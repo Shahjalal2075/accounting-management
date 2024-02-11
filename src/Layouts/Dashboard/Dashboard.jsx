@@ -22,7 +22,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
                             <p className="text-base text-[#111] font-semibold">35,000.00</p>
                         </div>
                     </div>
@@ -33,7 +33,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
                             <p className="text-base text-[#111] font-semibold">35,000.00</p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#f555ff]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Purchase - Sale</h2>
                             <p className="text-base text-[#111] font-semibold">35,000.00</p>
                         </div>
                     </div>

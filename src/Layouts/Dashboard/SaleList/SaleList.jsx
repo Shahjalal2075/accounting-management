@@ -33,8 +33,8 @@ const SaleList = () => {
                             <td>02 - CHEQUES</td>
                             <td>Est soluta molestiae</td>
                             <td className='flex justify-between'>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">A</a>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">B</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
                             </td>
                         </tr>
                         <tr>
@@ -46,8 +46,8 @@ const SaleList = () => {
                             <td>02 - CHEQUES</td>
                             <td>Est soluta molestiae</td>
                             <td className='flex justify-between'>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">A</a>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">B</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
                             </td>
                         </tr>
                         <tr>
@@ -59,8 +59,8 @@ const SaleList = () => {
                             <td>02 - CHEQUES</td>
                             <td>Est soluta molestiae</td>
                             <td className='flex justify-between'>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">A</a>
-                                <a className='bg-red-600 p-1 rounded-lg' href="">B</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
+                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
                             </td>
                         </tr>
                     </tbody>
