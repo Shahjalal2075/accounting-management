@@ -6,6 +6,12 @@ import PurchaseAdd from "../Layouts/PurchaseAdd/PurchaseAdd";
 import PurchaseList from "../Layouts/PurchaseList/PurchaseList";
 import SaleAdd from "../Layouts/Dashboard/SaleAdd/SaleAdd";
 import SaleList from "../Layouts/Dashboard/SaleList/SaleList";
+import Login from "../Layouts/Login/Login";
+import InvoiceEdit from "../Layouts/InvoiceEdit/InvoiceEdit";
+import UserAdd from "../Layouts/UserAdd/UserAdd";
+import PrivateRoute from "./PrivateRoute";
+import CompanyList from "../Layouts/CompanyList/CompanyList";
+import InvoiceEditS from "../Layouts/InvoiceEdit/InvoiceEditS";
 
 
 const Routes = createBrowserRouter([
@@ -15,27 +21,55 @@ const Routes = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home></Home>
+                element: <PrivateRoute><Home></Home></PrivateRoute>,
+                children: [
+                    {
+                        path: "/",
+                        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                    },
+                    {
+                        path: "/dashboard",
+                        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                    },
+                    {
+                        path: "/purchase-add",
+                        element: <PrivateRoute><PurchaseAdd></PurchaseAdd></PrivateRoute>
+                    },
+                    {
+                        path: "/purchase-list",
+                        element: <PrivateRoute><PurchaseList></PurchaseList></PrivateRoute>
+                    },
+                    {
+                        path: "/sale-add",
+                        element: <PrivateRoute><SaleAdd></SaleAdd></PrivateRoute>
+                    },
+                    {
+                        path: "/sale-list",
+                        element: <PrivateRoute><SaleList></SaleList></PrivateRoute>
+                    },
+                    {
+                        path: "/purchase-invoice/:id",
+                        element: <PrivateRoute><InvoiceEdit></InvoiceEdit></PrivateRoute>,
+                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/purchase-invoice/${params.id}`)
+                    },
+                    {
+                        path: "/sale-invoice/:id",
+                        element: <PrivateRoute><InvoiceEditS></InvoiceEditS></PrivateRoute>,
+                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/sale-invoice/${params.id}`)
+                    },
+                    {
+                        path: "/company-list",
+                        element: <PrivateRoute><CompanyList></CompanyList></PrivateRoute>
+                    }
+                ]
             },
             {
-                path: "/dashboard",
-                element: <Dashboard></Dashboard>
+                path: "/add-user",
+                element: <UserAdd></UserAdd>
             },
             {
-                path: "/purchase-add",
-element: <PurchaseAdd></PurchaseAdd>
-            },
-            {
-                path: "/purchase-list",
-                element: <PurchaseList></PurchaseList>
-            },
-            {
-                path: "/sale-add",
-                element: <SaleAdd></SaleAdd>
-            },
-            {
-                path: "/sale-list",
-                element: <SaleList></SaleList>
+                path: "/login",
+                element: <Login></Login>
             }
         ]
     }

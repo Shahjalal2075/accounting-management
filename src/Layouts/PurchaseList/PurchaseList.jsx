@@ -1,12 +1,103 @@
-
+import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PurchaseList = () => {
+    const [invoices, setInvoices] = useState([]);
+
+    const [selectedDate1, setSelectedDate1] = useState(null);
+
+    const [searchStatus, setSearchStatus] = useState(false);
+
+    const handleDateChange1 = (date) => {
+        setSelectedDate1(date);
+    };
+
+
+
+    useEffect(() => {
+        fetch(`https://account-ser.vercel.app/purchase-invoice`)
+            .then(res => res.json())
+            .then(data => setInvoices(data));
+    }, []);
+
+    const handleDelete = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`https://account-ser.vercel.app/purchase-invoice/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => {
+                        res.json()
+                    })
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                ` has been deleted.`,
+                                'success'
+                            )
+                        }
+                    })
+                setTimeout(() => {
+                    window.location.reload();
+                }, 600);
+            }
+        })
+    }
+
+    const filterInvoicesByDate = () => {
+        let filteredInvoices = invoices.filter(invoice => {
+            const firstDate = selectedDate1 && `${selectedDate1.getDate()}-${selectedDate1.getMonth() + 1}-${selectedDate1.getFullYear()}`;
+            const secondDate = firstDate;
+
+            const invoiceDate = new Date(invoice.fecha);
+            return invoiceDate >= new Date(firstDate) && invoiceDate <= new Date(secondDate);
+        });
+        return filteredInvoices;
+    };
+
+    const handleFilter = () => {
+        setSearchStatus(!searchStatus);
+    }
+
     return (
-        <div className='bg-[#F7F8F9] pt-8 pb-14 px-8'>
+        <div className='bg-[#eee] pt-8 pb-14 px-8'>
             <h2 className="text-[#28084B] text-2xl font-bold pb-8">Purchase Invoice List</h2>
-            <div className="flex justify-end pb-6">
-                <Link className='bg-[#111] text-[#fff] font-medium px-4 py-2 rounded-lg'>Add New</Link>
+            <div className="flex pb-6 justify-between items-center">
+                <div>
+                    <div className="input bg-[#fff] input-bordered w-full flex items-center">
+                        <DatePicker
+                            selected={selectedDate1}
+                            onChange={handleDateChange1}
+                            dateFormat="dd-MM-yyyy"
+                            placeholderText="dd-mm-yyyy"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1===null)?true:false}>
+                        {
+                            searchStatus ? 'Clear' : 'Filter'
+                        }
+                    </button>
+
+                </div>
             </div>
             <div className="overflow-x-auto bg-[#fff] p-2 rounded-lg">
                 <table className="table">
@@ -24,46 +115,48 @@ const PurchaseList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        <tr>
-                            <th>16</th>
-                            <td>Odio non qui culpa d</td>
-                            <td>Tanya Vazquez</td>
-                            <td>04-01-2024</td>
-                            <td>04-01-2024</td>
-                            <td>02 - CHEQUES</td>
-                            <td>Est soluta molestiae</td>
-                            <td className='flex justify-between'>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>16</th>
-                            <td>Odio non qui culpa d</td>
-                            <td>Tanya Vazquez</td>
-                            <td>04-01-2024</td>
-                            <td>04-01-2024</td>
-                            <td>02 - CHEQUES</td>
-                            <td>Est soluta molestiae</td>
-                            <td className='flex justify-between'>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>16</th>
-                            <td>Odio non qui culpa d</td>
-                            <td>Tanya Vazquez</td>
-                            <td>04-01-2024</td>
-                            <td>04-01-2024</td>
-                            <td>02 - CHEQUES</td>
-                            <td>Est soluta molestiae</td>
-                            <td className='flex justify-between'>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">A</a>
-                                <a className='bg-red-700 rounded-lg px-3 py-2 text-[#fff] font-bold' href="">B</a>
-                            </td>
-                        </tr>
+                        {
+                            searchStatus ?
+                                filterInvoicesByDate().map((invoice) =>
+                                    <tr key={invoice._id}>
+                                        <td>{invoice.nfc}</td>
+                                        <td>{invoice.id}</td>
+                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.fecha}</td>
+                                        <td>{invoice.fechDePago}</td>
+                                        <td>{invoice.formaDePago}</td>
+                                        <td>{invoice.modificado}</td>
+                                        <td className='flex justify-between'>
+                                            <Link to={`/purchase-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                                <FaRegEdit />
+                                            </Link>
+                                            <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>
+                                                <MdDelete />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                                :
+                                invoices.map((invoice) =>
+                                    <tr key={invoice._id}>
+                                        <td>{invoice.nfc}</td>
+                                        <td>{invoice.id}</td>
+                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.fecha}</td>
+                                        <td>{invoice.fechDePago}</td>
+                                        <td>{invoice.formaDePago}</td>
+                                        <td>{invoice.modificado}</td>
+                                        <td className='flex justify-between'>
+                                            <Link to={`/purchase-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                                <FaRegEdit />
+                                            </Link>
+                                            <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>
+                                                <MdDelete />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                        }
                     </tbody>
                 </table>
             </div>
