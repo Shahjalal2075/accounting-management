@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +13,16 @@ const SaleAdd = () => {
     const [taxAmmount, setTaxAmmount] = useState([]);
 
     const [selectedDate1, setSelectedDate1] = useState(null);
+
+    const [rid, setRid] = useState([]);
+
+    useEffect(() => {
+        fetch('DGII_RNC.json')
+            .then(res => res.json())
+            .then(data => setRid(data));
+    }, [])
+
+
 
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
@@ -119,13 +129,22 @@ const SaleAdd = () => {
         const fechDePago = dueDate;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
+        let company = "";
+        for (let i = 0; i <= rid.length; i++) {
+            if(rid[i].CompanyRNC===rnc)
+            {
+                company=rid[i].CompanyName;
+                console.log(company);
+                break;
+            }
+        }
 
         const impuesto = taxs;
         const monto = ammount;
         const subTotal = parseInt(ammount);
         const total = parseInt(ammount) + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0);
 
-        const invoice = { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado, impuesto, monto, subTotal, total };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, impuesto, monto, subTotal, total };
 
         console.log(invoice);
 

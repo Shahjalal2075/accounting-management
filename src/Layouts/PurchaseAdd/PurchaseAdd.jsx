@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,6 +16,14 @@ const PurchaseAdd = () => {
     const [enable, setEnable] = useState([]);
 
     const [selectedDate1, setSelectedDate1] = useState(null);
+
+    const [rid, setRid] = useState([]);
+
+    useEffect(() => {
+        fetch('DGII_RNC.json')
+            .then(res => res.json())
+            .then(data => setRid(data));
+    }, [])
 
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
@@ -123,8 +131,16 @@ const PurchaseAdd = () => {
         const fechDePago = dueDate;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
+        let company = "";
+        for (let i = 0; i <= rid.length; i++) {
+            if (rid[i].CompanyRNC === rnc) {
+                company = rid[i].CompanyName;
+                console.log(company);
+                break;
+            }
+        }
 
-        const invoice = { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
 
         console.log(invoice);
 

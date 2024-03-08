@@ -91,7 +91,7 @@ const PurchaseList = () => {
                     </div>
                 </div>
                 <div>
-                    <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1===null)?true:false}>
+                    <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                         {
                             searchStatus ? 'Clear' : 'Filter'
                         }
@@ -104,13 +104,13 @@ const PurchaseList = () => {
                     {/* head */}
                     <thead>
                         <tr>
+                            <th>NFC</th>
                             <th>ID</th>
-                            <th>NCF</th>
-                            <th>Name</th>
-                            <th>Invoice Date</th>
-                            <th>Due date</th>
-                            <th>Status</th>
-                            <th>Ref No</th>
+                            <th>Company Name</th>
+                            <th>Fecha</th>
+                            <th>Fecha de pago</th>
+                            <th>Forma de pago</th>
+                            <th>Modificado</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@ const PurchaseList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
-                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>
                                         <td>{invoice.formaDePago}</td>
@@ -141,7 +141,7 @@ const PurchaseList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
-                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>
                                         <td>{invoice.formaDePago}</td>

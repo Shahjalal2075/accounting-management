@@ -14,6 +14,8 @@ const SaleList = () => {
 
     const [searchStatus, setSearchStatus] = useState(false);
 
+    
+
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
     };
@@ -23,6 +25,7 @@ const SaleList = () => {
             .then(res => res.json())
             .then(data => setInvoices(data));
     }, [])
+
 
     const handleDelete = (id) => {
         console.log(id)
@@ -93,7 +96,7 @@ const SaleList = () => {
                     </div>
                 </div>
                 <div>
-                    <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1===null)?true:false}>
+                    <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                         {
                             searchStatus ? 'Clear' : 'Filter'
                         }
@@ -108,7 +111,7 @@ const SaleList = () => {
                         <tr>
                             <th>NFC</th>
                             <th>ID</th>
-                            <th>RNC</th>
+                            <th>Company Name</th>
                             <th>Fecha</th>
                             <th>Fecha de pago</th>
                             <th>Forma de pago</th>
@@ -123,7 +126,7 @@ const SaleList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
-                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>
                                         <td>{invoice.formaDePago}</td>
@@ -143,7 +146,7 @@ const SaleList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
-                                        <td>{invoice.rnc}</td>
+                                        <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>
                                         <td>{invoice.formaDePago}</td>

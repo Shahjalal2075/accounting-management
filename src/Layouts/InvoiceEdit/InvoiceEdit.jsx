@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,6 +8,13 @@ const InvoiceEdit = () => {
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
     const { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado } = invoiceData;
+    const [rid, setRid] = useState([]);
+
+    useEffect(() => {
+        fetch('DGII_RNC.json')
+            .then(res => res.json())
+            .then(data => setRid(data));
+    }, [])
 
     const handleAddProduct = (e) => {
         e.preventDefault();
@@ -18,8 +26,16 @@ const InvoiceEdit = () => {
         const fechDePago = form.fechDePago.value;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
+        let company = "";
+        for (let i = 0; i <= rid.length; i++) {
+            if (rid[i].CompanyRNC === rnc) {
+                company = rid[i].CompanyName;
+                console.log(company);
+                break;
+            }
+        }
 
-        const invoice = { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado };
+        const invoice = { nfc, id, rnc,company, fecha, fechDePago, formaDePago, modificado };
 
         console.log(invoice);
 
