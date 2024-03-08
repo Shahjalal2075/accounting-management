@@ -7,7 +7,7 @@ import { AuthContext } from '../../Providers/AuthProvider';
 
 const UserAdd = () => {
 
-    const { createUser, googleUser } = useContext(AuthContext);
+    const { createUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleRegister = e => {
@@ -17,7 +17,6 @@ const UserAdd = () => {
         const role = e.target.role.value;
         const verify = false;
         const password = e.target.password.value;
-        console.log(company + " " + email + " " + role + " " + password);
         const user = { company,email,role,verify };
 
         createUser(email, password)

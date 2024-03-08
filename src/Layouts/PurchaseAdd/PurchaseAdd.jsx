@@ -320,7 +320,7 @@ const PurchaseAdd = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <input type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} max={'99'} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                                        <input type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" />
                                                     </label>
                                                 </div>
                                             </td>
@@ -352,11 +352,11 @@ const PurchaseAdd = () => {
                                     <button onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] mt-6 hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
                                 </div>
                                 <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
-                                    <h2>Sub Total: {(subTotal + parseInt(ammount)).toFixed(2)}</h2>
+                                    <h2>Sub Total: {(subTotal + parseInt(ammount?ammount:'0')).toFixed(2)}</h2>
                                     {
-                                        taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
+                                        taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {(((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
                                     }
-                                    <h2>Total: {((subTotal + parseInt(ammount)) + (taxAmmount[0] ? (((subTotal + parseInt(ammount)) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseInt(ammount)) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseInt(ammount)) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseInt(ammount)) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseInt(ammount)) * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
+                                    <h2>Total: {((subTotal + parseInt(ammount?ammount:'0')) + (taxAmmount[0] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
                                 </div>
                             </div>
 
