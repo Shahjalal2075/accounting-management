@@ -14,8 +14,6 @@ const PurchaseAdd = () => {
     const [conceptoValue, setConceptoValue] = useState("00");
     const [subTotal, setSubTotal] = useState(0);
     const [enable, setEnable] = useState([]);
-    console.log('ena', enable)
-    console.log(taxs)
 
     const [selectedDate1, setSelectedDate1] = useState(null);
 
@@ -51,7 +49,6 @@ const PurchaseAdd = () => {
     const handleTax = (e) => {
         const form = e.target;
 
-        console.log('s', form.value);
         let f = 0;
         for (let i = 0; i <= taxs.length; i++) {
             if (taxs[i] === form.value) {
@@ -71,30 +68,41 @@ const PurchaseAdd = () => {
         }
         if (f === 0) {
             if (form.value === "Ninguno - (0.00%)") {
-                const newAmm = [...taxAmmount, 0.00];
+                console.log('hit')
+                const newAmm = [];
                 setTaxAmmount(newAmm);
+                const newTax = [];
+                setTax(newTax);
+
             }
             if (form.value === "ITBIS - (18.00%)") {
                 const newAmm = [...taxAmmount, 18.00];
                 setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
             }
             if (form.value === "Propina - (10.00%)") {
                 const newAmm = [...taxAmmount, 10.00];
                 setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
             }
             if (form.value === "CDT - (2.00%)") {
                 const newAmm = [...taxAmmount, 2.00];
                 setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
             }
             if (form.value === "PROPORCIONALIDAD - (18.00%)") {
                 const newAmm = [...taxAmmount, 18.00];
                 setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
             }
-            const newTax = [...taxs, form.value];
-            setTax(newTax);
         }
     }
-    console.log('amm', ammount)
+    console.log(taxs)
+
 
     const handleNewRow = () => {
         setCount(count + 1);
@@ -151,7 +159,7 @@ const PurchaseAdd = () => {
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-tex
-                                t font-medium">NFC</span>
+                                t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" name="nfc" required className="input bg-[#fff] input-bordered w-full" />
@@ -281,7 +289,7 @@ const PurchaseAdd = () => {
                                                 <div className="form-control">
                                                     <label className="input-group">
                                                         <select name="status" onChange={handleTax} id="status" className="input bg-[#fff] input-bordered w-full">
-                                                            <option value="">Ninguno - (0.00%)</option>
+                                                            <option value="Ninguno - (0.00%)">Ninguno - (0.00%)</option>
                                                             <option value="ITBIS - (18.00%)">ITBIS - (18.00%)</option>
                                                             <option value="Propina - (10.00%)">Propina - (10.00%)</option>
                                                             <option value="CDT - (2.00%)">CDT - (2.00%)</option>
