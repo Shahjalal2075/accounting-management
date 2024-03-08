@@ -25,6 +25,7 @@ const PurchaseAdd = () => {
             .then(data => setRid(data));
     }, [])
 
+
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
     };

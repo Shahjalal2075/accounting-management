@@ -116,8 +116,6 @@ const SaleAdd = () => {
             }
         }
     }
-    //console.log('amm', ammount)
-    console.log('t', taxs);
 
     const handleAddProduct = (e) => {
         e.preventDefault();

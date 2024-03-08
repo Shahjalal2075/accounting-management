@@ -1,12 +1,36 @@
+import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const InvoiceEditS = () => {
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
-    const { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado } = invoiceData;
+    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado } = invoiceData;
+
+    const [selectedDate1, setSelectedDate1] = useState(null);
+
+    const handleDateChange1 = (date) => {
+        setSelectedDate1(date);
+    };
+
+    const startDate = selectedDate1
+        ? `${selectedDate1.getDate()}-${selectedDate1.getMonth() + 1}-${selectedDate1.getFullYear()}`
+        : fecha;
+
+    const [selectedDate2, setSelectedDate2] = useState(null);
+
+    const handleDateChange2 = (date) => {
+        setSelectedDate2(date);
+    };
+
+    const dueDate = selectedDate2
+        ? `${selectedDate2.getDate()}-${selectedDate2.getMonth() + 1}-${selectedDate2.getFullYear()}`
+        : fechDePago;
 
     const handleAddProduct = (e) => {
         e.preventDefault();
@@ -14,12 +38,13 @@ const InvoiceEditS = () => {
         const nfc = form.nfc.value;
         const id = form.id.value;
         const rnc = form.rnc.value;
-        const fecha = form.fecha.value;
-        const fechDePago = form.fechDePago.value;
+        const fecha = startDate;
+        const fechDePago = dueDate;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
 
-        const invoice = { nfc, id, rnc, fecha, fechDePago, formaDePago, modificado };
+
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
 
         console.log(invoice);
 
@@ -77,7 +102,7 @@ const InvoiceEditS = () => {
                                 <span className="label-text font-medium">RNC</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" defaultValue={rnc} name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                <input type="text" defaultValue={rnc} name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" readOnly />
                             </label>
                         </div>
                         <div className="form-control">
@@ -85,7 +110,14 @@ const InvoiceEditS = () => {
                                 <span className="label-text font-medium">Fecha</span>
                             </label>
                             <label className="input-group">
-                                <input type="date" defaultValue={fecha} name="fecha" className="input bg-[#fff] input-bordered w-full" />
+                                <div className="input bg-[#fff] input-bordered w-full flex items-center">
+                                    <DatePicker
+                                        selected={selectedDate1}
+                                        onChange={handleDateChange1}
+                                        dateFormat="dd-MM-yyyy"
+                                        placeholderText={fecha}
+                                    />
+                                </div>
                             </label>
                         </div>
 
@@ -94,7 +126,14 @@ const InvoiceEditS = () => {
                                 <span className="label-text font-medium">Fecha de pago</span>
                             </label>
                             <label className="input-group">
-                                <input type="date" defaultValue={fechDePago} name="fechDePago" className="input bg-[#fff] input-bordered w-full" />
+                                <div className="input bg-[#fff] input-bordered w-full flex items-center">
+                                    <DatePicker
+                                        selected={selectedDate2}
+                                        onChange={handleDateChange2}
+                                        dateFormat="dd-MM-yyyy"
+                                        placeholderText={fechDePago}
+                                    />
+                                </div>
                             </label>
                         </div>
                         <div className="form-control">
