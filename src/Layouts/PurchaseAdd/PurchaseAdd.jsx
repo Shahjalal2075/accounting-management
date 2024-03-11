@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PurchaseAdd = () => {
 
@@ -77,7 +79,6 @@ const PurchaseAdd = () => {
         }
         if (f === 0) {
             if (form.value === "Ninguno - (0.00%)") {
-                console.log('hit')
                 const newAmm = [];
                 setTaxAmmount(newAmm);
                 const newTax = [];
@@ -108,15 +109,32 @@ const PurchaseAdd = () => {
                 const newTax = [...taxs, form.value];
                 setTax(newTax);
             }
+            if (form.value === "ISC - (2.00%)") {
+                const newAmm = [...taxAmmount, 2.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
+            if (form.value === "ISC - (16.00%)") {
+                const newAmm = [...taxAmmount, 16.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
+            if (form.value === "ISR RETENIDO - (10.00%)") {
+                const newAmm = [...taxAmmount, 10.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
         }
     }
-    console.log(taxs)
 
 
     const handleNewRow = () => {
         setCount(count + 1);
         const newT = [...enable, true];
-        setSubTotal(subTotal + parseInt(ammount))
+        setSubTotal(subTotal + parseFloat(ammount))
         setEnable(newT);
         setAmmount(0);
 
@@ -133,12 +151,23 @@ const PurchaseAdd = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
         let company = "";
-        for (let i = 0; i <= rid.length; i++) {
-            if (rid[i].CompanyRNC === rnc) {
-                company = rid[i].CompanyName;
-                console.log(company);
-                break;
+        if (rid && rid.length > 0) {
+            for (let i = 0; i < rid.length; i++) {
+                if (rid[i].CompanyRNC === rnc) {
+                    company = rid[i].CompanyName;
+                    console.log(company);
+                    break;
+                }
+                else {
+                    company = "empty";
+                }
             }
+        } else {
+            console.error("RID data is undefined or empty.");
+        }
+        if (company === "empty") {
+            toast('No se encontraron datos registrados de este contribuyente.');
+            return;
         }
 
         const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
@@ -162,6 +191,9 @@ const PurchaseAdd = () => {
             .then(data => {
                 console.log(data);
             })
+            .catch(error => {
+                console.error(error);
+            })
 
     }
 
@@ -171,7 +203,7 @@ const PurchaseAdd = () => {
 
             <div className="bg-[#eee] pt-8 pb-14 px-8">
                 <form onSubmit={handleAddProduct}>
-                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">New Purchase Invoice</h2>
+                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Nueva Factura de Compra</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#fff] p-4 pb-6 rounded-lg">
                         <div className="form-control">
                             <label className="label">
@@ -179,13 +211,13 @@ const PurchaseAdd = () => {
                                 t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" name="nfc" required className="input bg-[#fff] input-bordered w-full" />
+                                <input type="text" name="nfc" maxLength={"13"} required className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">ID</span>
+                                <span className="label-text font-medium">Tipo de ID</span>
                             </label>
                             <label className="input-group">
                                 <select name="id" id="id" className="input bg-[#fff] input-bordered w-full">
@@ -197,10 +229,10 @@ const PurchaseAdd = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">RNC</span>
+                                <span className="label-text font-medium">ID</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" name="rnc" required placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                <input type="number" name="rnc" required placeholder="" className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
                         <div className="form-control">
@@ -263,7 +295,7 @@ const PurchaseAdd = () => {
                     </div>
 
                     <div className="bg-[#fff] p-4 pb-6 rounded-lg mt-8">
-                        <h2 className="text-[#28084B] text-2xl font-medium pb-8">Invoice Details</h2>
+                        <h2 className="text-[#28084B] text-2xl font-medium pb-8">Detalle de factura</h2>
                         <div className="overflow-x-auto bg-[#fff] p-2 rounded-lg">
                             <table className="table">
                                 {/* head */}
@@ -285,18 +317,18 @@ const PurchaseAdd = () => {
                                                     <label className="input-group">
                                                         <select defaultValue={conceptoValue} onChange={handleConcepto} name={'product' + idx} id={'product' + idx} className="input bg-[#fff] input-bordered w-full">
 
-                                                            <option value="00">Select</option>
-                                                            <option value="01 - GASTOS DE PERSONAL">01 - GASTOS DE PERSONAL</option>
-                                                            <option value="02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS">02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS</option>
-                                                            <option value="03 - ARRENDAMIENTOS">03 - ARRENDAMIENTOS</option>
-                                                            <option value="04 - GASTOS DE ACTIVOS FIJO">04 - GASTOS DE ACTIVOS FIJO</option>
-                                                            <option value="05 - GASTOS DE REPRESENTACIÓN" >05 - GASTOS DE REPRESENTACIÓN</option>
-                                                            <option value="06 - OTRAS DEDUCCIONES ADMITIDAS">06 - OTRAS DEDUCCIONES ADMITIDAS</option>
-                                                            <option value="07 - GASTOS FINANCIEROS">07 - GASTOS FINANCIEROS</option>
-                                                            <option value="08 - GASTOS EXTRAORDINARIOS">08 - GASTOS EXTRAORDINARIOS</option>
-                                                            <option value="09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA">09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA</option>
-                                                            <option value="10 - ADQUISICIONES DE ACTIVOS">10 - ADQUISICIONES DE ACTIVOS</option>
-                                                            <option value="11 - GASTOS DE SEGUROS">11 - GASTOS DE SEGUROS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="00">Select</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="01 - GASTOS DE PERSONAL">01 - GASTOS DE PERSONAL</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS">02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="03 - ARRENDAMIENTOS">03 - ARRENDAMIENTOS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="04 - GASTOS DE ACTIVOS FIJO">04 - GASTOS DE ACTIVOS FIJO</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="05 - GASTOS DE REPRESENTACIÓN" >05 - GASTOS DE REPRESENTACIÓN</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="06 - OTRAS DEDUCCIONES ADMITIDAS">06 - OTRAS DEDUCCIONES ADMITIDAS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="07 - GASTOS FINANCIEROS">07 - GASTOS FINANCIEROS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="08 - GASTOS EXTRAORDINARIOS">08 - GASTOS EXTRAORDINARIOS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA">09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="10 - ADQUISICIONES DE ACTIVOS">10 - ADQUISICIONES DE ACTIVOS</option>
+                                                            <option disabled={(idx > 0) ? true : false} value="11 - GASTOS DE SEGUROS">11 - GASTOS DE SEGUROS</option>
 
                                                         </select>
                                                     </label>
@@ -313,6 +345,7 @@ const PurchaseAdd = () => {
                                                             <option value="PROPORCIONALIDAD - (18.00%)">PROPORCIONALIDAD - (18.00%)</option>
                                                             <option value="ISC - (2.00%)">ISC - (2.00%)</option>
                                                             <option value="ISC - (16.00%)">ISC - (16.00%)</option>
+                                                            <option value="ISR RETENIDO - (10.00%)">ISR RETENIDO - (10.00%)</option>
                                                         </select>
                                                     </label>
                                                 </div>
@@ -320,7 +353,7 @@ const PurchaseAdd = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <input type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                                        <input type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
                                                     </label>
                                                 </div>
                                             </td>
@@ -329,16 +362,16 @@ const PurchaseAdd = () => {
                                                     <label className="input-group">
 
                                                         <select name="status" id="status" className="input bg-[#fff] input-bordered w-full">
-                                                            <option value="">Select</option>
-                                                            <option value="Goods">Goods</option>
-                                                            <option value="Service" >Service</option>
+                                                            <option value="">Seleccionar</option>
+                                                            <option value="Goods">Bien</option>
+                                                            <option value="Service" >Servicio</option>
                                                         </select>
                                                     </label>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div className="form-control">
-                                                    <button onClick={() => setCount((count) => count - 1)} className="bg-red-700 rounded-lg px-1 py-2 text-[#fff] font-bold">X</button>
+                                                    <button type="button" onClick={() => setCount((count) => count - 1)} className="bg-red-700 rounded-lg px-1 py-2 text-[#fff] font-bold">X</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -349,14 +382,14 @@ const PurchaseAdd = () => {
                             <div className="flex justify-between mt-6">
 
                                 <div className="">
-                                    <button onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] mt-6 hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
+                                    <button type="button" onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] mt-6 hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
                                 </div>
                                 <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
-                                    <h2>Sub Total: {(subTotal + parseInt(ammount?ammount:'0')).toFixed(2)}</h2>
+                                    <h2>Sub Total: {(subTotal + parseFloat(ammount ? ammount : '0')).toFixed(2)}</h2>
                                     {
-                                        taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {(((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
+                                        taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {(((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
                                     }
-                                    <h2>Total: {((subTotal + parseInt(ammount?ammount:'0')) + (taxAmmount[0] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseInt(ammount?ammount:'0')) * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
+                                    <h2>Total: {((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
                                 </div>
                             </div>
 
@@ -370,6 +403,7 @@ const PurchaseAdd = () => {
                 </form>
 
             </div>
+            <ToastContainer />
         </div>
     );
 };

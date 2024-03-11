@@ -22,8 +22,6 @@ const SaleAdd = () => {
             .then(data => setRid(data));
     }, [])
 
-//console.log(rid)
-
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
     };
@@ -130,9 +128,8 @@ const SaleAdd = () => {
         const modificado = form.modificado.value;
         let company = "";
         for (let i = 0; i <= rid.length; i++) {
-            if(rid[i].CompanyRNC===rnc)
-            {
-                company=rid[i].CompanyName;
+            if (rid[i].CompanyRNC === rnc) {
+                company = rid[i].CompanyName;
                 console.log(company);
                 break;
             }
@@ -312,11 +309,11 @@ const SaleAdd = () => {
                             <div className=" mt-6">
 
                                 <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
-                                    <h2>Sub Total: {(parseInt(ammount?ammount:'0')).toFixed(2)}</h2>
+                                    <h2>Sub Total: {(parseInt(ammount ? ammount : '0')).toFixed(2)}</h2>
                                     {
                                         taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
                                     }
-                                    <h2>Total: {(parseInt(ammount?ammount:'0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
+                                    <h2>Total: {(parseInt(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
                                 </div>
                             </div>
                         </div>

@@ -40,10 +40,10 @@ const LeftSideMenu = () => {
                             &&
                             <div className="text-lg text-[#fff] font-medium flex flex-col">
                                 <NavLink to={'/dashboard'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Dashboard</NavLink>
-                                <NavLink to={'/purchase-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Purchase Invoice Add</NavLink>
-                                <NavLink to={'/purchase-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Purchase Invoice List</NavLink>
-                                <NavLink to={'/sale-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Sale Invoice Add</NavLink>
-                                <NavLink to={'/sale-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Sale Invoice List</NavLink>
+                                <NavLink to={'/purchase-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Registrar Factura de Compra</NavLink>
+                                <NavLink to={'/purchase-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Consultar de Facturas de Compra</NavLink>
+                                <NavLink to={'/sale-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Registrar Factura de Venta</NavLink>
+                                <NavLink to={'/sale-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2'>Consultar Facturas de Ventas</NavLink>
                             </div>
                         }
 
