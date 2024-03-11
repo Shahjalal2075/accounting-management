@@ -71,12 +71,12 @@ const InvoiceEdit = () => {
         <div className="">
             <div className="bg-[#eee] pt-8 pb-14 px-8">
                 <form onSubmit={handleAddProduct}>
-                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Invoice Edit</h2>
+                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Editar Factura de Compra</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#fff] p-4 pb-6 rounded-lg">
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-tex
-                                t font-medium">NFC</span>
+                                t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" defaultValue={nfc} name="nfc" className="input bg-[#fff] input-bordered w-full" />
@@ -85,7 +85,7 @@ const InvoiceEdit = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">ID</span>
+                                <span className="label-text font-medium">Tipo de ID</span>
                             </label>
                             <label className="input-group">
                                 <select name="id" defaultValue={id} id="id" className="input bg-[#fff] input-bordered w-full">
@@ -97,7 +97,7 @@ const InvoiceEdit = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">RNC</span>
+                                <span className="label-text font-medium">ID</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" defaultValue={rnc} name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" readOnly />

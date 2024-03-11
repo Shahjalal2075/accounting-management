@@ -104,8 +104,9 @@ const PurchaseList = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>NFC</th>
-                            <th>ID</th>
+                            <th>NCF</th>
+                            <th>Tipo de ID</th>
+                            <th>Company ID</th>
                             <th>Company Name</th>
                             <th>Fecha</th>
                             <th>Fecha de pago</th>
@@ -121,6 +122,7 @@ const PurchaseList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
+                                        <td>{invoice.rnc}</td>
                                         <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>
@@ -141,6 +143,7 @@ const PurchaseList = () => {
                                     <tr key={invoice._id}>
                                         <td>{invoice.nfc}</td>
                                         <td>{invoice.id}</td>
+                                        <td>{invoice.rnc}</td>
                                         <td>{invoice.company}</td>
                                         <td>{invoice.fecha}</td>
                                         <td>{invoice.fechDePago}</td>

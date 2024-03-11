@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SaleAdd = () => {
     const navigate = useNavigate();
@@ -81,7 +83,6 @@ const SaleAdd = () => {
         }
         if (f === 0) {
             if (form.value === "Ninguno - (0.00%)") {
-                console.log('hit')
                 const newAmm = [];
                 setTaxAmmount(newAmm);
                 const newTax = [];
@@ -112,6 +113,24 @@ const SaleAdd = () => {
                 const newTax = [...taxs, form.value];
                 setTax(newTax);
             }
+            if (form.value === "ISC - (2.00%)") {
+                const newAmm = [...taxAmmount, 2.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
+            if (form.value === "ISC - (16.00%)") {
+                const newAmm = [...taxAmmount, 16.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
+            if (form.value === "ISR RETENIDO - (10.00%)") {
+                const newAmm = [...taxAmmount, 10.00];
+                setTaxAmmount(newAmm);
+                const newTax = [...taxs, form.value];
+                setTax(newTax);
+            }
         }
     }
 
@@ -127,18 +146,29 @@ const SaleAdd = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
         let company = "";
-        for (let i = 0; i <= rid.length; i++) {
-            if (rid[i].CompanyRNC === rnc) {
-                company = rid[i].CompanyName;
-                console.log(company);
-                break;
+        if (rid && rid.length > 0) {
+            for (let i = 0; i < rid.length; i++) {
+                if (rid[i].CompanyRNC === rnc) {
+                    company = rid[i].CompanyName;
+                    console.log(company);
+                    break;
+                }
+                else {
+                    company = "empty";
+                }
             }
+        } else {
+            console.error("RID data is undefined or empty.");
+        }
+        if (company === "empty") {
+            toast('No se encontraron datos registrados de este contribuyente.');
+            return;
         }
 
         const impuesto = taxs;
         const monto = ammount;
-        const subTotal = parseInt(ammount);
-        const total = parseInt(ammount) + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0);
+        const subTotal = parseFloat(ammount);
+        const total = parseFloat(ammount) + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0);
 
         const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, impuesto, monto, subTotal, total };
 
@@ -170,7 +200,7 @@ const SaleAdd = () => {
 
             <div className="bg-[#eee] pt-8 pb-14 px-8">
                 <form onSubmit={handleAddProduct}>
-                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">New Sale Invoice</h2>
+                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Nueva Factura de Compra</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#fff] p-4 pb-6 rounded-lg">
                         <div className="form-control">
                             <label className="label">
@@ -178,13 +208,13 @@ const SaleAdd = () => {
                                 t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" name="nfc" className="input bg-[#fff] input-bordered w-full" />
+                                <input type="text" maxLength={"13"} name="nfc" className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">ID</span>
+                                <span className="label-text font-medium">Tipo de ID</span>
                             </label>
                             <label className="input-group">
                                 <select name="id" id="id" className="input bg-[#fff] input-bordered w-full">
@@ -197,7 +227,7 @@ const SaleAdd = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">RNC</span>
+                                <span className="label-text font-medium">ID</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" />
@@ -270,7 +300,6 @@ const SaleAdd = () => {
                                     <tr>
                                         <th>Impuesto</th>
                                         <th>Monto</th>
-                                        <th>Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -286,6 +315,10 @@ const SaleAdd = () => {
                                                             <option value="Propina - (10.00%)">Propina - (10.00%)</option>
                                                             <option value="CDT - (2.00%)">CDT - (2.00%)</option>
                                                             <option value="PROPORCIONALIDAD - (18.00%)">PROPORCIONALIDAD - (18.00%)</option>
+                                                            <option value="ISC - (2.00%)">ISC - (2.00%)</option>
+                                                            <option value="ISC - (16.00%)">ISC - (16.00%)</option>
+                                                            <option value="ISR RETENIDO - (10.00%)">ISR RETENIDO - (10.00%)</option>
+
                                                         </select>
                                                     </label>
                                                 </div>
@@ -297,11 +330,6 @@ const SaleAdd = () => {
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div className="form-control">
-                                                    <button onClick={() => setCount((count) => count - 1)} className="bg-red-700 rounded-lg px-1 py-2 text-[#fff] font-bold">X</button>
-                                                </div>
-                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -309,22 +337,23 @@ const SaleAdd = () => {
                             <div className=" mt-6">
 
                                 <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
-                                    <h2>Sub Total: {(parseInt(ammount ? ammount : '0')).toFixed(2)}</h2>
+                                    <h2>Sub Total: {(parseFloat(ammount ? ammount : '0')).toFixed(2)}</h2>
                                     {
                                         taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
                                     }
-                                    <h2>Total: {(parseInt(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
+                                    <h2>Total: {(parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
                                 </div>
                             </div>
                         </div>
                     </div>
 
 
-                    <input type="submit" value="Save" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
+                    <input type="submit" value="Guardar" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
 
                 </form>
 
             </div>
+            <ToastContainer />
         </div>
     );
 };
