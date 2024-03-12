@@ -16,6 +16,9 @@ const PurchaseAdd = () => {
     const [conceptoValue, setConceptoValue] = useState("00");
     const [subTotal, setSubTotal] = useState(0);
     const [enable, setEnable] = useState([]);
+    const [discounts, setDiscount] = useState([]);
+    const [discountAmmount, setDiscountAmmount] = useState([]);
+    const [totalDis, setTotalDis] = useState(0);
 
     const [selectedDate1, setSelectedDate1] = useState(null);
 
@@ -55,6 +58,115 @@ const PurchaseAdd = () => {
     const handleConcepto = (e) => {
         const form = e.target;
         setConceptoValue(form.value);
+    }
+
+    const handleDiscount = (e) => {
+        const form = e.target;
+
+        let f = 0;
+        for (let i = 0; i <= discounts.length; i++) {
+            if (discounts[i] === form.value) {
+                let newDis = [];
+                let newDisAmm = [];
+                for (let i = 0; i <= discounts.length; i++) {
+                    if (discounts[i] !== form.value) {
+                        newDis = [...newDis, discounts[i]];
+                        newDisAmm = [...newDisAmm, discountAmmount[i]];
+                    }
+                }
+                setTotalDis(totalDis - discountAmmount[i]);
+                setDiscount(newDis);
+                setDiscountAmmount(newDisAmm);
+                f = 1;
+                break;
+            }
+        }
+        if (f === 0) {
+            if (form.value === "None") {
+                const newAmm = [];
+                setDiscountAmmount(newAmm);
+                const newDis = [];
+                setDiscount(newDis);
+                setTotalDis(0);
+            }
+            if (form.value === "ITBIS Retenido - 30%") {
+                const newAmm = [...discountAmmount, 30.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 30)
+            }
+            if (form.value === "ITBIS Retenido - 75%") {
+                const newAmm = [...discountAmmount, 75.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 75)
+            }
+            if (form.value === "ITBIS Retenido - 100%") {
+                const newAmm = [...discountAmmount, 100.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 100)
+            }
+            if (form.value === "ALQUILERES - 10%") {
+                const newAmm = [...discountAmmount, 10.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 10)
+            }
+            if (form.value === "HONORARIOS POR SERVICIOS - 10%") {
+                const newAmm = [...discountAmmount, 10.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 10)
+            }
+            if (form.value === "OTRAS RENTAS - 10%") {
+                const newAmm = [...discountAmmount, 10.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 10)
+            }
+            if (form.value === "OTRAS RENTAS (Rentas Presuntas) - 2%") {
+                const newAmm = [...discountAmmount, 2.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 2)
+            }
+            if (form.value === "INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%") {
+                const newAmm = [...discountAmmount, 10.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 10)
+            }
+            if (form.value === "INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%") {
+                const newAmm = [...discountAmmount, 10.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 10)
+            }
+            if (form.value === "RETENCION POR PROVEEDORES DEL ESTADO - 5%") {
+                const newAmm = [...discountAmmount, 5.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 5)
+            }
+            if (form.value === "JUEGOS TELEFONICOS - 5%") {
+                const newAmm = [...discountAmmount, 5.00];
+                setDiscountAmmount(newAmm);
+                const newDis = [...discounts, form.value];
+                setDiscount(newDis);
+                setTotalDis(totalDis + 5)
+            }
+        }
     }
 
     const handleTax = (e) => {
@@ -379,10 +491,32 @@ const PurchaseAdd = () => {
                                 </tbody>
                             </table>
 
-                            <div className="flex justify-between mt-6">
-
-                                <div className="">
-                                    <button type="button" onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] mt-6 hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
+                            <div className="flex justify-between mt-6 mx-4">
+                                <div className="flex items-center gap-8">
+                                    <div className="">
+                                        <button type="button" onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <p className="text-sm font-medium">Retenciones:</p>
+                                        <div className="form-control">
+                                            <label className="input-group">
+                                                <select name="status" id="status" onChange={handleDiscount} className="input bg-[#fff] input-bordered w-1/2">
+                                                    <option value="None">None</option>
+                                                    <option value="ITBIS Retenido - 30%">ITBIS Retenido - 30%</option>
+                                                    <option value="ITBIS Retenido - 75%">ITBIS Retenido - 75%</option>
+                                                    <option value="ITBIS Retenido - 100%">ITBIS Retenido - 100%</option>
+                                                    <option value="ALQUILERES - 10%">ALQUILERES - 10%</option>
+                                                    <option value="HONORARIOS POR SERVICIOS - 10%">HONORARIOS POR SERVICIOS - 10%</option>
+                                                    <option value="OTRAS RENTAS - 10%">OTRAS RENTAS - 10%</option>
+                                                    <option value="OTRAS RENTAS (Rentas Presuntas) - 2%">OTRAS RENTAS (Rentas Presuntas) - 2%</option>
+                                                    <option value="INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%">INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%</option>
+                                                    <option value="INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%">INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%</option>
+                                                    <option value="RETENCION POR PROVEEDORES DEL ESTADO - 5%">RETENCION POR PROVEEDORES DEL ESTADO - 5%</option>
+                                                    <option value="JUEGOS TELEFONICOS - 5%">JUEGOS TELEFONICOS - 5%</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
                                     <h2>Sub Total: {(subTotal + parseFloat(ammount ? ammount : '0')).toFixed(2)}</h2>
@@ -390,6 +524,8 @@ const PurchaseAdd = () => {
                                         taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {(((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[idx]) / 100).toFixed(2)}</h2>)
                                     }
                                     <h2>Total: {((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toFixed(2)}</h2>
+                                    <h2>- Retenciones: {((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0))*totalDis)/100).toFixed(2)} </h2>
+                                    <h2>Total a pagar: {(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0))-((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0))*totalDis)/100)).toFixed(2)} </h2>
                                 </div>
                             </div>
 

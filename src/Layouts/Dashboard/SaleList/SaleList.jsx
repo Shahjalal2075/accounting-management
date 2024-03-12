@@ -109,7 +109,7 @@ const SaleList = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>NCF/th>
+                            <th>NCF</th>
                             <th>Tipo de ID</th>
                             <th>Company ID</th>
                             <th>Company Name</th>

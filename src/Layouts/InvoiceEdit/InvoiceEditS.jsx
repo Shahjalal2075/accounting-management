@@ -77,7 +77,7 @@ const InvoiceEditS = () => {
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-tex
-                                t font-medium">NFC</span>
+                                t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" defaultValue={nfc} name="nfc" className="input bg-[#fff] input-bordered w-full" />
@@ -86,7 +86,7 @@ const InvoiceEditS = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">ID</span>
+                                <span className="label-text font-medium">Tipo de ID</span>
                             </label>
                             <label className="input-group">
                                 <select name="id" defaultValue={id} id="id" className="input bg-[#fff] input-bordered w-full">
@@ -99,7 +99,7 @@ const InvoiceEditS = () => {
 
                         <div className="form-control">
                             <label className="label">
-                                <span className="label-text font-medium">RNC</span>
+                                <span className="label-text font-medium">ID</span>
                             </label>
                             <label className="input-group">
                                 <input type="text" defaultValue={rnc} name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" readOnly />
