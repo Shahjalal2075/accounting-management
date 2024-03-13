@@ -287,7 +287,7 @@ const SaleAdd = () => {
         
         const totalToPagar = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total,totalToPagar };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total,totalToPagar,taxs,taxAmmount,discounts,discountAmmount,totalDis };
 
         console.log(invoice);
 
@@ -317,7 +317,7 @@ const SaleAdd = () => {
 
             <div className="bg-[#eee] pt-8 pb-14 px-8">
                 <form onSubmit={handleAddProduct}>
-                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Nueva Factura de Compra</h2>
+                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Nueva Factura de Venta</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#fff] p-4 pb-6 rounded-lg">
                         <div className="form-control">
                             <label className="label">
@@ -409,7 +409,7 @@ const SaleAdd = () => {
                     </div>
 
                     <div className="bg-[#fff] p-4 pb-6 rounded-lg mt-8">
-                        <h2 className="text-[#28084B] text-2xl font-medium pb-8">Invoice Details</h2>
+                        <h2 className="text-[#28084B] text-2xl font-medium pb-8">Detalle de factura</h2>
                         <div className="overflow-x-auto bg-[#fff] p-2 rounded-lg">
                             <table className="table">
                                 {/* head */}
