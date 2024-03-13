@@ -51,18 +51,6 @@ const SaleAdd = () => {
         setAmmount(form.value);
         console.log(form.value);
     }
-
-    /* const handleTax = (event) => {
-        const selectedOption = event.target.value;
-        if (event.target.selected) {
-            setSelectedOptions([...selectedOptions, selectedOption]);
-        } else {
-            setSelectedOptions(selectedOptions.filter(option => option !== selectedOption));
-        }
-    }; */
-
-
-
     const handleDiscount = (e) => {
         const form = e.target;
 
@@ -97,77 +85,77 @@ const SaleAdd = () => {
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+30)
+                setTotalDis(totalDis + 30)
             }
             if (form.value === "ITBIS Retenido - 75%") {
                 const newAmm = [...discountAmmount, 75.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+75)
+                setTotalDis(totalDis + 75)
             }
             if (form.value === "ITBIS Retenido - 100%") {
                 const newAmm = [...discountAmmount, 100.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+100)
+                setTotalDis(totalDis + 100)
             }
             if (form.value === "ALQUILERES - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+10)
+                setTotalDis(totalDis + 10)
             }
             if (form.value === "HONORARIOS POR SERVICIOS - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+10)
+                setTotalDis(totalDis + 10)
             }
             if (form.value === "OTRAS RENTAS - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+10)
+                setTotalDis(totalDis + 10)
             }
             if (form.value === "OTRAS RENTAS (Rentas Presuntas) - 2%") {
                 const newAmm = [...discountAmmount, 2.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+2)
+                setTotalDis(totalDis + 2)
             }
             if (form.value === "INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+10)
+                setTotalDis(totalDis + 10)
             }
             if (form.value === "INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+10)
+                setTotalDis(totalDis + 10)
             }
             if (form.value === "RETENCION POR PROVEEDORES DEL ESTADO - 5%") {
                 const newAmm = [...discountAmmount, 5.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+5)
+                setTotalDis(totalDis + 5)
             }
             if (form.value === "JUEGOS TELEFONICOS - 5%") {
                 const newAmm = [...discountAmmount, 5.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
-                setTotalDis(totalDis+5)
+                setTotalDis(totalDis + 5)
             }
         }
     }
@@ -256,6 +244,22 @@ const SaleAdd = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
         let company = "";
+        if (nfc.length !== 11 && nfc.length !== 13) {
+            toast('Llene el NCF correcto.');
+            return;
+        }
+        if (fecha === 'No date selected') {
+            toast('Seleccione fecha.');
+            return;
+        }
+        if (fechDePago === 'No date selected') {
+            toast('Seleccione fecha de pago.');
+            return;
+        }
+        if (formaDePago === 'none') {
+            toast('Seleccione forma de pago.');
+            return;
+        }
         if (rid && rid.length > 0) {
             for (let i = 0; i < rid.length; i++) {
                 if (rid[i].CompanyRNC === rnc) {
@@ -275,12 +279,15 @@ const SaleAdd = () => {
             return;
         }
 
-        const impuesto = taxs;
         const monto = ammount;
-        const subTotal = parseFloat(ammount);
-        const total = parseFloat(ammount) + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0);
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, impuesto, monto, subTotal, total };
+        const subTotal = parseFloat(parseFloat(ammount).toFixed(2));
+
+        const total = parseFloat((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2));
+        
+        const totalToPagar = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toFixed(2));
+
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total,totalToPagar };
 
         console.log(invoice);
 
@@ -318,7 +325,7 @@ const SaleAdd = () => {
                                 t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" maxLength={"13"} name="nfc" className="input bg-[#fff] input-bordered w-full" />
+                                <input required type="text" maxLength={"13"} name="nfc" className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
 
@@ -340,7 +347,7 @@ const SaleAdd = () => {
                                 <span className="label-text font-medium">ID</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                <input required type="text" name="rnc" placeholder="" className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
                         <div className="form-control">
@@ -380,7 +387,7 @@ const SaleAdd = () => {
                             </label>
                             <label className="input-group">
                                 <select name="formaDePago" id="status" className="input bg-[#fff] input-bordered w-full">
-                                    <option value="">Select</option>
+                                    <option value="none">Select</option>
                                     <option value="01 - EFECTIVO">01 - EFECTIVO</option>
                                     <option value="02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO<">02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO</option>
                                     <option value="03 - TARJETA CRÉDITO/DÉBITO">03 - TARJETA CRÉDITO/DÉBITO</option>
@@ -436,7 +443,7 @@ const SaleAdd = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <input type="number" onChange={handleAmmount} name="productName" placeholder="" className="input bg-[#fff] input-bordered w-full" />
+                                                    <input type="number" required onChange={handleAmmount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
                                                     </label>
                                                 </div>
                                             </td>
@@ -469,13 +476,13 @@ const SaleAdd = () => {
                                         </div>
                                     </div>
                                     <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
-                                        <h2>Sub Total: {(parseFloat(ammount ? ammount : '0')).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
+                                        <h2>Sub Total: {(parseFloat(ammount ? ammount : '0')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
                                         {
-                                            taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>)
+                                            taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>)
                                         }
-                                        <h2>Total: {(parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
-                                        <h2>- Retenciones: {((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)))*totalDis)/100).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
-                                        <h2>Total a pagar: {(((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))-((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)))*totalDis)/100))).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</h2>
+                                        <h2>Total: {(parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+                                        <h2>- Retenciones: {((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+                                        <h2>Total a pagar: {(((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
                                     </div>
                                 </div>
                             </div>

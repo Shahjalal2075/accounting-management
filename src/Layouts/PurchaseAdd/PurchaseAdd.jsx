@@ -19,6 +19,7 @@ const PurchaseAdd = () => {
     const [discounts, setDiscount] = useState([]);
     const [discountAmmount, setDiscountAmmount] = useState([]);
     const [totalDis, setTotalDis] = useState(0);
+    const [tipoCk, setTipoCk] = useState("none");
 
     const [selectedDate1, setSelectedDate1] = useState(null);
 
@@ -242,14 +243,30 @@ const PurchaseAdd = () => {
         }
     }
 
+    const handleTipo = (e) => {
+        const form = e.target;
+        setTipoCk(form.value);
+    }
 
     const handleNewRow = () => {
+        if (conceptoValue === "00") {
+            toast('Seleccione Concepto.');
+            return;
+        }
+        if (ammount === 0) {
+            toast('Ingrese el monto.');
+            return;
+        }
+        if (tipoCk === "none") {
+            toast('Seleccione Tipo.');
+            return;
+        }
         setCount(count + 1);
         const newT = [...enable, true];
         setSubTotal(subTotal + parseFloat(ammount))
         setEnable(newT);
         setAmmount(0);
-
+        setTipoCk("none");
     }
 
     const handleAddProduct = (e) => {
@@ -263,6 +280,31 @@ const PurchaseAdd = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
         let company = "";
+        if (nfc.length !== 11 && nfc.length !== 13) {
+            toast('Llene el NCF correcto. ' + nfc.length);
+            return;
+        }
+        if (fecha === 'No date selected') {
+            toast('Seleccione fecha.');
+            return;
+        }
+        if (fechDePago === 'No date selected') {
+            toast('Seleccione fecha de pago.');
+            return;
+        }
+        if (formaDePago === 'none') {
+            toast('Seleccione forma de pago.');
+            return;
+        }
+        if (conceptoValue === "00") {
+            toast('Seleccione Concepto.');
+            return;
+        }
+        if (tipoCk === "none") {
+            toast('Seleccione Tipo.');
+            return;
+        }
+
         if (rid && rid.length > 0) {
             for (let i = 0; i < rid.length; i++) {
                 if (rid[i].CompanyRNC === rnc) {
@@ -282,7 +324,15 @@ const PurchaseAdd = () => {
             return;
         }
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
+        const monto = ammount;
+
+        const subTotal = parseFloat(parseFloat(ammount).toFixed(2));
+
+        const total = parseFloat(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toFixed(2));
+
+        const totalToPagar = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - ((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100)).toFixed(2));
+
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total, totalToPagar };
 
         console.log(invoice);
 
@@ -306,7 +356,6 @@ const PurchaseAdd = () => {
             .catch(error => {
                 console.error(error);
             })
-
     }
 
 
@@ -429,18 +478,18 @@ const PurchaseAdd = () => {
                                                     <label className="input-group">
                                                         <select defaultValue={conceptoValue} onChange={handleConcepto} name={'product' + idx} id={'product' + idx} className="input bg-[#fff] input-bordered w-full">
 
-                                                            <option disabled={(idx > 0) ? true : false} value="00">Select</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="01 - GASTOS DE PERSONAL">01 - GASTOS DE PERSONAL</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS">02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="03 - ARRENDAMIENTOS">03 - ARRENDAMIENTOS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="04 - GASTOS DE ACTIVOS FIJO">04 - GASTOS DE ACTIVOS FIJO</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="05 - GASTOS DE REPRESENTACIÓN" >05 - GASTOS DE REPRESENTACIÓN</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="06 - OTRAS DEDUCCIONES ADMITIDAS">06 - OTRAS DEDUCCIONES ADMITIDAS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="07 - GASTOS FINANCIEROS">07 - GASTOS FINANCIEROS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="08 - GASTOS EXTRAORDINARIOS">08 - GASTOS EXTRAORDINARIOS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA">09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="10 - ADQUISICIONES DE ACTIVOS">10 - ADQUISICIONES DE ACTIVOS</option>
-                                                            <option disabled={(idx > 0) ? true : false} value="11 - GASTOS DE SEGUROS">11 - GASTOS DE SEGUROS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="00">Select</option>
+                                                            <option disabled={(count > 1) ? true : false} value="01 - GASTOS DE PERSONAL">01 - GASTOS DE PERSONAL</option>
+                                                            <option disabled={(count > 1) ? true : false} value="02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS">02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="03 - ARRENDAMIENTOS">03 - ARRENDAMIENTOS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="04 - GASTOS DE ACTIVOS FIJO">04 - GASTOS DE ACTIVOS FIJO</option>
+                                                            <option disabled={(count > 1) ? true : false} value="05 - GASTOS DE REPRESENTACIÓN" >05 - GASTOS DE REPRESENTACIÓN</option>
+                                                            <option disabled={(count > 1) ? true : false} value="06 - OTRAS DEDUCCIONES ADMITIDAS">06 - OTRAS DEDUCCIONES ADMITIDAS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="07 - GASTOS FINANCIEROS">07 - GASTOS FINANCIEROS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="08 - GASTOS EXTRAORDINARIOS">08 - GASTOS EXTRAORDINARIOS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA">09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA</option>
+                                                            <option disabled={(count > 1) ? true : false} value="10 - ADQUISICIONES DE ACTIVOS">10 - ADQUISICIONES DE ACTIVOS</option>
+                                                            <option disabled={(count > 1) ? true : false} value="11 - GASTOS DE SEGUROS">11 - GASTOS DE SEGUROS</option>
 
                                                         </select>
                                                     </label>
@@ -449,7 +498,7 @@ const PurchaseAdd = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <select name="status" onChange={handleTax} id="status" className="input bg-[#fff] input-bordered w-full">
+                                                        <select name="statu" onChange={handleTax} id="statu" className="input bg-[#fff] input-bordered w-full">
                                                             <option value="Ninguno - (0.00%)">Ninguno - (0.00%)</option>
                                                             <option value="ITBIS - (18.00%)">ITBIS - (18.00%)</option>
                                                             <option value="Propina - (10.00%)">Propina - (10.00%)</option>
@@ -473,8 +522,8 @@ const PurchaseAdd = () => {
                                                 <div className="form-control">
                                                     <label className="input-group">
 
-                                                        <select name="status" id="status" className="input bg-[#fff] input-bordered w-full">
-                                                            <option value="">Seleccionar</option>
+                                                        <select onChange={handleTipo} name={'status' + idx} id={'status' + idx} className="input bg-[#fff] input-bordered w-full">
+                                                            <option value="none">Seleccionar</option>
                                                             <option value="Goods">Bien</option>
                                                             <option value="Service" >Servicio</option>
                                                         </select>

@@ -72,7 +72,7 @@ const InvoiceEditS = () => {
         <div className="">
             <div className="bg-[#eee] pt-8 pb-14 px-8">
                 <form onSubmit={handleAddProduct}>
-                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Invoice Edit</h2>
+                    <h2 className="text-[#28084B] text-2xl font-bold pb-8">Editar Factura</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-[#fff] p-4 pb-6 rounded-lg">
                         <div className="form-control">
                             <label className="label">
