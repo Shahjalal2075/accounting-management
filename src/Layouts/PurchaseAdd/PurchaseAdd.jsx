@@ -332,7 +332,7 @@ const PurchaseAdd = () => {
 
         const totalToPagar = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - ((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100)).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total, totalToPagar };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total, totalToPagar,count,taxs,taxAmmount,conceptoValue,enable,discounts,discountAmmount,totalDis };
 
         console.log(invoice);
 
