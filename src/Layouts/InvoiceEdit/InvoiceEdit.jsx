@@ -13,16 +13,19 @@ const InvoiceEdit = () => {
     const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado } = invoiceData;
 
     const [count, setCount] = useState(invoiceData.count);
-    const [ammount, setAmmount] = useState(invoiceData.subTotal);
+    const [ammount, setAmmount] = useState(invoiceData.ammount);
     const [taxs, setTax] = useState(invoiceData.taxs);
     const [taxAmmount, setTaxAmmount] = useState(invoiceData.taxAmmount);
     const [conceptoValue, setConceptoValue] = useState(invoiceData.conceptoValue);
-    const [subTotal, setSubTotal] = useState(0);
+    const [subTotal, setSubTotal] = useState(invoiceData.subTotals-ammount);
     const [enable, setEnable] = useState(invoiceData.enable);
     const [discounts, setDiscount] = useState(invoiceData.discounts);
     const [discountAmmount, setDiscountAmmount] = useState(invoiceData.discountAmmount);
     const [totalDis, setTotalDis] = useState(invoiceData.totalDis);
-    const [tipoCk, setTipoCk] = useState("none");
+    const [tipoCk, setTipoCk] = useState(invoiceData.tipoCk);
+
+    const [montoList,setMontoList] = useState(invoiceData.montoList);
+    const [tipoList,setTipoList] = useState(invoiceData.tipoList);
 
     const handleConcepto = (e) => {
         const form = e.target;
@@ -128,6 +131,8 @@ const InvoiceEdit = () => {
         }
         setCount(count + 1);
         const newT = [...enable, true];
+        setMontoList([...montoList,ammount]);
+        setTipoList([...tipoList,tipoCk]);
         setSubTotal(subTotal + parseFloat(ammount))
         setEnable(newT);
         setAmmount(0);
@@ -274,7 +279,20 @@ const InvoiceEdit = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
+        setMontoList([...montoList,ammount]);
+        setTipoList([...tipoList,tipoCk]);
+
+        const monto = ammount;
+
+        const subTotals = parseFloat((subTotal + parseFloat(ammount ? ammount : '0')).toFixed(2));
+
+        const totals = parseFloat(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toFixed(2));
+
+        const totalToPagars = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - ((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100)).toFixed(2));
+
+
+        //const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars,count,taxs,taxAmmount,conceptoValue,enable,discounts,discountAmmount,totalDis,montoList,tipoList,tipoCk,ammount };
 
         console.log(invoice);
 
@@ -435,7 +453,7 @@ const InvoiceEdit = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <select defaultValue={taxs[0]} name="statu" onChange={handleTax} id="statu" className="input bg-[#fff] input-bordered w-full">
+                                                        <select defaultValue={taxs[0]?taxs[0]:"Ninguno - (0.00%)"} name="statu" onChange={handleTax} id="statu" className="input bg-[#fff] input-bordered w-full">
                                                             <option value="Ninguno - (0.00%)">Ninguno - (0.00%)</option>
                                                             <option value="ITBIS - (18.00%)">ITBIS - (18.00%)</option>
                                                             <option value="Propina - (10.00%)">Propina - (10.00%)</option>
@@ -451,7 +469,7 @@ const InvoiceEdit = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <input defaultValue={invoiceData.subTotal} type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
+                                                        <input defaultValue={montoList[idx]?montoList[idx]:ammount} type="number" readOnly={enable[idx] ? true : false} required onChange={handleAmmount} name="ammount+idx" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
                                                     </label>
                                                 </div>
                                             </td>
@@ -459,7 +477,7 @@ const InvoiceEdit = () => {
                                                 <div className="form-control">
                                                     <label className="input-group">
 
-                                                        <select onChange={handleTipo} name={'status' + idx} id={'status' + idx} className="input bg-[#fff] input-bordered w-full">
+                                                        <select defaultValue={tipoList[idx]?tipoList[idx]:tipoCk} onChange={handleTipo} name={'status' + idx} id={'status' + idx} className="input bg-[#fff] input-bordered w-full">
                                                             <option value="none">Seleccionar</option>
                                                             <option value="Goods">Bien</option>
                                                             <option value="Service" >Servicio</option>
@@ -486,7 +504,7 @@ const InvoiceEdit = () => {
                                         <p className="text-sm font-medium">Retenciones:</p>
                                         <div className="form-control">
                                             <label className="input-group">
-                                                <select name="status" id="status" onChange={handleDiscount} className="input bg-[#fff] input-bordered w-1/2">
+                                                <select defaultValue={discounts[0]?discounts[0]:"None"} name="status" id="status" onChange={handleDiscount} className="input bg-[#fff] input-bordered w-1/2">
                                                     <option value="None">None</option>
                                                     <option value="ITBIS Retenido - 30%">ITBIS Retenido - 30%</option>
                                                     <option value="ITBIS Retenido - 75%">ITBIS Retenido - 75%</option>

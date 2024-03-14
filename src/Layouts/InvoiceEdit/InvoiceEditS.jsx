@@ -10,11 +10,11 @@ const InvoiceEditS = () => {
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
-    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, subTotal } = invoiceData;
+    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado } = invoiceData;
 
     const [selectedDate1, setSelectedDate1] = useState(null);
     const [count, setCount] = useState(1);
-    const [ammount, setAmmount] = useState(subTotal);
+    const [ammount, setAmmount] = useState(invoiceData.subTotals);
     const [taxs, setTax] = useState(invoiceData.taxs);
     const [taxAmmount, setTaxAmmount] = useState(invoiceData.taxAmmount);
     const [discounts, setDiscount] = useState(invoiceData.discounts);
@@ -238,13 +238,13 @@ const InvoiceEditS = () => {
 
         const monto = ammount;
 
-        const subTotal = parseFloat(parseFloat(ammount).toFixed(2));
+        const subTotals = parseFloat(parseFloat(ammount).toFixed(2));
 
-        const total = parseFloat((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2));
+        const totals = parseFloat((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toFixed(2));
 
-        const totalToPagar = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toFixed(2));
+        const totalToPagars = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotal, total, totalToPagar, taxs, taxAmmount, discounts, discountAmmount, totalDis };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, discountAmmount, totalDis };
         console.log(invoice);
 
         fetch(`https://account-ser.vercel.app/sale-invoice/${invoiceData._id}`, {
@@ -397,7 +397,7 @@ const InvoiceEditS = () => {
                                             <td>
                                                 <div className="form-control">
                                                     <label className="input-group">
-                                                        <input type="number" defaultValue={subTotal} required onChange={handleAmmount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
+                                                        <input type="number" defaultValue={invoiceData.subTotals} required onChange={handleAmmount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
                                                     </label>
                                                 </div>
                                             </td>
