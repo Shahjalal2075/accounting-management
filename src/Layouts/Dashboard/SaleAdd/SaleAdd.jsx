@@ -10,6 +10,7 @@ const SaleAdd = () => {
 
     const [count, setCount] = useState(1);
     /*  console.log(count); */
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [ammount, setAmmount] = useState(0);
     const [ammountDisscount, setAmmountDisscount] = useState(0);
     const [taxs, setTax] = useState([]);
@@ -19,7 +20,7 @@ const SaleAdd = () => {
     const [totalDis, setTotalDis] = useState(0);
     const [selectedDate1, setSelectedDate1] = useState(null);
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/sales-report')
@@ -284,7 +285,7 @@ const SaleAdd = () => {
         if (invoices && invoices.length > 0) {
             for (let i = 0; i < invoices.length; i++) {
                 if (invoices[i].nfc === nfc) {
-                    toast('NFC Allready Have.');
+                    toast('NCF existe para ese RNC.');
                     return;
                 }
             }
@@ -309,6 +310,8 @@ const SaleAdd = () => {
             return;
         }
 
+        
+
         const monto = ammount;
 
         const subTotals = parseFloat(parseFloat(ammount).toFixed(2));
@@ -330,6 +333,9 @@ const SaleAdd = () => {
 
         const report = { Purchase, Sale };
         console.log(report)
+
+        
+        setIsButtonDisabled(true);
 
         fetch('https://account-ser.vercel.app/sale-invoice', {
             method: 'POST',
@@ -550,7 +556,7 @@ const SaleAdd = () => {
                     </div>
 
 
-                    <input type="submit" value="Guardar" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
+                    <input disabled={isButtonDisabled} type="submit" value="Guardar" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
 
                 </form>
 

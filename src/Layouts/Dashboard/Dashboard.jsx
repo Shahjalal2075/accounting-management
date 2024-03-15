@@ -19,6 +19,8 @@ const Dashboard = () => {
             .then(data => setData(data));
     }, [])
 
+    console.log(data);
+
 
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
@@ -52,7 +54,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Tax Income</h2>
                             <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? (((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)) - ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
@@ -63,7 +65,42 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#f555ff]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Purchase - Sale</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Tax Outcome</h2>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? (((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)) - ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
+                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
+                    <div className="flex justify-center items-center gap-4">
+                        <div className="p-5 bg-[#FFEEC3] rounded-xl">
+                            <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
+                        </div>
+                        <div className="">
+                            <h2 className="text-sm text-[#878A99] font-medium">Tax on Sales</h2>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? ((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
+                    <div className="flex justify-center items-center gap-4">
+                        <div className="p-5 bg-[#d1f3ff] rounded-xl">
+                            <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                        </div>
+                        <div className="">
+                            <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
+                    <div className="flex justify-center items-center gap-4">
+                        <div className="p-5 bg-[#ceffd5] rounded-xl">
+                            <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
+                        </div>
+                        <div className="">
+                            <h2 className="text-sm text-[#878A99] font-medium">Tax Income</h2>
                             <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? (((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)) - ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
@@ -136,6 +173,7 @@ const Dashboard = () => {
                 </div>
 
             </div>
+            
         </div>
     );
 };

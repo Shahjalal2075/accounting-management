@@ -78,7 +78,7 @@ const PurchaseList = () => {
 
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
-            <h2 className="text-[#28084B] text-2xl font-bold pb-8">Purchase Invoice List</h2>
+            <h2 className="text-[#28084B] text-2xl font-bold pb-8">Consultar Facturas de Compras</h2>
             <div className="flex pb-6 justify-between items-center">
                 <div>
                     <div className="input bg-[#fff] input-bordered w-full flex items-center">

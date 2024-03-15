@@ -1,74 +1,74 @@
 [
     {
-        "name": "January",
-        "Purchase": 4000,
-        "Sale": 2400,
+        "name": "Jan",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2400
     },
     {
-        "name": "February",
-        "Purchase": 3000,
-        "Sale": 1398,
+        "name": "Feb",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2210
     },
     {
-        "name": "March",
-        "Purchase": 2000,
-        "Sale": 9500,
+        "name": "Mar",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2290
     },
     {
-        "name": "April",
-        "Purchase": 2780,
-        "Sale": 3908,
+        "name": "Apr",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2000
     },
     {
         "name": "May",
-        "Purchase": 1890,
-        "Sale": 4800,
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2181
     },
     {
-        "name": "June",
-        "Purchase": 2390,
-        "Sale": 3800,
+        "name": "Jun",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2500
     },
     {
-        "name": "July",
-        "Purchase": 3490,
-        "Sale": 4300,
+        "name": "Jul",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2100
     },
     {
-        "name": "August",
-        "Purchase": 3490,
-        "Sale": 4300,
+        "name": "Aug",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2100
     },
     {
-        "name": "September",
-        "Purchase": 3490,
-        "Sale": 4300,
+        "name": "Sep",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2100
     },
     {
-        "name": "October",
-        "Purchase": 3490,
-        "Sale": 4300,
+        "name": "Oct",
+        "Purchase": 0,
+        "Sale": 0,
+        "amt": 2000
+    },
+    {
+        "name": "Nov",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2100
     },
     {
-        "name": "November",
-        "Purchase": 3490,
-        "Sale": 4300,
-        "amt": 2100
-    },
-    {
-        "name": "December",
-        "Purchase": 3490,
-        "Sale": 4300,
+        "name": "Dec",
+        "Purchase": 0,
+        "Sale": 0,
         "amt": 2100
     }
 ]

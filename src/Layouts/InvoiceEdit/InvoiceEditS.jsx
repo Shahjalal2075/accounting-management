@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +21,13 @@ const InvoiceEditS = () => {
     const [discountAmmount, setDiscountAmmount] = useState(invoiceData.discountAmmount);
     const [totalDis, setTotalDis] = useState(invoiceData.totalDis);
 
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const [salesReport, setSalesReport] = useState([]);
+    useEffect(() => {
+        fetch('https://account-ser.vercel.app/sales-report')
+            .then(res => res.json())
+            .then(data => setSalesReport(data));
+    }, [])
     const handleAmmount = (e) => {
         const form = e.target;
         setAmmount(form.value);
@@ -236,6 +243,11 @@ const InvoiceEditS = () => {
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
 
+        if (nfc.length !== 11 && nfc.length !== 13) {
+            toast('Llene el NCF correcto. ' + nfc.length);
+            return;
+        }
+
         const monto = ammount;
 
         const subTotals = parseFloat(parseFloat(ammount).toFixed(2));
@@ -247,12 +259,29 @@ const InvoiceEditS = () => {
         const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, discountAmmount, totalDis };
         console.log(invoice);
 
+        const dateString = fecha;
+        const parts = dateString.split('-');
+        const month = parseInt(parts[1]);
+        const monthName = monthNames[month - 1];
+        const Purchase = (salesReport[month - 1].Purchase);
+        const Sale = (salesReport[month - 1].Sale) - invoiceData.totalToPagars + totalToPagars;
+
+        const report = { Purchase, Sale };
+        console.log(report)
+
         fetch(`https://account-ser.vercel.app/sale-invoice/${invoiceData._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(invoice)
+        })
+        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(report)
         })
             .then(res => {
                 res.json()
@@ -279,7 +308,7 @@ const InvoiceEditS = () => {
                                 t font-medium">NCF</span>
                             </label>
                             <label className="input-group">
-                                <input type="text" defaultValue={nfc} name="nfc" className="input bg-[#fff] input-bordered w-full" />
+                                <input type="text" maxLength={"13"} defaultValue={nfc} name="nfc" className="input bg-[#fff] input-bordered w-full" />
                             </label>
                         </div>
 

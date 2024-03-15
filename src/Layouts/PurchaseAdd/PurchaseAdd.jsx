@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const PurchaseAdd = () => {
 
     const navigate = useNavigate();
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [count, setCount] = useState(1);
     const [ammount, setAmmount] = useState(0);
     const [ammountDisscount, setAmmountDisscount] = useState(0);
@@ -24,7 +24,7 @@ const PurchaseAdd = () => {
 
     const [montoList, setMontoList] = useState([]);
     const [tipoList, setTipoList] = useState([]);
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/sales-report')
@@ -337,7 +337,7 @@ const PurchaseAdd = () => {
         if (invoices && invoices.length > 0) {
             for (let i = 0; i < invoices.length; i++) {
                 if (invoices[i].nfc === nfc) {
-                    toast('NFC Allready Have.');
+                    toast('NCF existe para ese RNC.');
                     return;
                 }
             }
@@ -382,7 +382,9 @@ const PurchaseAdd = () => {
         const Sale = (salesReport[month - 1].Sale);
 
         const report = { Purchase, Sale };
-        console.log(report)
+        console.log(report);
+
+        setIsButtonDisabled(true);
 
         fetch('https://account-ser.vercel.app/purchase-invoice', {
             method: 'POST',
@@ -649,7 +651,7 @@ const PurchaseAdd = () => {
                     </div>
 
 
-                    <input type="submit" value="Guardar" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
+                    <input disabled={isButtonDisabled} type="submit" value="Guardar" className="px-4 cursor-pointer py-2 rounded-lg bg-[#157347] text-[#fff] mt-6" />
 
                 </form>
 
