@@ -12,9 +12,9 @@ import {
 
 const Dashboard = () => {
 
-    const [data,setData]=useState([]);
+    const [data, setData] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/sales-report')
+        fetch('https://account-ser.vercel.app/sales-report')
             .then(res => res.json())
             .then(data => setData(data));
     }, [])
@@ -31,7 +31,7 @@ const Dashboard = () => {
                         </div>
                         <div className="">
                             <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
-                            <p className="text-base text-[#111] font-semibold">35,000.00</p>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? ((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ const Dashboard = () => {
                         </div>
                         <div className="">
                             <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
-                            <p className="text-base text-[#111] font-semibold">35,000.00</p>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ const Dashboard = () => {
                         </div>
                         <div className="">
                             <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
-                            <p className="text-base text-[#111] font-semibold">35,000.00</p>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? (((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)) - ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ const Dashboard = () => {
                         </div>
                         <div className="">
                             <h2 className="text-sm text-[#878A99] font-medium">Purchase - Sale</h2>
-                            <p className="text-base text-[#111] font-semibold">35,000.00</p>
+                            <p className="text-base text-[#111] font-semibold">{(data.length > 0) ? (((data[0].Sale ? data[0].Sale : 0) + (data[1].Sale ? data[1].Sale : 0) + (data[2].Sale ? data[2].Sale : 0) + (data[3].Sale ? data[3].Sale : 0) + (data[4].Sale ? data[4].Sale : 0) + (data[5].Sale ? data[5].Sale : 0) + (data[6].Sale ? data[6].Sale : 0) + (data[7].Sale ? data[7].Sale : 0) + (data[8].Sale ? data[8].Sale : 0) + (data[9].Sale ? data[9].Sale : 0) + (data[10].Sale ? data[10].Sale : 0) + (data[11].Sale ? data[11].Sale : 0)) - ((data[0].Purchase ? data[0].Purchase : 0) + (data[1].Purchase ? data[1].Purchase : 0) + (data[2].Purchase ? data[2].Purchase : 0) + (data[3].Purchase ? data[3].Purchase : 0) + (data[4].Purchase ? data[4].Purchase : 0) + (data[5].Purchase ? data[5].Purchase : 0) + (data[6].Purchase ? data[6].Purchase : 0) + (data[7].Purchase ? data[7].Purchase : 0) + (data[8].Purchase ? data[8].Purchase : 0) + (data[9].Purchase ? data[9].Purchase : 0) + (data[10].Purchase ? data[10].Purchase : 0) + (data[11].Purchase ? data[11].Purchase : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00}</p>
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,18 @@ const SaleAdd = () => {
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const [salesReport, setSalesReport] = useState([]);
+    useEffect(() => {
+        fetch('https://account-ser.vercel.app/sales-report')
+            .then(res => res.json())
+            .then(data => setSalesReport(data));
+    }, [])
+
+    const [invoices, setInvoices] = useState([]);
+    useEffect(() => {
+        fetch(`https://account-ser.vercel.app/sale-invoice`)
+            .then(res => res.json())
+            .then(data => setInvoices(data));
+    }, []);
 
     const [rid, setRid] = useState([]);
 
@@ -269,6 +281,15 @@ const SaleAdd = () => {
             toast('Seleccione forma de pago.');
             return;
         }
+        if (invoices && invoices.length > 0) {
+            for (let i = 0; i < invoices.length; i++) {
+                if (invoices[i].nfc === nfc) {
+                    toast('NFC Allready Have.');
+                    return;
+                }
+            }
+        }
+
         if (rid && rid.length > 0) {
             for (let i = 0; i < rid.length; i++) {
                 if (rid[i].CompanyRNC === rnc) {
@@ -304,10 +325,10 @@ const SaleAdd = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Purchase = (salesReport[month-1].Purchase)+totalToPagars;
-        const Sale = (salesReport[month-1].Sale);
+        const Purchase = (salesReport[month - 1].Purchase);
+        const Sale = (salesReport[month - 1].Sale) + totalToPagars;
 
-        const report = {Purchase,Sale};
+        const report = { Purchase, Sale };
         console.log(report)
 
         fetch('https://account-ser.vercel.app/sale-invoice', {
@@ -317,7 +338,7 @@ const SaleAdd = () => {
             },
             body: JSON.stringify(invoice)
         })
-        fetch(`http://localhost:5000/sales-report/${monthName}`, {
+        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -505,10 +526,10 @@ const SaleAdd = () => {
                                     <div className="col-span-3">
                                         <p className="text-sm font-medium pb-2">Valor:</p>
                                         <div className="form-control">
-                                                    <label className="input-group">
-                                                        <input type="number" required onChange={handleAmmountDisscount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
-                                                    </label>
-                                                </div>
+                                            <label className="input-group">
+                                                <input type="number" required onChange={handleAmmountDisscount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
+                                            </label>
+                                        </div>
                                     </div>
                                     <div className="col-span-4 text-[#111] text-xl font-medium flex flex-col justify-center text-right">
                                         <h2>Sub Total: {(parseFloat(ammount ? ammount : '0')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
@@ -516,10 +537,10 @@ const SaleAdd = () => {
                                             taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {((ammount * taxAmmount[idx]) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>)
                                         }
                                         <h2>Total: {(parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
-                                        
+
                                         {/* <h2>- Retenciones: {((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>*/}
-                                         {/* <h2>- Retenciones: {(((parseFloat(ammountDisscount)) * totalDis) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2> */}
-                                         <h2>- Retenciones: {ammountDisscount}</h2>
+                                        {/* <h2>- Retenciones: {(((parseFloat(ammountDisscount)) * totalDis) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2> */}
+                                        <h2>- Retenciones: {ammountDisscount}</h2>
                                         {/* <h2>Total a pagar: {(((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2> */}
                                         <h2>Total a pagar: {(((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
                                     </div>

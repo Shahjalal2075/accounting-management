@@ -27,12 +27,19 @@ const PurchaseAdd = () => {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/sales-report')
+        fetch('https://account-ser.vercel.app/sales-report')
             .then(res => res.json())
             .then(data => setSalesReport(data));
     }, [])
 
     const [selectedDate1, setSelectedDate1] = useState(null);
+
+    const [invoices, setInvoices] = useState([]);
+    useEffect(() => {
+        fetch(`https://account-ser.vercel.app/purchase-invoice`)
+            .then(res => res.json())
+            .then(data => setInvoices(data));
+    }, []);
 
     const [rid, setRid] = useState([]);
 
@@ -327,6 +334,15 @@ const PurchaseAdd = () => {
             return;
         }
 
+        if (invoices && invoices.length > 0) {
+            for (let i = 0; i < invoices.length; i++) {
+                if (invoices[i].nfc === nfc) {
+                    toast('NFC Allready Have.');
+                    return;
+                }
+            }
+        }
+
         if (rid && rid.length > 0) {
             for (let i = 0; i < rid.length; i++) {
                 if (rid[i].CompanyRNC === rnc) {
@@ -362,10 +378,10 @@ const PurchaseAdd = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Purchase = (salesReport[month-1].Purchase)+totalToPagars;
-        const Sale = (salesReport[month-1].Sale);
+        const Purchase = (salesReport[month - 1].Purchase) + totalToPagars;
+        const Sale = (salesReport[month - 1].Sale);
 
-        const report = {Purchase,Sale};
+        const report = { Purchase, Sale };
         console.log(report)
 
         fetch('https://account-ser.vercel.app/purchase-invoice', {
@@ -375,7 +391,7 @@ const PurchaseAdd = () => {
             },
             body: JSON.stringify(invoice)
         })
-        fetch(`http://localhost:5000/sales-report/${monthName}`, {
+        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
