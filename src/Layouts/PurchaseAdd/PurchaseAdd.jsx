@@ -24,6 +24,13 @@ const PurchaseAdd = () => {
 
     const [montoList, setMontoList] = useState([]);
     const [tipoList, setTipoList] = useState([]);
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const [salesReport, setSalesReport] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/sales-report')
+            .then(res => res.json())
+            .then(data => setSalesReport(data));
+    }, [])
 
     const [selectedDate1, setSelectedDate1] = useState(null);
 
@@ -351,12 +358,29 @@ const PurchaseAdd = () => {
 
         console.log(invoice);
 
+        const dateString = fecha;
+        const parts = dateString.split('-');
+        const month = parseInt(parts[1]);
+        const monthName = monthNames[month - 1];
+        const Purchase = (salesReport[month-1].Purchase)+totalToPagars;
+        const Sale = (salesReport[month-1].Sale);
+
+        const report = {Purchase,Sale};
+        console.log(report)
+
         fetch('https://account-ser.vercel.app/purchase-invoice', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(invoice)
+        })
+        fetch(`http://localhost:5000/sales-report/${monthName}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(report)
         })
             .then(res => {
                 res.json()
