@@ -14,7 +14,6 @@ const LeftSideMenu = () => {
             .then(res => res.json())
             .then(data => setUsers(data));
     }, [user.email])
-    //console.log(users.role)
 
 
     return (

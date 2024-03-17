@@ -25,21 +25,15 @@ const Dashboard = () => {
             });
     }, [])
 
-    console.log(data);
-
-    const data2 = [
-        { name: "GASTOS DE PERSONAL", value: 400 },
-        { name: "GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS", value: 300 },
-        { name: "ARRENDAMIENTOS", value: 300 },
-        { name: "GASTOS DE ACTIVOS FIJO", value: 200 },
-        { name: "GASTOS DE REPRESENTACIÓN", value: 200 },
-        { name: "OTRAS DEDUCCIONES ADMITIDAS", value: 200 },
-        { name: "GASTOS FINANCIEROS", value: 200 },
-        { name: "GASTOS EXTRAORDINARIOS", value: 200 },
-        { name: "COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA", value: 200 },
-        { name: "ADQUISICIONES DE ACTIVOS", value: 200 },
-        { name: "GASTOS DE SEGUROS", value: 200 }
-    ];
+const [data2, setData2] = useState([]);
+    useEffect(() => {
+        fetch('https://account-ser.vercel.app/concepto-report')
+            .then(res => res.json())
+            .then(data => {
+                const top12Data = data.slice(0, 11);
+                setData2(top12Data);
+            });
+    }, [])
 
     const COLORS = ["#00B6CB", "#FFA800", "#03A9F4", "#7AC36A", "#F10096", "#5E35B1", "#00C49F", "#FFBB28", "#FF8042", "#e84f74", "#0B5DCF"];
 
