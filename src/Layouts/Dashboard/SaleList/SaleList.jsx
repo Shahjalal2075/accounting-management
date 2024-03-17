@@ -233,7 +233,7 @@ const SaleList = () => {
                 taxAmm += invoice.taxAmmount[i];
             }
             let allDis = "";
-            for (let i = 0; i < invoice.taxs.length; i++) {
+            for (let i = 0; i < invoice.discounts.length; i++) {
                 allDis += invoice.discounts[i];
             }
             sheet.addRow({

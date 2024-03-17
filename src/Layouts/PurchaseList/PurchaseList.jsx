@@ -177,6 +177,12 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
+                header: "Concepto Value",
+                key: "conceptoValue",
+                width: 25,
+                alignment: { horizontal: 'center' }
+            },
+            {
                 header: "Sub Total",
                 key: "subTotal",
                 width: 15,
@@ -225,11 +231,11 @@ const PurchaseList = () => {
             let allTax = "";
             let taxAmm = 0;
             for (let i = 0; i < invoice.taxs.length; i++) {
-                allTax += (invoice.taxs[i]+(", "));
+                allTax += (invoice.taxs[i] + (", "));
                 taxAmm += invoice.taxAmmount[i];
             }
             let allDis = "";
-            for (let i = 0; i < invoice.taxs.length; i++) {
+            for (let i = 0; i < invoice.discounts.length; i++) {
                 allDis += invoice.discounts[i];
             }
             sheet.addRow({
@@ -242,13 +248,14 @@ const PurchaseList = () => {
                 fechaDePago: invoice?.fechDePago,
                 formaDePago: invoice?.formaDePago,
                 modificado: invoice?.modificado,
+                conceptoValue: invoice?.conceptoValue,
                 subTotal: invoice?.subTotals,
                 total: invoice?.totals,
                 totalToPagars: invoice?.totalToPagars,
                 taxList: allTax,
-                totalTax: ((invoice?.subTotals*taxAmm)/100),
+                totalTax: ((invoice?.subTotals * taxAmm) / 100),
                 discountList: allDis,
-                totalDiscount: (invoice?.totals-invoice?.totalToPagars),
+                totalDiscount: (invoice?.totals - invoice?.totalToPagars),
             })
         })
 
@@ -259,7 +266,7 @@ const PurchaseList = () => {
             const url = window.URL.createObjectURL(blob);
             const anchor = document.createElement('a');
             anchor.href = url;
-            anchor.download = 'sale-invoices.xlsx';
+            anchor.download = 'purchase-invoices.xlsx';
             anchor.click();
             window.URL.revokeObjectURL(url);
         })
