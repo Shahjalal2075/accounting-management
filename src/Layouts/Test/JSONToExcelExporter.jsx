@@ -1,5 +1,5 @@
 /* import React from 'react';
-import XLSX from 'xlsx';
+import XLSX from "xlsx";
 
 class JSONToExcelExporter extends React.Component {
     exportToExcel = () => {
@@ -23,5 +23,4 @@ class JSONToExcelExporter extends React.Component {
     }
 }
 
-export default JSONToExcelExporter;
- */
+export default JSONToExcelExporter; */

@@ -12,6 +12,7 @@ import UserAdd from "../Layouts/UserAdd/UserAdd";
 import PrivateRoute from "./PrivateRoute";
 import CompanyList from "../Layouts/CompanyList/CompanyList";
 import InvoiceEditS from "../Layouts/InvoiceEdit/InvoiceEditS";
+import Test from "../Layouts/Test/Test";
 
 
 const Routes = createBrowserRouter([
@@ -60,6 +61,10 @@ const Routes = createBrowserRouter([
                     {
                         path: "/company-list",
                         element: <PrivateRoute><CompanyList></CompanyList></PrivateRoute>
+                    },
+                    {
+                        path: "/test",
+                        element: <Test></Test>
                     }
                 ]
             },

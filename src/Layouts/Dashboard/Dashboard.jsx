@@ -28,15 +28,20 @@ const Dashboard = () => {
     console.log(data);
 
     const data2 = [
-        { name: "Group A", value: 400 },
-        { name: "Group B", value: 300 },
-        { name: "Group C", value: 300 },
-        { name: "Group D", value: 200 },
-        { name: "Group D", value: 200 },
-        { name: "Group D", value: 200 }
+        { name: "GASTOS DE PERSONAL", value: 400 },
+        { name: "GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS", value: 300 },
+        { name: "ARRENDAMIENTOS", value: 300 },
+        { name: "GASTOS DE ACTIVOS FIJO", value: 200 },
+        { name: "GASTOS DE REPRESENTACIÓN", value: 200 },
+        { name: "OTRAS DEDUCCIONES ADMITIDAS", value: 200 },
+        { name: "GASTOS FINANCIEROS", value: 200 },
+        { name: "GASTOS EXTRAORDINARIOS", value: 200 },
+        { name: "COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA", value: 200 },
+        { name: "ADQUISICIONES DE ACTIVOS", value: 200 },
+        { name: "GASTOS DE SEGUROS", value: 200 }
     ];
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#00C49F", "#FFBB28"];
+    const COLORS = ["#00B6CB", "#FFA800", "#03A9F4", "#7AC36A", "#F10096", "#5E35B1", "#00C49F", "#FFBB28", "#FF8042", "#e84f74", "#0B5DCF"];
 
     const RADIAN = Math.PI / 180;
     function renderCustomizedLabel({
@@ -256,22 +261,70 @@ const Dashboard = () => {
             <div className="w-full mt-20 flex justify-center">
 
                 <div className="hidden lg:flex lg:flex-col">
-                    <PieChart width={400} height={400}>
-                        <Pie
-                            data={data2}
-                            cx={200}
-                            cy={200}
-                            labelLine={false}
-                            label={renderCustomizedLabel}
-                            outerRadius={80}
-                            fill="#8884d8"
-                            dataKey="value"
-                        >
-                            {data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                    </PieChart>
+                    <div className="grid grid-cols-2">
+                        <PieChart width={400} height={400} className="text-[10px]">
+                            <Pie
+                                data={data2}
+                                cx={200}
+                                cy={200}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                outerRadius={160}
+                                fill="#8884d8"
+                                dataKey="value"
+                            >
+                                {data.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                        </PieChart>
+                        <div className="flex flex-col justify-center gap-3">
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#00B6CB]"></p>
+                                <h2>GASTOS DE PERSONAL</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#FFA800]"></p>
+                                <h2>GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#03A9F4]"></p>
+                                <h2>ARRENDAMIENTOS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#7AC36A]"></p>
+                                <h2>GASTOS DE ACTIVOS FIJO</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#F10096]"></p>
+                                <h2>GASTOS DE REPRESENTACIÓN</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#5E35B1]"></p>
+                                <h2>OTRAS DEDUCCIONES ADMITIDAS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#00C49F]"></p>
+                                <h2>GASTOS FINANCIEROS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#FFBB28]"></p>
+                                <h2>GASTOS EXTRAORDINARIOS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#FF8042]"></p>
+                                <h2>COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#e84f74]"></p>
+                                <h2>ADQUISICIONES DE ACTIVOS</h2>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <p className="p-2 rounded-full bg-[#0B5DCF]"></p>
+                                <h2>GASTOS DE SEGUROS</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="hidden md:flex md:flex-col lg:hidden">
                     <BarChart
