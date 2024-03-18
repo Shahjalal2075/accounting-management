@@ -354,7 +354,7 @@ const SaleList = () => {
                         </div>
                     </div>
                     <div>
-                        <h2 className=' font-medium'>To</h2>
+                        <h2 className=' font-medium'>a</h2>
                     </div>
                     <div>
                         <div className="input bg-[#fff] input-bordered w-full flex items-center">
@@ -369,7 +369,7 @@ const SaleList = () => {
                     <div>
                         <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                             {
-                                searchStatus ? 'Clear' : 'Filter'
+                                searchStatus ? 'Clear' : 'Filtrar'
                             }
                         </button>
 
@@ -377,7 +377,7 @@ const SaleList = () => {
                 </div>
                 <div>
                     <button onClick={handleExportFile} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]">
-                        Export
+                        Exportar
                     </button>
 
                 </div>

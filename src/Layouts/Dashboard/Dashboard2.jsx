@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaDollarSign } from "react-icons/fa6";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-//import { PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from "recharts";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Dashboard = () => {
+const Dashboard2 = () => {
 
     /* For BarChart Start */
     const [data, setData] = useState([]);
@@ -20,7 +19,7 @@ const Dashboard = () => {
 
     /* For BarChart End */
 
-    /* For PieChart Start 
+    /* For PieChart Start */
     const [data2, setData2] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/concepto-report')
@@ -61,7 +60,7 @@ const Dashboard = () => {
     }
     /* For PieChart End */
 
-    const [filterData, setFilterData] = useState([]);
+    const [filterInvoices, setFilterInvoices] = useState([]);
     const [searchStatus, setSearchStatus] = useState(false);
 
     const [selectedDate1, setSelectedDate1] = useState(null);
@@ -76,7 +75,7 @@ const Dashboard = () => {
 
     const handleFilter = () => {
         setSearchStatus(!searchStatus);
-        setFilterData([]);
+        setFilterInvoices([]);
 
         const firstDate = selectedDate1 && `${selectedDate1.getDate()}-${selectedDate1.getMonth() + 1}-${selectedDate1.getFullYear()}`;
         const parts1 = firstDate.split('-');
@@ -95,18 +94,65 @@ const Dashboard = () => {
         console.log(`Year1: ${year2}`);
 
 
-        if (data && data.length > 0) {
+        if (invoices && invoices.length > 0) {
             let newInvoice = [];
-            for (let i = 0; i < data.length; i++) {
-                if((i+1)>=month1 && (i+1)<=month2){
-                    newInvoice = [...newInvoice, data[i]];
+            for (let i = 0; i < invoices.length; i++) {
+
+                let searchDate = invoices[i].fecha;
+                let partsSearch = searchDate.split('-');
+                let daySearch = parseInt(partsSearch[0]);
+                let monthSearch = parseInt(partsSearch[1]);
+                let yearSearch = parseInt(partsSearch[2]);
+
+                if (year1 === year2) {
+                    if (month1 === month2) {
+                        if (day1 <= daySearch && daySearch <= day2) {
+                            newInvoice = [...newInvoice, invoices[i]];
+                        }
+                    }
+                    else {
+                        if (month1 <= monthSearch && monthSearch <= month2) {
+                            if (month1 === monthSearch && day1 <= daySearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month2 === monthSearch && daySearch <= day2) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month1 !== monthSearch && month2 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (year1 <= yearSearch && yearSearch <= year2) {
+                        if (year1 === yearSearch && month1 <= monthSearch) {
+                            if (month1 === monthSearch && day1 <= daySearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month1 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                        }
+                        if (year2 === yearSearch && monthSearch <= month2) {
+                            if (month2 === monthSearch && daySearch <= day2) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month2 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                        }
+                        if (year1 !== yearSearch && year2 !== yearSearch) {
+                            newInvoice = [...newInvoice, invoices[i]];
+                        }
+                    }
                 }
             }
-            setFilterData(newInvoice);
+            setFilterInvoices(newInvoice)
         }
     }
 
-    console.log(filterData)
+    console.log(filterInvoices)
 
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
@@ -235,7 +281,7 @@ const Dashboard = () => {
                     <BarChart
                         width={900}
                         height={400}
-                        data={searchStatus?filterData:data}
+                        data={data}
                         margin={{
                             top: 5,
                             right: 30,
@@ -256,7 +302,7 @@ const Dashboard = () => {
                     <BarChart
                         width={600}
                         height={350}
-                        data={searchStatus?filterData:data}
+                        data={data}
                         margin={{
                             top: 5,
                             right: 30,
@@ -277,7 +323,7 @@ const Dashboard = () => {
                     <BarChart
                         width={350}
                         height={200}
-                        data={searchStatus?filterData:data}
+                        data={data}
                         margin={{
                             top: 5,
                             right: 30,
@@ -334,9 +380,9 @@ const Dashboard = () => {
             </div>
             <div className="w-full mt-20 flex justify-center">
 
-                <div className="flex lg:flex-col">
+                <div className="hidden lg:flex lg:flex-col">
                     <div className="grid lg:grid-cols-2 grid-cols-1">
-                        {/* <PieChart width={400} height={400} className="text-[10px]">
+                        <PieChart width={400} height={400} className="text-[10px]">
                             <Pie
                                 data={data2}
                                 cx={200}
@@ -351,7 +397,7 @@ const Dashboard = () => {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                        </PieChart> */}
+                        </PieChart>
                         <div className="flex flex-col justify-center gap-3">
                             <div className="flex items-center gap-3">
                                 <p className="p-2 rounded-full bg-[#00B6CB]"></p>
@@ -406,4 +452,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Dashboard2;
