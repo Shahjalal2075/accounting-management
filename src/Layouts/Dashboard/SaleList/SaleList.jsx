@@ -165,43 +165,19 @@ const SaleList = () => {
                 else {
                     if (year1 <= yearSearch && yearSearch <= year2) {
                         if (year1 === yearSearch && month1 <= monthSearch) {
-                            if (month1 === month2) {
-                                if (day1 <= daySearch && daySearch <= day2) {
-                                    newInvoice = [...newInvoice, invoices[i]];
-                                }
+                            if (month1 === monthSearch && day1 <= daySearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
                             }
-                            else {
-                                if (month1 <= monthSearch && monthSearch <= month2) {
-                                    if (month1 === monthSearch && day1 <= daySearch) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                    if (month2 === monthSearch && daySearch <= day2) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                    if (month1 !== monthSearch && month2 !== monthSearch) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                }
+                            if (month1 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
                             }
                         }
                         if (year2 === yearSearch && monthSearch <= month2) {
-                            if (month1 === month2) {
-                                if (day1 <= daySearch && daySearch <= day2) {
-                                    newInvoice = [...newInvoice, invoices[i]];
-                                }
+                            if (month2 === monthSearch && daySearch <= day2) {
+                                newInvoice = [...newInvoice, invoices[i]];
                             }
-                            else {
-                                if (month1 <= monthSearch && monthSearch <= month2) {
-                                    if (month1 === monthSearch && day1 <= daySearch) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                    if (month2 === monthSearch && daySearch <= day2) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                    if (month1 !== monthSearch && month2 !== monthSearch) {
-                                        newInvoice = [...newInvoice, invoices[i]];
-                                    }
-                                }
+                            if (month2 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
                             }
                         }
                         if (year1 !== yearSearch && year2 !== yearSearch) {
