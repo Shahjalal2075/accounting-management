@@ -628,7 +628,7 @@ const PurchaseAdd = () => {
                                             <p className="text-sm font-medium pb-2">Valor:</p>
                                             <div className="form-control">
                                                 <label className="input-group">
-                                                    <input type="number" required onChange={handleAmmountDisscount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
+                                                    <input type="number" defaultValue={0} onChange={handleAmmountDisscount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
                                                 </label>
                                             </div>
                                         </div>
