@@ -255,7 +255,7 @@ const [data2, setData2] = useState([]);
             <div className="w-full mt-20 flex justify-center">
 
                 <div className="hidden lg:flex lg:flex-col">
-                    <div className="grid grid-cols-2">
+                    <div className="grid lg:grid-cols-2 grid-cols-1">
                         <PieChart width={400} height={400} className="text-[10px]">
                             <Pie
                                 data={data2}
@@ -319,48 +319,6 @@ const [data2, setData2] = useState([]);
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="hidden md:flex md:flex-col lg:hidden">
-                    <BarChart
-                        width={600}
-                        height={350}
-                        data={data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="Sale" fill="#8884d8" />
-                        <Bar dataKey="Purchase" fill="#82ca9d" />
-                    </BarChart>
-                </div>
-                <div className="flex flex-col md:hidden">
-                    <BarChart
-                        width={350}
-                        height={200}
-                        data={data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="Sale" fill="#8884d8" />
-                        <Bar dataKey="Purchase" fill="#82ca9d" />
-                    </BarChart>
                 </div>
 
             </div>

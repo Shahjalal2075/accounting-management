@@ -13,6 +13,7 @@ const SaleList = () => {
     const [filterInvoices, setFilterInvoices] = useState([]);
 
     const [selectedDate1, setSelectedDate1] = useState(null);
+    const [selectedDate2, setSelectedDate2] = useState(null);
 
     const [searchStatus, setSearchStatus] = useState(false);
 
@@ -28,6 +29,9 @@ const SaleList = () => {
 
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
+    };
+    const handleDateChange2 = (date) => {
+        setSelectedDate2(date);
     };
 
     useEffect(() => {
@@ -110,12 +114,100 @@ const SaleList = () => {
     const handleFilter = () => {
         setSearchStatus(!searchStatus);
         setFilterInvoices([]);
+
         const firstDate = selectedDate1 && `${selectedDate1.getDate()}-${selectedDate1.getMonth() + 1}-${selectedDate1.getFullYear()}`;
+        const parts1 = firstDate.split('-');
+        const day1 = parseInt(parts1[0]);
+        const month1 = parseInt(parts1[1]);
+        const year1 = parseInt(parts1[2]);
+
+        const secondDate = selectedDate2 && `${selectedDate2.getDate()}-${selectedDate2.getMonth() + 1}-${selectedDate2.getFullYear()}`;
+        const parts2 = secondDate.split('-');
+        const day2 = parseInt(parts2[0]);
+        const month2 = parseInt(parts2[1]);
+        const year2 = parseInt(parts2[2]);
+
+        console.log(`Day1: ${day2}`);
+        console.log(`Month1: ${month2}`);
+        console.log(`Year1: ${year2}`);
+
+
         if (invoices && invoices.length > 0) {
             let newInvoice = [];
             for (let i = 0; i < invoices.length; i++) {
-                if (invoices[i].fecha === firstDate) {
-                    newInvoice = [...newInvoice, invoices[i]]
+
+                let searchDate = invoices[i].fecha;
+                let partsSearch = searchDate.split('-');
+                let daySearch = parseInt(partsSearch[0]);
+                let monthSearch = parseInt(partsSearch[1]);
+                let yearSearch = parseInt(partsSearch[2]);
+
+                if (year1 === year2) {
+                    if (month1 === month2) {
+                        if (day1 <= daySearch && daySearch <= day2) {
+                            newInvoice = [...newInvoice, invoices[i]];
+                        }
+                    }
+                    else {
+                        if (month1 <= monthSearch && monthSearch <= month2) {
+                            if (month1 === monthSearch && day1 <= daySearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month2 === monthSearch && daySearch <= day2) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                            if (month1 !== monthSearch && month2 !== monthSearch) {
+                                newInvoice = [...newInvoice, invoices[i]];
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (year1 <= yearSearch && yearSearch <= year2) {
+                        if (year1 === yearSearch && month1 <= monthSearch) {
+                            if (month1 === month2) {
+                                if (day1 <= daySearch && daySearch <= day2) {
+                                    newInvoice = [...newInvoice, invoices[i]];
+                                }
+                            }
+                            else {
+                                if (month1 <= monthSearch && monthSearch <= month2) {
+                                    if (month1 === monthSearch && day1 <= daySearch) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                    if (month2 === monthSearch && daySearch <= day2) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                    if (month1 !== monthSearch && month2 !== monthSearch) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                }
+                            }
+                        }
+                        if (year2 === yearSearch && monthSearch <= month2) {
+                            if (month1 === month2) {
+                                if (day1 <= daySearch && daySearch <= day2) {
+                                    newInvoice = [...newInvoice, invoices[i]];
+                                }
+                            }
+                            else {
+                                if (month1 <= monthSearch && monthSearch <= month2) {
+                                    if (month1 === monthSearch && day1 <= daySearch) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                    if (month2 === monthSearch && daySearch <= day2) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                    if (month1 !== monthSearch && month2 !== monthSearch) {
+                                        newInvoice = [...newInvoice, invoices[i]];
+                                    }
+                                }
+                            }
+                        }
+                        if (year1 !== yearSearch && year2 !== yearSearch) {
+                            newInvoice = [...newInvoice, invoices[i]];
+                        }
+                    }
                 }
             }
             setFilterInvoices(newInvoice)
@@ -229,7 +321,7 @@ const SaleList = () => {
             let allTax = "";
             let taxAmm = 0;
             for (let i = 0; i < invoice.taxs.length; i++) {
-                allTax += (invoice.taxs[i]+(", "));
+                allTax += (invoice.taxs[i] + (", "));
                 taxAmm += invoice.taxAmmount[i];
             }
             let allDis = "";
@@ -250,9 +342,9 @@ const SaleList = () => {
                 total: invoice?.totals,
                 totalToPagars: invoice?.totalToPagars,
                 taxList: allTax,
-                totalTax: ((invoice?.subTotals*taxAmm)/100),
+                totalTax: ((invoice?.subTotals * taxAmm) / 100),
                 discountList: allDis,
-                totalDiscount: (invoice?.totals-invoice?.totalToPagars),
+                totalDiscount: (invoice?.totals - invoice?.totalToPagars),
             })
         })
 
@@ -280,6 +372,19 @@ const SaleList = () => {
                             <DatePicker
                                 selected={selectedDate1}
                                 onChange={handleDateChange1}
+                                dateFormat="dd-MM-yyyy"
+                                placeholderText="dd-mm-yyyy"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className=' font-medium'>To</h2>
+                    </div>
+                    <div>
+                        <div className="input bg-[#fff] input-bordered w-full flex items-center">
+                            <DatePicker
+                                selected={selectedDate2}
+                                onChange={handleDateChange2}
                                 dateFormat="dd-MM-yyyy"
                                 placeholderText="dd-mm-yyyy"
                             />
