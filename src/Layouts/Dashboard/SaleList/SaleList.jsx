@@ -364,7 +364,7 @@ const SaleList = () => {
                 if (invoice.taxs[i] === "CDT - (2.00%)") {
                     cdt = cdt + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
                 }
-                if (invoice.taxs[i] === "PROPORCIONALIDAD - (18.00%)") {
+                if (invoice.taxs[i] === "Propina - (10.00%)") {
                     propina = propina + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
                 }
             }

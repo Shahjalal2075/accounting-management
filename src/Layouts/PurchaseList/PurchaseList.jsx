@@ -345,28 +345,93 @@ const PurchaseList = () => {
                 allTax += (invoice.taxs[i] + (", "));
                 taxAmm += invoice.taxAmmount[i];
             }
-            let allDis = "";
-            for (let i = 0; i < invoice.discounts.length; i++) {
-                allDis += invoice.discounts[i];
+
+
+            /*new*/
+
+            let tipoId = 0;
+            if (invoice.id === "RNC")
+                tipoId = 1;
+            if (invoice.id === "Cedula")
+                tipoId = 2;
+
+            let isc = 0;
+            let cdt = 0;
+            let propina = 0;
+            let proporcionalidad = 0;
+            let itbis = 0;
+            for (let i = 0; i < invoice.taxs.length; i++) {
+                if (invoice.taxs[i] === "ISC - (2.00%)") {
+                    isc = isc + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "ISC - (16.00%)") {
+                    isc = isc + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "CDT - (2.00%)") {
+                    cdt = cdt + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "Propina - (10.00%)") {
+                    propina = propina + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "PROPORCIONALIDAD - (18.00%)") {
+                    proporcionalidad = proporcionalidad + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "ITBIS - (18.00%)") {
+                    itbis = itbis + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
             }
+            let itbisDis = 0;
+            let allDis = 0;
+            for (let i = 0; i < invoice.discounts.length; i++) {
+                if (invoice.discounts[i] === "ITBIS Retenido - 30%" || invoice.discounts[i] === "ITBIS Retenido - 75%" || invoice.discounts[i] === "ITBIS Retenido - 100%") {
+                    itbisDis = invoice.totalDis;
+                }
+                else {
+                    allDis = invoice.totalDis;
+                }
+            }
+            let bienAmm = 0;
+            let servicioAmm = 0;
+            for (let i = 0; i < invoice.tipoList.length; i++) {
+                if (invoice.tipoList[i] === "Goods") {
+                    bienAmm = bienAmm + (parseFloat(invoice.montoList[i]));
+                }
+                if (invoice.tipoList[i] === "Service") {
+                    servicioAmm = servicioAmm + (parseFloat(invoice.montoList[i]));
+                }
+            }
+            if (invoice.tipoCk === "Goods") {
+                bienAmm = bienAmm + (parseFloat(invoice.ammount));
+            }
+            if (invoice.tipoCk === "Service") {
+                servicioAmm = servicioAmm + (parseFloat(invoice.ammount));
+            }
+
             sheet.addRow({
-                sl: idx + 1,
+                no: idx + 1,
+                rnc: invoice?.rnc,
+                tipoDeId: tipoId,
+                concepto: invoice?.conceptoValue,
                 ncf: invoice?.nfc,
-                tipoDeId: invoice?.id,
-                companyId: invoice?.rnc,
-                companyName: invoice?.company,
+                modificado: invoice?.modificado,
                 fecha: invoice?.fecha,
                 fechaDePago: invoice?.fechDePago,
-                formaDePago: invoice?.formaDePago,
-                modificado: invoice?.modificado,
-                conceptoValue: invoice?.conceptoValue,
+                bien: bienAmm,
+                servicio: servicioAmm,
                 subTotal: invoice?.subTotals,
-                total: invoice?.totals,
-                totalToPagars: invoice?.totalToPagars,
-                taxList: allTax,
                 totalTax: ((invoice?.subTotals * taxAmm) / 100),
-                discountList: allDis,
-                totalDiscount: (invoice?.totals - invoice?.totalToPagars),
+                itbisRetendio: itbisDis,
+                proporcionalidadTax: proporcionalidad,
+                b1: "",
+                itbisTax: itbis,
+                b2: "",
+                othersRetenciones: allDis,
+                b4: "",
+                b3: "",
+                iscTax: isc,
+                cdtTax: cdt,
+                propinaTax: propina,
+                formaDePago: invoice?.formaDePago
             })
         })
 
