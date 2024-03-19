@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaDollarSign } from "react-icons/fa6";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-//import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -20,7 +20,7 @@ const Dashboard = () => {
 
     /* For BarChart End */
 
-    /* For PieChart Start 
+    /* For PieChart Start */
     const [data2, setData2] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/concepto-report')
@@ -41,7 +41,6 @@ const Dashboard = () => {
         innerRadius,
         outerRadius,
         percent,
-        index,
     }) {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
@@ -80,19 +79,11 @@ const Dashboard = () => {
 
         const firstDate = selectedDate1 && `${selectedDate1.getDate()}-${selectedDate1.getMonth() + 1}-${selectedDate1.getFullYear()}`;
         const parts1 = firstDate.split('-');
-        const day1 = parseInt(parts1[0]);
         const month1 = parseInt(parts1[1]);
-        const year1 = parseInt(parts1[2]);
 
         const secondDate = selectedDate2 && `${selectedDate2.getDate()}-${selectedDate2.getMonth() + 1}-${selectedDate2.getFullYear()}`;
         const parts2 = secondDate.split('-');
-        const day2 = parseInt(parts2[0]);
         const month2 = parseInt(parts2[1]);
-        const year2 = parseInt(parts2[2]);
-
-        console.log(`Day1: ${day2}`);
-        console.log(`Month1: ${month2}`);
-        console.log(`Year1: ${year2}`);
 
 
         if (data && data.length > 0) {
@@ -105,8 +96,6 @@ const Dashboard = () => {
             setFilterData(newInvoice);
         }
     }
-
-    console.log(filterData)
 
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
@@ -366,7 +355,7 @@ const Dashboard = () => {
 
                 <div className="flex lg:flex-col">
                     <div className="grid lg:grid-cols-2 grid-cols-1">
-                        {/* <PieChart width={400} height={400} className="text-[10px]">
+                        <PieChart width={400} height={400} className="text-[10px]">
                             <Pie
                                 data={data2}
                                 cx={200}
@@ -381,7 +370,7 @@ const Dashboard = () => {
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                        </PieChart> */}
+                        </PieChart>
                         <div className="flex flex-col justify-center gap-3">
                             <div className="flex items-center gap-3">
                                 <p className="p-2 rounded-full bg-[#00B6CB]"></p>
