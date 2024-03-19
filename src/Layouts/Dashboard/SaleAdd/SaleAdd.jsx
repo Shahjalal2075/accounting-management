@@ -335,8 +335,9 @@ const SaleAdd = () => {
         const monthName = monthNames[month - 1];
         const Purchase = (salesReport[month - 1].Purchase);
         const Sale = (salesReport[month - 1].Sale) + totalToPagars;
-
-        const report = { Purchase, Sale };
+        const STax = (salesReport[month - 1].STax) + ((taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0));
+        const PTax = (salesReport[month - 1].PTax);
+        const report = { Purchase, Sale, PTax, STax };
         console.log(report)
 
 

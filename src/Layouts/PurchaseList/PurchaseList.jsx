@@ -69,8 +69,10 @@ const PurchaseList = () => {
                     const monthName = monthNames[month - 1];
                     const Purchase = (salesReport[month - 1].Purchase) - ammt;
                     const Sale = (salesReport[month - 1].Sale);
+                    const PTax = (salesReport[month - 1].PTax);
+                    const STax = (salesReport[month - 1].STax);
 
-                    const report = { Purchase, Sale };
+                    const report = { Purchase, Sale, PTax, STax };
                     console.log(report);
 
                     fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
@@ -339,10 +341,8 @@ const PurchaseList = () => {
         ];
 
         invoices?.map((invoice, idx) => {
-            let allTax = "";
             let taxAmm = 0;
             for (let i = 0; i < invoice.taxs.length; i++) {
-                allTax += (invoice.taxs[i] + (", "));
                 taxAmm += invoice.taxAmmount[i];
             }
 

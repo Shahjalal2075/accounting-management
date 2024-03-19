@@ -10,7 +10,7 @@ const InvoiceEditS = () => {
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
-    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago,tipoDeIngreso, modificado } = invoiceData;
+    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, tipoDeIngreso, modificado } = invoiceData;
 
     const [selectedDate1, setSelectedDate1] = useState(null);
     const [count, setCount] = useState(1);
@@ -263,7 +263,7 @@ const InvoiceEditS = () => {
 
         const totalToPagars = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - (ammountDisscount))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago,tipoDeIngreso, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts,ammountDisscount, discountAmmount, totalDis };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, tipoDeIngreso, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, ammountDisscount, discountAmmount, totalDis };
         console.log(invoice);
 
         const dateString = fecha;
@@ -272,8 +272,9 @@ const InvoiceEditS = () => {
         const monthName = monthNames[month - 1];
         const Purchase = (salesReport[month - 1].Purchase);
         const Sale = (salesReport[month - 1].Sale) - invoiceData.totalToPagars + totalToPagars;
-
-        const report = { Purchase, Sale };
+        const STax = (salesReport[month - 1].STax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0));
+        const PTax = (salesReport[month - 1].PTax);
+        const report = { Purchase, Sale, PTax, STax };
         console.log(report)
 
         fetch(`https://account-ser.vercel.app/sale-invoice/${invoiceData._id}`, {
@@ -459,7 +460,7 @@ const InvoiceEditS = () => {
                             </table>
 
                             <div className=" mt-6">
-                            <div className="grid grid-cols-10 gap-3 mx-4">
+                                <div className="grid grid-cols-10 gap-3 mx-4">
                                     <div className="col-span-3">
                                         <p className="text-sm font-medium pb-2">Retenciones:</p>
                                         <div className="form-control">

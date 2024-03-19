@@ -71,8 +71,10 @@ const SaleList = () => {
                     const monthName = monthNames[month - 1];
                     const Purchase = (salesReport[month - 1].Purchase);
                     const Sale = (salesReport[month - 1].Sale) - ammt;
+                    const PTax = (salesReport[month - 1].PTax);
+                    const STax = (salesReport[month - 1].STax);
 
-                    const report = { Purchase, Sale };
+                    const report = { Purchase, Sale, PTax, STax };
                     console.log(report);
 
                     fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {

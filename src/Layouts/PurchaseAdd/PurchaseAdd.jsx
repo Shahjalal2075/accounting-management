@@ -370,7 +370,7 @@ const PurchaseAdd = () => {
 
         const totalToPagars = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount,ammountDisscount, totalDis, montoList, tipoList, tipoCk, ammount };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount, ammountDisscount, totalDis, montoList, tipoList, tipoCk, ammount };
 
         console.log(invoice);
 
@@ -380,12 +380,14 @@ const PurchaseAdd = () => {
         const monthName = monthNames[month - 1];
         const Purchase = (salesReport[month - 1].Purchase) + totalToPagars;
         const Sale = (salesReport[month - 1].Sale);
+        const PTax = (salesReport[month - 1].PTax) + ((taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0));
+        const STax = (salesReport[month - 1].STax);
 
-        const report = { Purchase, Sale };
-        console.log(report);
+        console.log(PTax);
+        const report = { Purchase, Sale, PTax, STax };
+        
 
         setIsButtonDisabled(true);
-
         fetch('https://account-ser.vercel.app/purchase-invoice', {
             method: 'POST',
             headers: {
