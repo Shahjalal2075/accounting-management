@@ -195,14 +195,14 @@ const SaleList = () => {
         const sheet = workbook.addWorksheet("Excel Sheet");
         sheet.columns = [
             {
-                header: "SL",
-                key: "sl",
+                header: "No",
+                key: "no",
                 width: 5,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "NCF",
-                key: "ncf",
+                header: "RNC",
+                key: "rnc",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
@@ -213,15 +213,21 @@ const SaleList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Company ID",
-                key: "companyId",
+                header: "NCF",
+                key: "ncf",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Company Name",
-                key: "companyName",
+                header: "NCF Modificado",
+                key: "modificado",
                 width: 30,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Tipo de Ingreso",
+                key: "tipoDeIngreso",
+                width: 40,
                 alignment: { horizontal: 'center' }
             },
             {
@@ -237,39 +243,9 @@ const SaleList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Forma De Pago",
-                key: "formaDePago",
-                width: 40,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Modificado",
-                key: "modificado",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
                 header: "Sub Total",
                 key: "subTotal",
                 width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Total",
-                key: "total",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Total To pagars",
-                key: "totalToPagars",
-                width: 20,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Tax List",
-                key: "taxList",
-                width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
@@ -279,14 +255,86 @@ const SaleList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Discount List",
-                key: "discountList",
+                header: "Tax Retention Amount ",
+                key: "totalRetention",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Total Discount",
-                key: "totalDiscount",
+                header: " ",
+                key: "b1",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b2",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b3",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "ISC Tax",
+                key: "iscTax",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "CDT Tax",
+                key: "cdtTax",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Propina Tax",
+                key: "propinaTax",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "EFECTIVO",
+                key: "type1",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "CHEQUES/TRANSFERENCIAS/DEPÓSITO",
+                key: "type2",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "TARJETA CRÉDITO/DÉBITO",
+                key: "type3",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "COMPRA A CREDITO",
+                key: "type4",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "PERMUTA",
+                key: "type5",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "NOTA DE CREDITO",
+                key: "type6",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "MIXTO",
+                key: "type7",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
@@ -294,33 +342,58 @@ const SaleList = () => {
         ];
 
         invoices?.map((invoice, idx) => {
-            let allTax = "";
+            let tipoId = 0;
+            if (invoice.id === "RNC")
+                tipoId = 1;
+            if (invoice.id === "Cedula")
+                tipoId = 2;
+            if (invoice.id === "Pasaporte")
+                tipoId = 3;
             let taxAmm = 0;
+            let isc = 0;
+            let cdt = 0;
+            let propina = 0;
             for (let i = 0; i < invoice.taxs.length; i++) {
-                allTax += (invoice.taxs[i] + (", "));
                 taxAmm += invoice.taxAmmount[i];
+                if (invoice.taxs[i] === "ISC - (2.00%)") {
+                    isc = isc + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "ISC - (16.00%)") {
+                    isc = isc + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "CDT - (2.00%)") {
+                    cdt = cdt + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
+                if (invoice.taxs[i] === "PROPORCIONALIDAD - (18.00%)") {
+                    propina = propina + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
+                }
             }
-            let allDis = "";
-            for (let i = 0; i < invoice.discounts.length; i++) {
-                allDis += invoice.discounts[i];
-            }
+
             sheet.addRow({
-                sl: idx + 1,
+                no: idx + 1,
+                rnc: invoice?.rnc,
+                tipoDeId: tipoId,
                 ncf: invoice?.nfc,
-                tipoDeId: invoice?.id,
-                companyId: invoice?.rnc,
-                companyName: invoice?.company,
+                modificado: invoice?.modificado,
+                tipoDeIngreso: invoice?.tipoDeIngreso,
                 fecha: invoice?.fecha,
                 fechaDePago: invoice?.fechDePago,
-                formaDePago: invoice?.formaDePago,
-                modificado: invoice?.modificado,
                 subTotal: invoice?.subTotals,
-                total: invoice?.totals,
-                totalToPagars: invoice?.totalToPagars,
-                taxList: allTax,
                 totalTax: ((invoice?.subTotals * taxAmm) / 100),
-                discountList: allDis,
-                totalDiscount: (invoice?.totals - invoice?.totalToPagars),
+                totalRetention: (invoice?.totals - invoice?.totalToPagars),
+                b1: "",
+                b2: "",
+                b3: "",
+                iscTax: isc,
+                cdtTax: cdt,
+                propinaTax: propina,
+                type1: invoice?.totals,
+                type2: invoice?.totals,
+                type3: invoice?.totals,
+                type4: invoice?.totals,
+                type5: invoice?.totals,
+                type6: invoice?.totals,
+                type7: invoice?.totals
             })
         })
 

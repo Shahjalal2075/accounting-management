@@ -10,7 +10,7 @@ const InvoiceEditS = () => {
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
-    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado } = invoiceData;
+    const { nfc, id, rnc, company, fecha, fechDePago, formaDePago,tipoDeIngreso, modificado } = invoiceData;
 
     const [selectedDate1, setSelectedDate1] = useState(null);
     const [count, setCount] = useState(1);
@@ -240,6 +240,7 @@ const InvoiceEditS = () => {
         const rnc = form.rnc.value;
         const fecha = startDate;
         const fechDePago = dueDate;
+        const tipoDeIngreso = form.tipoDeIngreso.value;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
 
@@ -256,7 +257,7 @@ const InvoiceEditS = () => {
 
         const totalToPagars = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - ((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0))) * totalDis) / 100))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, discountAmmount, totalDis };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago,tipoDeIngreso, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, discountAmmount, totalDis };
         console.log(invoice);
 
         const dateString = fecha;
@@ -362,6 +363,22 @@ const InvoiceEditS = () => {
                                         placeholderText={fechDePago}
                                     />
                                 </div>
+                            </label>
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-medium">Tipo de Ingreso</span>
+                            </label>
+                            <label className="input-group">
+                                <select defaultValue={tipoDeIngreso} name="tipoDeIngreso" id="tipoDeIngreso" className="input bg-[#fff] input-bordered w-full">
+                                    <option value="none">Select</option>
+                                    <option value="01 - Ingresos por Operaciones (No Financieros)">01 - Ingresos por Operaciones (No Financieros)</option>
+                                    <option value="02 - Ingresos Financieros">02 - Ingresos Financieros</option>
+                                    <option value="03 - Ingresos Extraordinarios">03 - Ingresos Extraordinarios</option>
+                                    <option value="04 - Ingresos por Arrendamientos">04 - Ingresos por Arrendamientos</option>
+                                    <option value="05 - Ingresos por Venta de Activo Depreciable ">05 - Ingresos por Venta de Activo Depreciable </option>
+                                    <option value="06 - Otros IngresosO">06 - Otros Ingresos</option>
+                                </select>
                             </label>
                         </div>
                         <div className="form-control">

@@ -191,14 +191,14 @@ const PurchaseList = () => {
         const sheet = workbook.addWorksheet("Excel Sheet");
         sheet.columns = [
             {
-                header: "SL",
-                key: "sl",
+                header: "No",
+                key: "no",
                 width: 5,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "NCF",
-                key: "ncf",
+                header: "RNC",
+                key: "rnc",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
@@ -209,14 +209,20 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Company ID",
-                key: "companyId",
+                header: "Concepto",
+                key: "concepto",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Company Name",
-                key: "companyName",
+                header: "NCF",
+                key: "ncf",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "NCF Modificado",
+                key: "modificado",
                 width: 30,
                 alignment: { horizontal: 'center' }
             },
@@ -233,45 +239,22 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Forma De Pago",
-                key: "formaDePago",
-                width: 40,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Modificado",
-                key: "modificado",
+                header: "Bien Amount",
+                key: "bien",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Concepto Value",
-                key: "conceptoValue",
-                width: 25,
+                header: "Servicio Amount",
+                key: "servicio",
+                width: 15,
                 alignment: { horizontal: 'center' }
             },
+
             {
                 header: "Sub Total",
                 key: "subTotal",
                 width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Total",
-                key: "total",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Total To pagars",
-                key: "totalToPagars",
-                width: 20,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "Tax List",
-                key: "taxList",
-                width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
@@ -281,14 +264,74 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Discount List",
-                key: "discountList",
+                header: "ITBIS Retenido",
+                key: "itbisRetendio",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Total Discount",
-                key: "totalDiscount",
+                header: "PROPORCIONALIDAD Tax",
+                key: "proporcionalidadTax",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b1",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "ITBIS Tax",
+                key: "itbisTax",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b2",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Others Retenciones",
+                key: "othersRetenciones",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b4",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: " ",
+                key: "b3",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "ISC Tax",
+                key: "iscTax",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "CDT Tax",
+                key: "cdtTax",
+                width: 20,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Propina Tax",
+                key: "propinaTax",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Forma de Pago",
+                key: "formaDePago",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
