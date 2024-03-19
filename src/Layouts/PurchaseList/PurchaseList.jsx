@@ -384,10 +384,10 @@ const PurchaseList = () => {
             let allDis = 0;
             for (let i = 0; i < invoice.discounts.length; i++) {
                 if (invoice.discounts[i] === "ITBIS Retenido - 30%" || invoice.discounts[i] === "ITBIS Retenido - 75%" || invoice.discounts[i] === "ITBIS Retenido - 100%") {
-                    itbisDis = invoice.totalDis;
+                    itbisDis = invoice.ammountDisscount;
                 }
                 else {
-                    allDis = invoice.totalDis;
+                    allDis = invoice.ammountDisscount;
                 }
             }
             let bienAmm = 0;

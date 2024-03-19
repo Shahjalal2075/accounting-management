@@ -14,6 +14,7 @@ const InvoiceEdit = () => {
 
     const [count, setCount] = useState(invoiceData.count);
     const [ammount, setAmmount] = useState(invoiceData.ammount);
+    const [ammountDisscount, setAmmountDisscount] = useState(invoiceData.ammountDisscount);
     const [taxs, setTax] = useState(invoiceData.taxs);
     const [taxAmmount, setTaxAmmount] = useState(invoiceData.taxAmmount);
     const [conceptoValue, setConceptoValue] = useState(invoiceData.conceptoValue);
@@ -116,6 +117,11 @@ const InvoiceEdit = () => {
     const handleAmmount = (e) => {
         const form = e.target;
         setAmmount(form.value);
+        console.log(form.value);
+    }
+    const handleAmmountDisscount = (e) => {
+        const form = e.target;
+        setAmmountDisscount(form.value);
         console.log(form.value);
     }
 
@@ -301,11 +307,11 @@ const InvoiceEdit = () => {
 
         const totals = parseFloat(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toFixed(2));
 
-        const totalToPagars = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - ((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100)).toFixed(2));
+        const totalToPagars = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount))).toFixed(2));
 
 
         //const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado };
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount, totalDis, montoList, tipoList, tipoCk, ammount };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount, totalDis, ammountDisscount, montoList, tipoList, tipoCk, ammount };
 
         console.log(invoice);
 
@@ -313,7 +319,7 @@ const InvoiceEdit = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Purchase = (salesReport[month - 1].Purchase) - invoiceData.totalToPagars + totalToPagars;
+        const Purchase = salesReport?((salesReport[month - 1].Purchase) - invoiceData.totalToPagars + totalToPagars):1;
         const Sale = (salesReport[month - 1].Sale);
 
         const report = { Purchase, Sale };
@@ -525,41 +531,53 @@ const InvoiceEdit = () => {
                                 </tbody>
                             </table>
 
-                            <div className="flex justify-between mt-6 mx-4">
-                                <div className="flex items-center gap-8">
-                                    <div className="">
+                            <div className="grid grid-cols-10 mt-6 mx-4">
+                                <div className="col-span-6">
+                                    <div className="pb-4">
                                         <button type="button" onClick={handleNewRow} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]">Anadir</button>
                                     </div>
-                                    <div className="flex items-center gap-4">
-                                        <p className="text-sm font-medium">Retenciones:</p>
-                                        <div className="form-control">
-                                            <label className="input-group">
-                                                <select defaultValue={discounts[0] ? discounts[0] : "None"} name="status" id="status" onChange={handleDiscount} className="input bg-[#fff] input-bordered w-1/2">
-                                                    <option value="None">None</option>
-                                                    <option value="ITBIS Retenido - 30%">ITBIS Retenido - 30%</option>
-                                                    <option value="ITBIS Retenido - 75%">ITBIS Retenido - 75%</option>
-                                                    <option value="ITBIS Retenido - 100%">ITBIS Retenido - 100%</option>
-                                                    <option value="ALQUILERES - 10%">ALQUILERES - 10%</option>
-                                                    <option value="HONORARIOS POR SERVICIOS - 10%">HONORARIOS POR SERVICIOS - 10%</option>
-                                                    <option value="OTRAS RENTAS - 10%">OTRAS RENTAS - 10%</option>
-                                                    <option value="OTRAS RENTAS (Rentas Presuntas) - 2%">OTRAS RENTAS (Rentas Presuntas) - 2%</option>
-                                                    <option value="INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%">INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%</option>
-                                                    <option value="INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%">INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%</option>
-                                                    <option value="RETENCION POR PROVEEDORES DEL ESTADO - 5%">RETENCION POR PROVEEDORES DEL ESTADO - 5%</option>
-                                                    <option value="JUEGOS TELEFONICOS - 5%">JUEGOS TELEFONICOS - 5%</option>
-                                                </select>
-                                            </label>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="">
+                                            <p className="text-sm font-medium pb-2">Retenciones:</p>
+                                            <div className="form-control">
+                                                <label className="input-group">
+                                                    <select defaultValue={discounts[0] ? discounts[0] : "None"} name="status" id="status" onChange={handleDiscount} className="input bg-[#fff] input-bordered w-full">
+                                                        <option value="None">None</option>
+                                                        <option value="ITBIS Retenido - 30%">ITBIS Retenido - 30%</option>
+                                                        <option value="ITBIS Retenido - 75%">ITBIS Retenido - 75%</option>
+                                                        <option value="ITBIS Retenido - 100%">ITBIS Retenido - 100%</option>
+                                                        <option value="ALQUILERES - 10%">ALQUILERES - 10%</option>
+                                                        <option value="HONORARIOS POR SERVICIOS - 10%">HONORARIOS POR SERVICIOS - 10%</option>
+                                                        <option value="OTRAS RENTAS - 10%">OTRAS RENTAS - 10%</option>
+                                                        <option value="OTRAS RENTAS (Rentas Presuntas) - 2%">OTRAS RENTAS (Rentas Presuntas) - 2%</option>
+                                                        <option value="INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%">INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%</option>
+                                                        <option value="INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%">INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%</option>
+                                                        <option value="RETENCION POR PROVEEDORES DEL ESTADO - 5%">RETENCION POR PROVEEDORES DEL ESTADO - 5%</option>
+                                                        <option value="JUEGOS TELEFONICOS - 5%">JUEGOS TELEFONICOS - 5%</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            <p className="text-sm font-medium pb-2">Valor:</p>
+                                            <div className="form-control">
+                                                <label className="input-group">
+                                                    <input type="number" defaultValue={ammountDisscount} onChange={handleAmmountDisscount} name="ammount" placeholder="" className="input bg-[#fff] input-bordered w-full" step="any" pattern="^\d*\.?\d*$" />
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
-                                <div className="text-[#111] text-xl font-medium flex flex-col justify-center text-right">
+                                <div className="col-span-4 text-[#111] text-xl font-medium flex flex-col justify-center text-right">
                                     <h2>Sub Total: {(subTotal + parseFloat(ammount ? ammount : '0')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
                                     {
                                         taxs.map((tax, idx) => tax && <h2 key={idx}>{tax}: {(((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[idx]) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>)
                                     }
                                     <h2>Total: {((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
-                                    <h2>- Retenciones: {((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h2>
-                                    <h2>Total a pagar: {(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - ((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) * totalDis) / 100)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h2>
+                                    <h2>- Retenciones: {(parseFloat(ammountDisscount)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h2>
+                                    
+                                    <h2>Total a pagar: {(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h2>
                                 </div>
                             </div>
 
