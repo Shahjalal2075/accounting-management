@@ -137,33 +137,43 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#FFEEC3] rounded-xl">
-                            <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
-                        </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].Sale : 0) + (filterData[1] ? filterData[1].Sale : 0) + (filterData[2] ? filterData[2].Sale : 0) + (filterData[3] ? filterData[3].Sale : 0) + (filterData[4] ? filterData[4].Sale : 0) + (filterData[5] ? filterData[5].Sale : 0) + (filterData[6] ? filterData[6].Sale : 0) + (filterData[7] ? filterData[7].Sale : 0) + (filterData[8] ? filterData[8].Sale : 0) + (filterData[9] ? filterData[9].Sale : 0) + (filterData[10] ? filterData[10].Sale : 0) + (filterData[11] ? filterData[11].Sale : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? ((data[0] ? data[0].Sale : 0) + (data[1] ? data[1].Sale : 0) + (data[2] ? data[2].Sale : 0) + (data[3] ? data[3].Sale : 0) + (data[4] ? data[4].Sale : 0) + (data[5] ? data[5].Sale : 0) + (data[6] ? data[6].Sale : 0) + (data[7] ? data[7].Sale : 0) + (data[8] ? data[8].Sale : 0) + (data[9] ? data[9].Sale : 0) + (data[10] ? data[10].Sale : 0) + (data[11] ? data[11].Sale : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#FFEEC3] rounded-xl">
+                                <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? ((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? ((data[0] ? data[0].Ventas : 0) + (data[1] ? data[1].Ventas : 0) + (data[2] ? data[2].Ventas : 0) + (data[3] ? data[3].Ventas : 0) + (data[4] ? data[4].Ventas : 0) + (data[5] ? data[5].Ventas : 0) + (data[6] ? data[6].Ventas : 0) + (data[7] ? data[7].Ventas : 0) + (data[8] ? data[8].Ventas : 0) + (data[9] ? data[9].Ventas : 0) + (data[10] ? data[10].Ventas : 0) + (data[11] ? data[11].Ventas : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="flex items-center justify-center">
+                        <h2>–</h2>
+                    </div>
                 </div>
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#d1f3ff] rounded-xl">
-                            <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#d1f3ff] rounded-xl">
+                                <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? ((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? ((data[0] ? data[0].Compra : 0) + (data[1] ? data[1].Compra : 0) + (data[2] ? data[2].Compra : 0) + (data[3] ? data[3].Compra : 0) + (data[4] ? data[4].Compra : 0) + (data[5] ? data[5].Compra : 0) + (data[6] ? data[6].Compra : 0) + (data[7] ? data[7].Compra : 0) + (data[8] ? data[8].Compra : 0) + (data[9] ? data[9].Compra : 0) + (data[10] ? data[10].Compra : 0) + (data[11] ? data[11].Compra : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].Purchase : 0) + (filterData[1] ? filterData[1].Purchase : 0) + (filterData[2] ? filterData[2].Purchase : 0) + (filterData[3] ? filterData[3].Purchase : 0) + (filterData[4] ? filterData[4].Purchase : 0) + (filterData[5] ? filterData[5].Purchase : 0) + (filterData[6] ? filterData[6].Purchase : 0) + (filterData[7] ? filterData[7].Purchase : 0) + (filterData[8] ? filterData[8].Purchase : 0) + (filterData[9] ? filterData[9].Purchase : 0) + (filterData[10] ? filterData[10].Purchase : 0) + (filterData[11] ? filterData[11].Purchase : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? ((data[0] ? data[0].Purchase : 0) + (data[1] ? data[1].Purchase : 0) + (data[2] ? data[2].Purchase : 0) + (data[3] ? data[3].Purchase : 0) + (data[4] ? data[4].Purchase : 0) + (data[5] ? data[5].Purchase : 0) + (data[6] ? data[6].Purchase : 0) + (data[7] ? data[7].Purchase : 0) + (data[8] ? data[8].Purchase : 0) + (data[9] ? data[9].Purchase : 0) + (data[10] ? data[10].Purchase : 0) + (data[11] ? data[11].Purchase : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
-                        </div>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <h2>=</h2>
                     </div>
                 </div>
                 <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
@@ -172,56 +182,52 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Tax Income</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
                             <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)) - ((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                 :
-                                ((data.length > 0) ? ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                                ((data.length > 0) ? (((data[0] ? data[0].Ventas : 0) + (data[1] ? data[1].Ventas : 0) + (data[2] ? data[2].Ventas : 0) + (data[3] ? data[3].Ventas : 0) + (data[4] ? data[4].Ventas : 0) + (data[5] ? data[5].Ventas : 0) + (data[6] ? data[6].Ventas : 0) + (data[7] ? data[7].Ventas : 0) + (data[8] ? data[8].Ventas : 0) + (data[9] ? data[9].Ventas : 0) + (data[10] ? data[10].Ventas : 0) + (data[11] ? data[11].Ventas : 0)) - ((data[0] ? data[0].Compra : 0) + (data[1] ? data[1].Compra : 0) + (data[2] ? data[2].Compra : 0) + (data[3] ? data[3].Compra : 0) + (data[4] ? data[4].Compra : 0) + (data[5] ? data[5].Compra : 0) + (data[6] ? data[6].Compra : 0) + (data[7] ? data[7].Compra : 0) + (data[8] ? data[8].Compra : 0) + (data[9] ? data[9].Compra : 0) + (data[10] ? data[10].Compra : 0) + (data[11] ? data[11].Compra : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
                         </div>
                     </div>
                 </div>
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#fccaff] rounded-xl">
-                            <p className="text-3xl font-bold text-[#f555ff]"><FaDollarSign /></p>
-                        </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Tax Outcome</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#FFEEC3] rounded-xl">
-                            <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
-                        </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Tax on Sales</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+            </div> */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6">
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#FFEEC3] rounded-xl">
+                                <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Tax on Sales</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="flex items-center justify-center">
+                        <h2>–</h2>
+                    </div>
                 </div>
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#d1f3ff] rounded-xl">
-                            <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#d1f3ff] rounded-xl">
+                                <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Tax on Purchases</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Tax on Purchases</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
-                        </div>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <h2>=</h2>
                     </div>
                 </div>
                 <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
@@ -258,8 +264,8 @@ const Dashboard = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Sale" fill="#8884d8" />
-                        <Bar dataKey="Purchase" fill="#82ca9d" />
+                        <Bar dataKey="Ventas" fill="#8884d8" />
+                        <Bar dataKey="Compra" fill="#82ca9d" />
                     </BarChart>
                 </div>
                 <div className="hidden md:flex md:flex-col lg:hidden">
@@ -279,8 +285,8 @@ const Dashboard = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Sale" fill="#8884d8" />
-                        <Bar dataKey="Purchase" fill="#82ca9d" />
+                        <Bar dataKey="Ventas" fill="#8884d8" />
+                        <Bar dataKey="Compra" fill="#82ca9d" />
                     </BarChart>
                 </div>
                 <div className="flex flex-col md:hidden">
@@ -300,40 +306,50 @@ const Dashboard = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="Sale" fill="#8884d8" />
-                        <Bar dataKey="Purchase" fill="#82ca9d" />
+                        <Bar dataKey="Ventas" fill="#8884d8" />
+                        <Bar dataKey="Compra" fill="#82ca9d" />
                     </BarChart>
                 </div>
 
             </div>
             <h2 className="text-[#28084B] text-2xl font-bold pb-8 mt-12">Without Tax Details</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#FFEEC3] rounded-xl">
-                            <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
-                        </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Sale : 0) + (filterData[1] ? filterData[1].Sale : 0) + (filterData[2] ? filterData[2].Sale : 0) + (filterData[3] ? filterData[3].Sale : 0) + (filterData[4] ? filterData[4].Sale : 0) + (filterData[5] ? filterData[5].Sale : 0) + (filterData[6] ? filterData[6].Sale : 0) + (filterData[7] ? filterData[7].Sale : 0) + (filterData[8] ? filterData[8].Sale : 0) + (filterData[9] ? filterData[9].Sale : 0) + (filterData[10] ? filterData[10].Sale : 0) + (filterData[11] ? filterData[11].Sale : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? (((data[0] ? data[0].Sale : 0) + (data[1] ? data[1].Sale : 0) + (data[2] ? data[2].Sale : 0) + (data[3] ? data[3].Sale : 0) + (data[4] ? data[4].Sale : 0) + (data[5] ? data[5].Sale : 0) + (data[6] ? data[6].Sale : 0) + (data[7] ? data[7].Sale : 0) + (data[8] ? data[8].Sale : 0) + (data[9] ? data[9].Sale : 0) + (data[10] ? data[10].Sale : 0) + (data[11] ? data[11].Sale : 0)) - ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6">
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#FFEEC3] rounded-xl">
+                                <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? (((data[0] ? data[0].Ventas : 0) + (data[1] ? data[1].Ventas : 0) + (data[2] ? data[2].Ventas : 0) + (data[3] ? data[3].Ventas : 0) + (data[4] ? data[4].Ventas : 0) + (data[5] ? data[5].Ventas : 0) + (data[6] ? data[6].Ventas : 0) + (data[7] ? data[7].Ventas : 0) + (data[8] ? data[8].Ventas : 0) + (data[9] ? data[9].Ventas : 0) + (data[10] ? data[10].Ventas : 0) + (data[11] ? data[11].Ventas : 0)) - ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="flex items-center justify-center">
+                        <h2>–</h2>
+                    </div>
                 </div>
-                <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
-                    <div className="flex justify-center items-center gap-4">
-                        <div className="p-5 bg-[#d1f3ff] rounded-xl">
-                            <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                <div className="grid grid-cols-12">
+                    <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)] col-span-11">
+                        <div className="flex justify-center items-center gap-4">
+                            <div className="p-5 bg-[#d1f3ff] rounded-xl">
+                                <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
+                            </div>
+                            <div className="">
+                                <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
+                                <p className="text-base text-[#111] font-semibold">{searchStatus ?
+                                    ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                    :
+                                    ((data.length > 0) ? (((data[0] ? data[0].Compra : 0) + (data[1] ? data[1].Compra : 0) + (data[2] ? data[2].Compra : 0) + (data[3] ? data[3].Compra : 0) + (data[4] ? data[4].Compra : 0) + (data[5] ? data[5].Compra : 0) + (data[6] ? data[6].Compra : 0) + (data[7] ? data[7].Compra : 0) + (data[8] ? data[8].Compra : 0) + (data[9] ? data[9].Compra : 0) + (data[10] ? data[10].Compra : 0) + (data[11] ? data[11].Compra : 0)) - ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                            </div>
                         </div>
-                        <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
-                            <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Purchase : 0) + (filterData[1] ? filterData[1].Purchase : 0) + (filterData[2] ? filterData[2].Purchase : 0) + (filterData[3] ? filterData[3].Purchase : 0) + (filterData[4] ? filterData[4].Purchase : 0) + (filterData[5] ? filterData[5].Purchase : 0) + (filterData[6] ? filterData[6].Purchase : 0) + (filterData[7] ? filterData[7].Purchase : 0) + (filterData[8] ? filterData[8].Purchase : 0) + (filterData[9] ? filterData[9].Purchase : 0) + (filterData[10] ? filterData[10].Purchase : 0) + (filterData[11] ? filterData[11].Purchase : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
-                                :
-                                ((data.length > 0) ? (((data[0] ? data[0].Purchase : 0) + (data[1] ? data[1].Purchase : 0) + (data[2] ? data[2].Purchase : 0) + (data[3] ? data[3].Purchase : 0) + (data[4] ? data[4].Purchase : 0) + (data[5] ? data[5].Purchase : 0) + (data[6] ? data[6].Purchase : 0) + (data[7] ? data[7].Purchase : 0) + (data[8] ? data[8].Purchase : 0) + (data[9] ? data[9].Purchase : 0) + (data[10] ? data[10].Purchase : 0) + (data[11] ? data[11].Purchase : 0)) - ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
-                        </div>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <h2>=</h2>
                     </div>
                 </div>
                 <div className="bg-[#fff] rounded-lg py-8 shadow-[0_0_13px_0px_rgba(82,63,105,0.05)]">
@@ -344,9 +360,9 @@ const Dashboard = () => {
                         <div className="">
                             <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
                             <p className="text-base text-[#111] font-semibold">{searchStatus ?
-                                ((filterData.length > 0) ? ((((filterData[0] ? filterData[0].Sale : 0) + (filterData[1] ? filterData[1].Sale : 0) + (filterData[2] ? filterData[2].Sale : 0) + (filterData[3] ? filterData[3].Sale : 0) + (filterData[4] ? filterData[4].Sale : 0) + (filterData[5] ? filterData[5].Sale : 0) + (filterData[6] ? filterData[6].Sale : 0) + (filterData[7] ? filterData[7].Sale : 0) + (filterData[8] ? filterData[8].Sale : 0) + (filterData[9] ? filterData[9].Sale : 0) + (filterData[10] ? filterData[10].Sale : 0) + (filterData[11] ? filterData[11].Sale : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))) - (((filterData[0] ? filterData[0].Purchase : 0) + (filterData[1] ? filterData[1].Purchase : 0) + (filterData[2] ? filterData[2].Purchase : 0) + (filterData[3] ? filterData[3].Purchase : 0) + (filterData[4] ? filterData[4].Purchase : 0) + (filterData[5] ? filterData[5].Purchase : 0) + (filterData[6] ? filterData[6].Purchase : 0) + (filterData[7] ? filterData[7].Purchase : 0) + (filterData[8] ? filterData[8].Purchase : 0) + (filterData[9] ? filterData[9].Purchase : 0) + (filterData[10] ? filterData[10].Purchase : 0) + (filterData[11] ? filterData[11].Purchase : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
+                                ((filterData.length > 0) ? ((((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))) - (((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                 :
-                                ((data.length > 0) ? ((((data[0] ? data[0].Sale : 0) + (data[1] ? data[1].Sale : 0) + (data[2] ? data[2].Sale : 0) + (data[3] ? data[3].Sale : 0) + (data[4] ? data[4].Sale : 0) + (data[5] ? data[5].Sale : 0) + (data[6] ? data[6].Sale : 0) + (data[7] ? data[7].Sale : 0) + (data[8] ? data[8].Sale : 0) + (data[9] ? data[9].Sale : 0) + (data[10] ? data[10].Sale : 0) + (data[11] ? data[11].Sale : 0)) - ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0))) - (((data[0] ? data[0].Purchase : 0) + (data[1] ? data[1].Purchase : 0) + (data[2] ? data[2].Purchase : 0) + (data[3] ? data[3].Purchase : 0) + (data[4] ? data[4].Purchase : 0) + (data[5] ? data[5].Purchase : 0) + (data[6] ? data[6].Purchase : 0) + (data[7] ? data[7].Purchase : 0) + (data[8] ? data[8].Purchase : 0) + (data[9] ? data[9].Purchase : 0) + (data[10] ? data[10].Purchase : 0) + (data[11] ? data[11].Purchase : 0)) - ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
+                                ((data.length > 0) ? ((((data[0] ? data[0].Ventas : 0) + (data[1] ? data[1].Ventas : 0) + (data[2] ? data[2].Ventas : 0) + (data[3] ? data[3].Ventas : 0) + (data[4] ? data[4].Ventas : 0) + (data[5] ? data[5].Ventas : 0) + (data[6] ? data[6].Ventas : 0) + (data[7] ? data[7].Ventas : 0) + (data[8] ? data[8].Ventas : 0) + (data[9] ? data[9].Ventas : 0) + (data[10] ? data[10].Ventas : 0) + (data[11] ? data[11].Ventas : 0)) - ((data[0] ? data[0].STax : 0) + (data[1] ? data[1].STax : 0) + (data[2] ? data[2].STax : 0) + (data[3] ? data[3].STax : 0) + (data[4] ? data[4].STax : 0) + (data[5] ? data[5].STax : 0) + (data[6] ? data[6].STax : 0) + (data[7] ? data[7].STax : 0) + (data[8] ? data[8].STax : 0) + (data[9] ? data[9].STax : 0) + (data[10] ? data[10].STax : 0) + (data[11] ? data[11].STax : 0))) - (((data[0] ? data[0].Compra : 0) + (data[1] ? data[1].Compra : 0) + (data[2] ? data[2].Compra : 0) + (data[3] ? data[3].Compra : 0) + (data[4] ? data[4].Compra : 0) + (data[5] ? data[5].Compra : 0) + (data[6] ? data[6].Compra : 0) + (data[7] ? data[7].Compra : 0) + (data[8] ? data[8].Compra : 0) + (data[9] ? data[9].Compra : 0) + (data[10] ? data[10].Compra : 0) + (data[11] ? data[11].Compra : 0)) - ((data[0] ? data[0].PTax : 0) + (data[1] ? data[1].PTax : 0) + (data[2] ? data[2].PTax : 0) + (data[3] ? data[3].PTax : 0) + (data[4] ? data[4].PTax : 0) + (data[5] ? data[5].PTax : 0) + (data[6] ? data[6].PTax : 0) + (data[7] ? data[7].PTax : 0) + (data[8] ? data[8].PTax : 0) + (data[9] ? data[9].PTax : 0) + (data[10] ? data[10].PTax : 0) + (data[11] ? data[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)}</p>
                         </div>
                     </div>
                 </div>
@@ -420,6 +436,31 @@ const Dashboard = () => {
                     </div>
                 </div>
 
+            </div>
+            <div className="w-full mt-20 md:px-20">
+                <div className="overflow-x-auto">
+                    <table className="table">
+                        {/* head */}
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Record Count</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data2.map((dta) =>
+                                        <tr key={dta._id}>
+                                            <td>{dta.name}</td>
+                                            <td>{dta.record-1}</td>
+                                            <td>{dta.value-1}</td>
+                                        </tr>
+                                    )
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

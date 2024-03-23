@@ -17,7 +17,7 @@ const SaleList = () => {
 
     const [searchStatus, setSearchStatus] = useState(false);
 
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/sales-report')
@@ -340,6 +340,12 @@ const SaleList = () => {
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
+            {
+                header: "Special",
+                key: "mark",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            }
 
         ];
 
@@ -389,13 +395,14 @@ const SaleList = () => {
                 iscTax: isc,
                 cdtTax: cdt,
                 propinaTax: propina,
-                type1: invoice?.totals,
-                type2: invoice?.totals,
-                type3: invoice?.totals,
-                type4: invoice?.totals,
-                type5: invoice?.totals,
-                type6: invoice?.totals,
-                type7: invoice?.totals
+                type1: (invoice?.formaDePago==="EFECTIVO")?invoice?.totals:0,
+                type2: (invoice?.formaDePago==="CHEQUES/TRANSFERENCIAS/DEPÓSITO")?invoice?.totals:0,
+                type3: (invoice?.formaDePago==="TARJETA CRÉDITO/DÉBITO")?invoice?.totals:0,
+                type4: (invoice?.formaDePago==="COMPRA A CREDITO")?invoice?.totals:0,
+                type5: (invoice?.formaDePago==="PERMUTA")?invoice?.totals:0,
+                type6: (invoice?.formaDePago==="NOTA DE CREDITO")?invoice?.totals:0,
+                type7: (invoice?.formaDePago==="MIXTO")?invoice?.totals:0,
+                mark: invoice?.mark
             })
         })
 

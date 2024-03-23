@@ -22,7 +22,13 @@ const InvoiceEditS = () => {
     const [discountAmmount, setDiscountAmmount] = useState(invoiceData.discountAmmount);
     const [totalDis, setTotalDis] = useState(invoiceData.totalDis);
 
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const [isChecked, setIsChecked] = useState(invoiceData.mark);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
+    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/sales-report')
@@ -89,56 +95,56 @@ const InvoiceEditS = () => {
                 setDiscount(newDis);
                 setTotalDis(totalDis + 100)
             }
-            if (form.value === "ALQUILERES - 10%") {
+            if (form.value === "01 - ALQUILERES - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 10)
             }
-            if (form.value === "HONORARIOS POR SERVICIOS - 10%") {
+            if (form.value === "02 - HONORARIOS POR SERVICIOS - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 10)
             }
-            if (form.value === "OTRAS RENTAS - 10%") {
+            if (form.value === "03 - OTRAS RENTAS - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 10)
             }
-            if (form.value === "OTRAS RENTAS (Rentas Presuntas) - 2%") {
+            if (form.value === "04 - OTRAS RENTAS (Rentas Presuntas) - 2%") {
                 const newAmm = [...discountAmmount, 2.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 2)
             }
-            if (form.value === "INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%") {
+            if (form.value === "05 - INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 10)
             }
-            if (form.value === "INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%") {
+            if (form.value === "06 - INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%") {
                 const newAmm = [...discountAmmount, 10.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 10)
             }
-            if (form.value === "RETENCION POR PROVEEDORES DEL ESTADO - 5%") {
+            if (form.value === "07 - RETENCION POR PROVEEDORES DEL ESTADO - 5%") {
                 const newAmm = [...discountAmmount, 5.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
                 setDiscount(newDis);
                 setTotalDis(totalDis + 5)
             }
-            if (form.value === "JUEGOS TELEFONICOS - 5%") {
+            if (form.value === "08 - JUEGOS TELEFONICOS - 5%") {
                 const newAmm = [...discountAmmount, 5.00];
                 setDiscountAmmount(newAmm);
                 const newDis = [...discounts, form.value];
@@ -249,6 +255,7 @@ const InvoiceEditS = () => {
         const tipoDeIngreso = form.tipoDeIngreso.value;
         const formaDePago = form.formaDePago.value;
         const modificado = form.modificado.value;
+        const mark = isChecked;
 
         if (nfc.length !== 11 && nfc.length !== 13) {
             toast('Llene el NCF correcto. ' + nfc.length);
@@ -263,18 +270,18 @@ const InvoiceEditS = () => {
 
         const totalToPagars = parseFloat((((parseFloat(ammount ? ammount : '0') + (taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0)) - (ammountDisscount))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, tipoDeIngreso, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, ammountDisscount, discountAmmount, totalDis };
+        const invoice = { nfc, id, rnc, company, fecha, fechDePago, tipoDeIngreso, formaDePago, modificado, monto, subTotals, totals, totalToPagars, taxs, taxAmmount, discounts, ammountDisscount, discountAmmount, totalDis, mark };
         console.log(invoice);
 
         const dateString = fecha;
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Purchase = (salesReport[month - 1].Purchase);
-        const Sale = (salesReport[month - 1].Sale) - invoiceData.totalToPagars + totalToPagars;
+        const Compra = (salesReport[month - 1].Compra);
+        const Ventas = (salesReport[month - 1].Ventas) - invoiceData.totalToPagars + totalToPagars;
         const STax = (salesReport[month - 1].STax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0));
         const PTax = (salesReport[month - 1].PTax);
-        const report = { Purchase, Sale, PTax, STax };
+        const report = { Compra, Ventas, PTax, STax };
         console.log(report)
 
         fetch(`https://account-ser.vercel.app/sale-invoice/${invoiceData._id}`, {
@@ -395,13 +402,13 @@ const InvoiceEditS = () => {
                             <label className="input-group">
                                 <select defaultValue={formaDePago} name="formaDePago" id="status" className="input bg-[#fff] input-bordered w-full">
                                     <option value="">Select</option>
-                                    <option value="01 - EFECTIVO">01 - EFECTIVO</option>
-                                    <option value="02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO<">02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO</option>
-                                    <option value="03 - TARJETA CRÉDITO/DÉBITO">03 - TARJETA CRÉDITO/DÉBITO</option>
-                                    <option value="04 - COMPRA A CREDITO">04 - COMPRA A CREDITO</option>
-                                    <option value="05 - PERMUTA">05 - PERMUTA</option>
-                                    <option value="06 - NOTA DE CREDITO">06 - NOTA DE CREDITO</option>
-                                    <option value="07 - MIXTO">07 - MIXTO</option>
+                                    <option value="EFECTIVO">EFECTIVO</option>
+                                    <option value="CHEQUES/TRANSFERENCIAS/DEPÓSITO">CHEQUES/TRANSFERENCIAS/DEPÓSITO</option>
+                                    <option value="TARJETA CRÉDITO/DÉBITO">TARJETA CRÉDITO/DÉBITO</option>
+                                    <option value="COMPRA A CREDITO">COMPRA A CREDITO</option>
+                                    <option value="PERMUTA">PERMUTA</option>
+                                    <option value="NOTA DE CREDITO">NOTA DE CREDITO</option>
+                                    <option value="MIXTO">MIXTO</option>
                                 </select>
                             </label>
                         </div>
@@ -411,6 +418,14 @@ const InvoiceEditS = () => {
                             </label>
                             <label className="input-group">
                                 <input type="text" defaultValue={modificado} name="modificado" className="input bg-[#fff] input-bordered w-full" />
+                            </label>
+                        </div>
+                        <div className="form-control flex justify-center items-center">
+                            {/* <label className="label">
+                                <span className="label-text font-medium"></span>
+                            </label> */}
+                            <label className="input-group mt-10">
+                                <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className="checkbox" />
                             </label>
                         </div>
                     </div>
@@ -470,14 +485,14 @@ const InvoiceEditS = () => {
                                                     <option value="ITBIS Retenido - 30%">ITBIS Retenido - 30%</option>
                                                     <option value="ITBIS Retenido - 75%">ITBIS Retenido - 75%</option>
                                                     <option value="ITBIS Retenido - 100%">ITBIS Retenido - 100%</option>
-                                                    <option value="ALQUILERES - 10%">ALQUILERES - 10%</option>
-                                                    <option value="HONORARIOS POR SERVICIOS - 10%">HONORARIOS POR SERVICIOS - 10%</option>
-                                                    <option value="OTRAS RENTAS - 10%">OTRAS RENTAS - 10%</option>
-                                                    <option value="OTRAS RENTAS (Rentas Presuntas) - 2%">OTRAS RENTAS (Rentas Presuntas) - 2%</option>
-                                                    <option value="INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%">INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%</option>
-                                                    <option value="INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%">INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%</option>
-                                                    <option value="RETENCION POR PROVEEDORES DEL ESTADO - 5%">RETENCION POR PROVEEDORES DEL ESTADO - 5%</option>
-                                                    <option value="JUEGOS TELEFONICOS - 5%">JUEGOS TELEFONICOS - 5%</option>
+                                                    <option value="01 - ALQUILERES - 10%">01 - ALQUILERES - 10%</option>
+                                                    <option value="02 - HONORARIOS POR SERVICIOS - 10%">02 - HONORARIOS POR SERVICIOS - 10%</option>
+                                                    <option value="03 - OTRAS RENTAS - 10%">03 - OTRAS RENTAS - 10%</option>
+                                                    <option value="04 - OTRAS RENTAS (Rentas Presuntas) - 2%">04 - OTRAS RENTAS (Rentas Presuntas) - 2%</option>
+                                                    <option value="05 - INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%">05 - INTERESES PAGADOS A PERSONAS JURIDICAS RESIDENTES -10%</option>
+                                                    <option value="06 - INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%">06 - INTERESES PAGADOS A PERSONAS FISICAS RESIDENTES - 10%</option>
+                                                    <option value="07 - RETENCION POR PROVEEDORES DEL ESTADO - 5%">07 - RETENCION POR PROVEEDORES DEL ESTADO - 5%</option>
+                                                    <option value="08 - JUEGOS TELEFONICOS - 5%">08 - JUEGOS TELEFONICOS - 5%</option>
                                                 </select>
                                             </label>
                                         </div>

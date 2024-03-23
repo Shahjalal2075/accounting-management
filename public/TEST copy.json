@@ -2,56 +2,67 @@
   {
     "_id": "65f7636ae61b8d848afc224e",
     "name": "01 - GASTOS DE PERSONAL",
-    "value": 0
+    "record": 1,
+    "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc224f",
     "name": "02 - GASTOS POR TRABAJOS, SUMINISTROS Y SERVICIOS",
-    "value": 0
+    "record": 1,
+    "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2250",
     "name": "03 - ARRENDAMIENTOS",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2251",
     "name": "04 - GASTOS DE ACTIVOS FIJO",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2252",
     "name": "05 - GASTOS DE REPRESENTACIÓN",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2253",
     "name": "06 - OTRAS DEDUCCIONES ADMITIDAS",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2254",
     "name": "07 - GASTOS FINANCIEROS",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2255",
     "name": "08 - GASTOS EXTRAORDINARIOS",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2256",
     "name": "09 - COMPRAS Y GASTOS QUE FORMARAN PARTE DEL COSTO DE VENTA",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2257",
     "name": "10 - ADQUISICIONES DE ACTIVOS",
+    "record": 1,
     "value": 1
   },
   {
     "_id": "65f7636ae61b8d848afc2258",
     "name": "11 - GASTOS DE SEGUROS",
+    "record": 1,
     "value": 1
   }
 ]

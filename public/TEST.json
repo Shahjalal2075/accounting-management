@@ -1,96 +1,96 @@
 [
     {
       "name": "Jan",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2400,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Feb",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2210,
       "PTax": 0,
-      "STax": 0
+      "STax": 180
     },
     {
       "name": "Mar",
-      "Purchase": 11984.61,
-      "Sale": 14550.28,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2290,
-      "PTax": 0,
+      "PTax": 120,
       "STax": 0
     },
     {
-      "name": "Apr",
-      "Purchase": 0,
-      "Sale": 141600.98,
+      "name": "Abr",
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2000,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "May",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2181,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Jun",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2500,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Jul",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2100,
       "PTax": 0,
       "STax": 0
     },
     {
-      "name": "Aug",
-      "Purchase": 0,
-      "Sale": 0,
+      "name": "Ago",
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2100,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Sep",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2100,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Oct",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2000,
       "PTax": 0,
       "STax": 0
     },
     {
       "name": "Nov",
-      "Purchase": 0,
-      "Sale": 0,
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2100,
       "PTax": 0,
       "STax": 0
     },
     {
-      "name": "Dec",
-      "Purchase": 0,
-      "Sale": 0,
+      "name": "Dic",
+      "Compra": 0,
+      "Ventas": 0,
       "amt": 2100,
       "PTax": 0,
       "STax": 0

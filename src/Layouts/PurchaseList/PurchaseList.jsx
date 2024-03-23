@@ -16,7 +16,13 @@ const PurchaseList = () => {
 
     const [searchStatus, setSearchStatus] = useState(false);
 
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+    const [conceptoReport, setConceptoReport] = useState([]);
+    useEffect(() => {
+        fetch('https://account-ser.vercel.app/concepto-report')
+            .then(res => res.json())
+            .then(data => setConceptoReport(data));
+    }, [])
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
         fetch('https://account-ser.vercel.app/sales-report')
@@ -56,11 +62,13 @@ const PurchaseList = () => {
 
                     let dateString = "";
                     let ammt = 0;
+                    let conceptoValueNew;
 
                     for (let i = 0; i < invoices.length; i++) {
                         if (invoices[i]._id === id) {
                             dateString = invoices[i].fecha;
                             ammt = invoices[i].totalToPagars;
+                            conceptoValueNew = invoices[i].conceptoValue;
                         }
                     }
 
@@ -75,12 +83,25 @@ const PurchaseList = () => {
                     const report = { Purchase, Sale, PTax, STax };
                     console.log(report);
 
+                    const conceptIdx = parseInt(conceptoValueNew) - 1;
+                    const record = conceptoReport[conceptIdx].record - 1;
+                    const value = conceptoReport[conceptIdx].value - ammt;
+                    const conceptoAdd = { record, value }
+
                     fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'
                         },
                         body: JSON.stringify(report)
+                    })
+
+                    fetch(`https://account-ser.vercel.app/concepto-report/${conceptoValueNew}`, {
+                        method: 'PUT',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(conceptoAdd)
                     })
 
                     fetch(`https://account-ser.vercel.app/purchase-invoice/${id}`, {
@@ -332,11 +353,53 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Forma de Pago",
-                key: "formaDePago",
+                header: "EFECTIVO",
+                key: "type1",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
+            {
+                header: "CHEQUES/TRANSFERENCIAS/DEPÓSITO",
+                key: "type2",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "TARJETA CRÉDITO/DÉBITO",
+                key: "type3",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "COMPRA A CREDITO",
+                key: "type4",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "PERMUTA",
+                key: "type5",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "NOTA DE CREDITO",
+                key: "type6",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "MIXTO",
+                key: "type7",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Special",
+                key: "mark",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            }
 
         ];
 
@@ -431,7 +494,14 @@ const PurchaseList = () => {
                 iscTax: isc,
                 cdtTax: cdt,
                 propinaTax: propina,
-                formaDePago: invoice?.formaDePago
+                type1: (invoice?.formaDePago === "EFECTIVO") ? invoice?.totals : 0,
+                type2: (invoice?.formaDePago === "CHEQUES/TRANSFERENCIAS/DEPÓSITO") ? invoice?.totals : 0,
+                type3: (invoice?.formaDePago === "TARJETA CRÉDITO/DÉBITO") ? invoice?.totals : 0,
+                type4: (invoice?.formaDePago === "COMPRA A CREDITO") ? invoice?.totals : 0,
+                type5: (invoice?.formaDePago === "PERMUTA") ? invoice?.totals : 0,
+                type6: (invoice?.formaDePago === "NOTA DE CREDITO") ? invoice?.totals : 0,
+                type7: (invoice?.formaDePago === "MIXTO") ? invoice?.totals : 0,
+                mark: invoice?.mark
             })
         })
 
