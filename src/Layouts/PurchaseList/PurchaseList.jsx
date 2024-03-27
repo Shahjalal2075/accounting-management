@@ -1,13 +1,16 @@
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ExcelJS from 'exceljs';
+import { AuthContext } from '../../Providers/AuthProvider';
 
 const PurchaseList = () => {
+    const { user } = useContext(AuthContext);
+
     const [invoices, setInvoices] = useState([]);
     const [filterInvoices, setFilterInvoices] = useState([]);
 
@@ -19,16 +22,17 @@ const PurchaseList = () => {
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [conceptoReport, setConceptoReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/concepto-report')
+        fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => setConceptoReport(data));
-    }, [])
+    }, [user.email])
+
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/sales-report')
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => setSalesReport(data));
-    }, [])
+    }, [user.email])
 
     const handleDateChange1 = (date) => {
         setSelectedDate1(date);
@@ -40,10 +44,10 @@ const PurchaseList = () => {
 
 
     useEffect(() => {
-        fetch(`https://account-ser.vercel.app/purchase-invoice`)
+        fetch(`https://account-ser.vercel.app/purchase-invoice/${user.email}`)
             .then(res => res.json())
             .then(data => setInvoices(data));
-    }, []);
+    }, [user.email]);
 
     const handleDelete = (id) => {
         console.log(id)
@@ -75,10 +79,19 @@ const PurchaseList = () => {
                     const parts = dateString.split('-');
                     const month = parseInt(parts[1]);
                     const monthName = monthNames[month - 1];
-                    const Purchase = (salesReport[month - 1].Purchase) - ammt;
-                    const Sale = (salesReport[month - 1].Sale);
-                    const PTax = (salesReport[month - 1].PTax);
-                    const STax = (salesReport[month - 1].STax);
+                    let srl;
+                    if (salesReport && salesReport.length > 0) {
+                        for (let i = 0; i < salesReport.length; i++) {
+                            if (monthName === salesReport[i].name) {
+                                srl = i;
+                                break;
+                            }
+                        }
+                    }
+                    const Purchase = (salesReport[srl].Purchase) - ammt;
+                    const Sale = (salesReport[srl].Sale);
+                    const PTax = (salesReport[srl].PTax);
+                    const STax = (salesReport[srl].STax);
 
                     const report = { Purchase, Sale, PTax, STax };
                     console.log(report);
@@ -88,7 +101,7 @@ const PurchaseList = () => {
                     const value = conceptoReport[conceptIdx].value - ammt;
                     const conceptoAdd = { record, value }
 
-                    fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+                    fetch(`https://account-ser.vercel.app/sales-report/${user.email}/${monthName}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'
@@ -96,7 +109,7 @@ const PurchaseList = () => {
                         body: JSON.stringify(report)
                     })
 
-                    fetch(`https://account-ser.vercel.app/concepto-report/${conceptoValueNew}`, {
+                    fetch(`https://account-ser.vercel.app/concepto-report/${user.email}/${conceptoValueNew}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'
@@ -250,25 +263,37 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Fecha",
-                key: "fecha",
+                header: "Fecha Comprobante",
+                key: "fecha1",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Fecha Comprobante",
+                key: "fecha2",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
                 header: "Fecha De Pago",
-                key: "fechaDePago",
+                key: "fechaDePago1",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Bien Amount",
+                header: "Fecha De Pago",
+                key: "fechaDePago2",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "Servicios",
                 key: "bien",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Servicio Amount",
+                header: "Bienes",
                 key: "servicio",
                 width: 15,
                 alignment: { horizontal: 'center' }
@@ -293,61 +318,61 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "PROPORCIONALIDAD Tax",
+                header: "Proporcionalidad",
                 key: "proporcionalidadTax",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "ITBIS llevado al Costo",
                 key: "b1",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "ITBIS Tax",
+                header: "ITBIS por adelantar",
                 key: "itbisTax",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "ITBIS percibido en compras",
                 key: "b2",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Others Retenciones",
-                key: "othersRetenciones",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: " ",
+                header: "Tipo de Retención en ISR",
                 key: "b4",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "Monto Retención Renta",
+                key: "othersRetenciones",
+                width: 15,
+                alignment: { horizontal: 'center' }
+            },
+            {
+                header: "ISR Percibido en compras",
                 key: "b3",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "ISC Tax",
+                header: "Impuesto Selectivo al Consumo",
                 key: "iscTax",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "CDT Tax",
+                header: "Otros Impuesto/Tasas",
                 key: "cdtTax",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Propina Tax",
+                header: "Monto Propina Legal",
                 key: "propinaTax",
                 width: 15,
                 alignment: { horizontal: 'center' }
@@ -469,6 +494,14 @@ const PurchaseList = () => {
             if (invoice.tipoCk === "Service") {
                 servicioAmm = servicioAmm + (parseFloat(invoice.ammount));
             }
+            const fecha = invoice?.fecha.split('-');
+            if (parseInt(fecha[1]) < 10) {
+                fecha[1] = '0' + fecha[1];
+            }
+            const fechaDePago = invoice?.fechDePago.split('-');
+            if (parseInt(fechaDePago[1]) < 10) {
+                fechaDePago[1] = '0' + fechaDePago[1];
+            }
 
             sheet.addRow({
                 no: idx + 1,
@@ -477,8 +510,10 @@ const PurchaseList = () => {
                 concepto: invoice?.conceptoValue,
                 ncf: invoice?.nfc,
                 modificado: invoice?.modificado,
-                fecha: invoice?.fecha,
-                fechaDePago: invoice?.fechDePago,
+                fecha1: fecha[2] + fecha[1],
+                fecha2: fecha[0],
+                fechaDePago1: fechaDePago[2] + fechaDePago[1],
+                fechaDePago2: fechaDePago[0],
                 bien: bienAmm,
                 servicio: servicioAmm,
                 subTotal: invoice?.subTotals,
@@ -593,7 +628,7 @@ const PurchaseList = () => {
                                         <td>{invoice.formaDePago}</td>
                                         <td>{invoice.modificado}</td>
                                         <td className='flex justify-between'>
-                                            <Link to={`/purchase-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                            <Link to={`/purchase-invoice/${user.email}/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
                                                 <FaRegEdit />
                                             </Link>
                                             <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>
@@ -614,7 +649,7 @@ const PurchaseList = () => {
                                         <td>{invoice.formaDePago}</td>
                                         <td>{invoice.modificado}</td>
                                         <td className='flex justify-between'>
-                                            <Link to={`/purchase-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                            <Link to={`/purchase-invoice/${user.email}/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
                                                 <FaRegEdit />
                                             </Link>
                                             <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>

@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 
 const InvoiceEditS = () => {
+    const { user} = useContext(AuthContext);
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
@@ -31,10 +33,10 @@ const InvoiceEditS = () => {
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/sales-report')
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => setSalesReport(data));
-    }, [])
+    }, [user.email])
     const handleAmmount = (e) => {
         const form = e.target;
         setAmmount(form.value);
@@ -277,21 +279,30 @@ const InvoiceEditS = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Compra = (salesReport[month - 1].Compra);
-        const Ventas = (salesReport[month - 1].Ventas) - invoiceData.totalToPagars + totalToPagars;
-        const STax = (salesReport[month - 1].STax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0));
-        const PTax = (salesReport[month - 1].PTax);
+        let srl ;
+        if (salesReport && salesReport.length > 0) {
+            for(let i=0;i<salesReport.length;i++){
+                if(monthName===salesReport[i].name){
+                    srl=i;
+                    break;
+                }
+            }
+        }
+        const Compra = (salesReport[srl].Compra);
+        const Ventas = (salesReport[srl].Ventas) - invoiceData.totalToPagars + totalToPagars;
+        const STax = (salesReport[srl].STax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? ((ammount * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? ((ammount * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? ((ammount * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? ((ammount * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? ((ammount * taxAmmount[4]) / 100) : 0));
+        const PTax = (salesReport[srl].PTax);
         const report = { Compra, Ventas, PTax, STax };
         console.log(report)
 
-        fetch(`https://account-ser.vercel.app/sale-invoice/${invoiceData._id}`, {
+        fetch(`https://account-ser.vercel.app/sale-invoice/${user.email}/${invoiceData._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(invoice)
         })
-        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}/${monthName}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

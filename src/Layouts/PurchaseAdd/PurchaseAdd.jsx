@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const PurchaseAdd = () => {
+
+    const { user } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -34,26 +37,26 @@ const PurchaseAdd = () => {
 
     const [conceptoReport, setConceptoReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/concepto-report')
+        fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => setConceptoReport(data));
-    }, [])
+    }, [user.email])
 
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/sales-report')
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => setSalesReport(data));
-    }, [])
+    }, [user.email])
 
     const [selectedDate1, setSelectedDate1] = useState(null);
 
     const [invoices, setInvoices] = useState([]);
     useEffect(() => {
-        fetch(`https://account-ser.vercel.app/purchase-invoice`)
+        fetch(`https://account-ser.vercel.app/purchase-invoice/${user.email}`)
             .then(res => res.json())
             .then(data => setInvoices(data));
-    }, []);
+    }, [user.email]);
 
     const [rid, setRid] = useState([]);
 
@@ -320,11 +323,13 @@ const PurchaseAdd = () => {
         const modificado = form.modificado.value;
         const mark = isChecked;
         let company = "";
+        const mail = user.email;
+        console.log('m', mail);
 
         setMontoList([...montoList, ammount]);
         setTipoList([...tipoList, tipoCk]);
 
-        if (mark===false && nfc.length !== 11 && nfc.length !== 13) {
+        if (mark === false && nfc.length !== 11 && nfc.length !== 13) {
             toast('Llene el NCF correcto. ' + nfc.length);
             return;
         }
@@ -358,7 +363,7 @@ const PurchaseAdd = () => {
             }
         }
 
-        if (mark===false && rid && rid.length > 0) {
+        if (mark === false && rid && rid.length > 0) {
             for (let i = 0; i < rid.length; i++) {
                 if (rid[i].CompanyRNC === rnc) {
                     company = rid[i].CompanyName;
@@ -385,7 +390,7 @@ const PurchaseAdd = () => {
 
         const totalToPagars = parseFloat((((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount))).toFixed(2));
 
-        const invoice = { nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount, ammountDisscount, totalDis, montoList, tipoList, tipoCk, ammount,mark };
+        const invoice = { mail, nfc, id, rnc, company, fecha, fechDePago, formaDePago, modificado, monto, subTotals, totals, totalToPagars, count, taxs, taxAmmount, conceptoValue, enable, discounts, discountAmmount, ammountDisscount, totalDis, montoList, tipoList, tipoCk, ammount, mark };
 
         console.log(invoice);
 
@@ -393,16 +398,27 @@ const PurchaseAdd = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Compra = (salesReport[month - 1].Compra) + totalToPagars;
-        const Ventas = (salesReport[month - 1].Ventas);
-        const PTax = (salesReport[month - 1].PTax) + ((taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0));
-        const STax = (salesReport[month - 1].STax);
+        let srl ;
+        if (salesReport && salesReport.length > 0) {
+            for(let i=0;i<salesReport.length;i++){
+                if(monthName===salesReport[i].name){
+                    srl=i;
+                    break;
+                }
+            }
+        }
+        console.log(salesReport[srl])
+        const Compra = (salesReport[srl].Compra) + totalToPagars;
+        const Ventas = (salesReport[srl].Ventas);
+        const PTax = (salesReport[srl].PTax) + ((taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0));
+        const STax = (salesReport[srl].STax);
 
         const report = { Compra, Ventas, PTax, STax };
+        console.log(report)
 
         const conceptIdx = parseInt(conceptoValue) - 1;
-        const record = conceptoReport[conceptIdx].record+1;
-        const value = conceptoReport[conceptIdx].value+totalToPagars;
+        const record = conceptoReport[conceptIdx].record + 1;
+        const value = conceptoReport[conceptIdx].value + totalToPagars;
         const conceptoAdd = { record, value }
 
         console.log(conceptoAdd)
@@ -416,14 +432,14 @@ const PurchaseAdd = () => {
             },
             body: JSON.stringify(invoice)
         })
-        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}/${monthName}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(report)
         })
-        fetch(`https://account-ser.vercel.app/concepto-report/${conceptoValue}`, {
+        fetch(`https://account-ser.vercel.app/concepto-report/${user.email}/${conceptoValue}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -683,8 +699,6 @@ const PurchaseAdd = () => {
                                     <h2>Total a pagar: {(((subTotal + parseFloat(ammount ? ammount : '0')) + (taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0)) - (parseFloat(ammountDisscount))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} </h2>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 

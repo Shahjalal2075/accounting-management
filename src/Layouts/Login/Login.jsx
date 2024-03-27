@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import {  useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,15 +9,6 @@ const Login = () => {
 
     const { signInUser } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const [user, setUser] = useState([]);
-    useEffect(() => {
-        fetch(`https://account-ser.vercel.app/user-list/superadmin@gmail.com`)
-            .then(res => res.json())
-            .then(data => setUser(data));
-    }, [])
-
-    console.log(user)
 
     const handleLogin = e => {
         e.preventDefault();

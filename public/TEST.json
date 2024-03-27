@@ -1,5 +1,6 @@
 [
     {
+      "mail": `${user.email}`,
       "name": "Jan",
       "Compra": 0,
       "Ventas": 0,
@@ -8,6 +9,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Feb",
       "Compra": 0,
       "Ventas": 0,
@@ -16,6 +18,7 @@
       "STax": 180
     },
     {
+      "mail": `${user.email}`,
       "name": "Mar",
       "Compra": 0,
       "Ventas": 0,
@@ -24,6 +27,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Abr",
       "Compra": 0,
       "Ventas": 0,
@@ -32,6 +36,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "May",
       "Compra": 0,
       "Ventas": 0,
@@ -40,6 +45,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Jun",
       "Compra": 0,
       "Ventas": 0,
@@ -48,6 +54,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Jul",
       "Compra": 0,
       "Ventas": 0,
@@ -56,6 +63,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Ago",
       "Compra": 0,
       "Ventas": 0,
@@ -64,6 +72,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Sep",
       "Compra": 0,
       "Ventas": 0,
@@ -72,6 +81,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Oct",
       "Compra": 0,
       "Ventas": 0,
@@ -80,6 +90,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Nov",
       "Compra": 0,
       "Ventas": 0,
@@ -88,6 +99,7 @@
       "STax": 0
     },
     {
+      "mail": `${user.email}`,
       "name": "Dic",
       "Compra": 0,
       "Ventas": 0,

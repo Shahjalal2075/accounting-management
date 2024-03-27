@@ -12,8 +12,8 @@ import UserAdd from "../Layouts/UserAdd/UserAdd";
 import PrivateRoute from "./PrivateRoute";
 import CompanyList from "../Layouts/CompanyList/CompanyList";
 import InvoiceEditS from "../Layouts/InvoiceEdit/InvoiceEditS";
-import Test from "../Layouts/Test/Test";
 import Dashboard2 from "../Layouts/Dashboard/Dashboard2";
+import CompanyAdd from "../Layouts/CompanyAdd/CompanyAdd";
 
 
 const Routes = createBrowserRouter([
@@ -50,14 +50,14 @@ const Routes = createBrowserRouter([
                         element: <PrivateRoute><SaleList></SaleList></PrivateRoute>
                     },
                     {
-                        path: "/purchase-invoice/:id",
+                        path: "/purchase-invoice/:mail/:id",
                         element: <PrivateRoute><InvoiceEdit></InvoiceEdit></PrivateRoute>,
-                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/purchase-invoice/${params.id}`)
+                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/purchase-invoice/${params.mail}/${params.id}`)
                     },
                     {
-                        path: "/sale-invoice/:id",
+                        path: "/sale-invoice/:mail/:id",
                         element: <PrivateRoute><InvoiceEditS></InvoiceEditS></PrivateRoute>,
-                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/sale-invoice/${params.id}`)
+                        loader: ({ params }) => fetch(`https://account-ser.vercel.app/sale-invoice/${params.mail}/${params.id}`)
                     },
                     {
                         path: "/company-list",
@@ -66,6 +66,10 @@ const Routes = createBrowserRouter([
                     {
                         path: "/dashboard2",
                         element: <PrivateRoute><Dashboard2></Dashboard2></PrivateRoute>
+                    },
+                    {
+                        path: "/company-add",
+                        element: <CompanyAdd></CompanyAdd>
                     }
                 ]
             },

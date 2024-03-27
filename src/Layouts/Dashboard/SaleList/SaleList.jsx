@@ -1,13 +1,15 @@
 import Swal from 'sweetalert2';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ExcelJS from 'exceljs';
+import { AuthContext } from '../../../Providers/AuthProvider';
 
 const SaleList = () => {
+    const { user } = useContext(AuthContext);
 
     const [invoices, setInvoices] = useState([]);
     const [filterInvoices, setFilterInvoices] = useState([]);
@@ -20,10 +22,10 @@ const SaleList = () => {
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/sales-report')
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => setSalesReport(data));
-    }, [])
+    }, [user.email])
 
 
 
@@ -35,10 +37,10 @@ const SaleList = () => {
     };
 
     useEffect(() => {
-        fetch(`https://account-ser.vercel.app/sale-invoice`)
+        fetch(`https://account-ser.vercel.app/sale-invoice/${user.email}`)
             .then(res => res.json())
             .then(data => setInvoices(data));
-    }, [])
+    }, [user.email])
 
 
     const handleDelete = (id) => {
@@ -69,15 +71,24 @@ const SaleList = () => {
                     const parts = dateString.split('-');
                     const month = parseInt(parts[1]);
                     const monthName = monthNames[month - 1];
-                    const Purchase = (salesReport[month - 1].Purchase);
-                    const Sale = (salesReport[month - 1].Sale) - ammt;
-                    const PTax = (salesReport[month - 1].PTax);
-                    const STax = (salesReport[month - 1].STax);
+                    let srl;
+                    if (salesReport && salesReport.length > 0) {
+                        for (let i = 0; i < salesReport.length; i++) {
+                            if (monthName === salesReport[i].name) {
+                                srl = i;
+                                break;
+                            }
+                        }
+                    }
+                    const Purchase = (salesReport[srl].Purchase);
+                    const Sale = (salesReport[srl].Sale) - ammt;
+                    const PTax = (salesReport[srl].PTax);
+                    const STax = (salesReport[srl].STax);
 
                     const report = { Purchase, Sale, PTax, STax };
                     console.log(report);
 
-                    fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+                    fetch(`https://account-ser.vercel.app/sales-report/${user.email}/${monthName}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'
@@ -233,109 +244,109 @@ const SaleList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Fecha",
+                header: "Fecha Comprobante",
                 key: "fecha",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Fecha De Pago",
+                header: "Fecha de Retención",
                 key: "fechaDePago",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Sub Total",
+                header: "Monto Facturado",
                 key: "subTotal",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Total Tax",
+                header: "ITBIS Facturado",
                 key: "totalTax",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Tax Retention Amount ",
+                header: "ITBIS Retenido por Terceros",
                 key: "totalRetention",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "ITBIS Percibido",
                 key: "b1",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "Retención Renta por Terceros",
                 key: "b2",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: " ",
+                header: "ISR Percibido",
                 key: "b3",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "ISC Tax",
+                header: "Impuesto Selectivo al Consumo",
                 key: "iscTax",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "CDT Tax",
+                header: "Otros Impuestos/Tasas",
                 key: "cdtTax",
                 width: 20,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Propina Tax",
+                header: "Monto Propina Legal",
                 key: "propinaTax",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "EFECTIVO",
+                header: "Efectivo",
                 key: "type1",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "CHEQUES/TRANSFERENCIAS/DEPÓSITO",
+                header: "Cheque/ Transferencia/ Depósito",
                 key: "type2",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "TARJETA CRÉDITO/DÉBITO",
+                header: "Tarjeta Débito/Crédito",
                 key: "type3",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "COMPRA A CREDITO",
+                header: "Venta a Crédito",
                 key: "type4",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "PERMUTA",
+                header: "Bonos o Certificados de Regalo",
                 key: "type5",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "NOTA DE CREDITO",
+                header: "Permuta",
                 key: "type6",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "MIXTO",
+                header: "Otras Formas de Ventas",
                 key: "type7",
                 width: 15,
                 alignment: { horizontal: 'center' }
@@ -376,6 +387,14 @@ const SaleList = () => {
                     propina = propina + ((invoice.taxAmmount[i] * invoice.subTotals) / 100);
                 }
             }
+            const fecha = invoice?.fecha.split('-');
+            if (parseInt(fecha[1]) < 10) {
+                fecha[1] = '0' + fecha[1];
+            }
+            const fechaDePago = invoice?.fechDePago.split('-');
+            if (parseInt(fechaDePago[1]) < 10) {
+                fechaDePago[1] = '0' + fechaDePago[1];
+            }
 
             sheet.addRow({
                 no: idx + 1,
@@ -384,8 +403,8 @@ const SaleList = () => {
                 ncf: invoice?.nfc,
                 modificado: invoice?.modificado,
                 tipoDeIngreso: invoice?.tipoDeIngreso,
-                fecha: invoice?.fecha,
-                fechaDePago: invoice?.fechDePago,
+                fecha: fecha[2] + fecha[1] + fecha[0],
+                fechaDePago: fechaDePago[2] + fechaDePago[1] + fechaDePago[0],
                 subTotal: invoice?.subTotals,
                 totalTax: ((invoice?.subTotals * taxAmm) / 100),
                 totalRetention: (invoice?.totals - invoice?.totalToPagars),
@@ -395,13 +414,13 @@ const SaleList = () => {
                 iscTax: isc,
                 cdtTax: cdt,
                 propinaTax: propina,
-                type1: (invoice?.formaDePago==="EFECTIVO")?invoice?.totals:0,
-                type2: (invoice?.formaDePago==="CHEQUES/TRANSFERENCIAS/DEPÓSITO")?invoice?.totals:0,
-                type3: (invoice?.formaDePago==="TARJETA CRÉDITO/DÉBITO")?invoice?.totals:0,
-                type4: (invoice?.formaDePago==="COMPRA A CREDITO")?invoice?.totals:0,
-                type5: (invoice?.formaDePago==="PERMUTA")?invoice?.totals:0,
-                type6: (invoice?.formaDePago==="NOTA DE CREDITO")?invoice?.totals:0,
-                type7: (invoice?.formaDePago==="MIXTO")?invoice?.totals:0,
+                type1: (invoice?.formaDePago === "EFECTIVO") ? invoice?.totals : 0,
+                type2: (invoice?.formaDePago === "CHEQUES/TRANSFERENCIAS/DEPÓSITO") ? invoice?.totals : 0,
+                type3: (invoice?.formaDePago === "TARJETA CRÉDITO/DÉBITO") ? invoice?.totals : 0,
+                type4: (invoice?.formaDePago === "COMPRA A CREDITO") ? invoice?.totals : 0,
+                type5: (invoice?.formaDePago === "PERMUTA") ? invoice?.totals : 0,
+                type6: (invoice?.formaDePago === "NOTA DE CREDITO") ? invoice?.totals : 0,
+                type7: (invoice?.formaDePago === "MIXTO") ? invoice?.totals : 0,
                 mark: invoice?.mark
             })
         })
@@ -494,7 +513,7 @@ const SaleList = () => {
                                         <td>{invoice.formaDePago}</td>
                                         <td>{invoice.modificado}</td>
                                         <td className='flex justify-between'>
-                                            <Link to={`/sale-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                            <Link to={`/sale-invoice/${user.email}/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
                                                 <FaRegEdit />
                                             </Link>
                                             <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>
@@ -515,7 +534,7 @@ const SaleList = () => {
                                         <td>{invoice.formaDePago}</td>
                                         <td>{invoice.modificado}</td>
                                         <td className='flex justify-between'>
-                                            <Link to={`/sale-invoice/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
+                                            <Link to={`/sale-invoice/${user.email}/${invoice._id}`} className=' text-[green] font-bold flex justify-center items-center'>
                                                 <FaRegEdit />
                                             </Link>
                                             <button onClick={() => handleDelete(invoice._id)} className=' text-[red] font-bold'>

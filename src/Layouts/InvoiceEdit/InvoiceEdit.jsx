@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 
 const InvoiceEdit = () => {
+    const { user} = useContext(AuthContext);
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
@@ -37,16 +39,16 @@ const InvoiceEdit = () => {
     const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     const [conceptoReport, setConceptoReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/concepto-report')
+        fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => setConceptoReport(data));
-    }, [])
+    }, [user.email])
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {
-        fetch('https://account-ser.vercel.app/sales-report')
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => setSalesReport(data));
-    }, [])
+    }, [user.email])
 
     const handleConcepto = (e) => {
         const form = e.target;
@@ -332,10 +334,19 @@ const InvoiceEdit = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        const Compra = salesReport ? ((salesReport[month - 1].Compra) - invoiceData.totalToPagars + totalToPagars) : 1;
-        const Ventas = (salesReport[month - 1].Ventas);
-        const PTax = (salesReport[month - 1].PTax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0));
-        const STax = (salesReport[month - 1].STax);
+        let srl ;
+        if (salesReport && salesReport.length > 0) {
+            for(let i=0;i<salesReport.length;i++){
+                if(monthName===salesReport[i].name){
+                    srl=i;
+                    break;
+                }
+            }
+        }
+        const Compra = salesReport ? ((salesReport[srl].Compra) - invoiceData.totalToPagars + totalToPagars) : 1;
+        const Ventas = (salesReport[srl].Ventas);
+        const PTax = (salesReport[srl].PTax) - (invoiceData.totals - invoiceData.subTotals) + ((taxAmmount[0] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[0]) / 100) : 0) + (taxAmmount[1] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[1]) / 100) : 0) + (taxAmmount[2] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[2]) / 100) : 0) + (taxAmmount[3] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[3]) / 100) : 0) + (taxAmmount[4] ? (((subTotal + parseFloat(ammount ? ammount : '0')) * taxAmmount[4]) / 100) : 0));
+        const STax = (salesReport[srl].STax);
         const report = { Compra, Ventas, PTax, STax };
         console.log(report);
 
@@ -346,21 +357,21 @@ const InvoiceEdit = () => {
 
         console.log(conceptoAdd)
 
-        fetch(`https://account-ser.vercel.app/purchase-invoice/${invoiceData._id}`, {
+        fetch(`https://account-ser.vercel.app/purchase-invoice/${user.email}/${invoiceData._id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(invoice)
         })
-        fetch(`https://account-ser.vercel.app/sales-report/${monthName}`, {
+        fetch(`https://account-ser.vercel.app/sales-report/${user.email}/${monthName}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(report)
         })
-        fetch(`https://account-ser.vercel.app/concepto-report/${conceptoValue}`, {
+        fetch(`https://account-ser.vercel.app/concepto-report/${user.email}/${conceptoValue}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

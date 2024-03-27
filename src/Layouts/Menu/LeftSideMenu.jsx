@@ -31,7 +31,7 @@ const LeftSideMenu = () => {
                             &&
                             <div className="text-lg text-[#fff] font-medium flex flex-col">
                                 <NavLink to={'/company-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2 px-8' activeclassname='active' >Company List</NavLink>
-                                <NavLink to={'/add-user'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2 px-8' activeclassname='active' >Add User</NavLink>
+                                <NavLink to={'/company-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2 px-8' activeclassname='active' >Add User</NavLink>
                             </div>
                         }
                         {
@@ -68,6 +68,7 @@ const LeftSideMenu = () => {
                                 <ul tabIndex="0"
                                     className="menu menu-sm dropdown-content mt-3 z-[1] p-2 bg-[#fff] rounded-box w-48 ">
                                     <li><NavLink to={'/company-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Company List</NavLink></li>
+                                    <li><NavLink to={'/company-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Add User</NavLink></li>
                                 </ul>
                             }
                             {
