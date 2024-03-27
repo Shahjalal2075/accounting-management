@@ -1,4 +1,4 @@
-import {  useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaDollarSign } from "react-icons/fa6";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { PieChart, Pie, Cell } from "recharts";
@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Dashboard = () => {
-    const { user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     //https://account-ser.vercel.app
     //http://localhost:5000
@@ -18,8 +18,9 @@ const Dashboard = () => {
         fetch(`https://account-ser.vercel.app/sales-report/${user.email}`)
             .then(res => res.json())
             .then(data => {
-                const top12Data = data.slice(0, 12);
-                setData(top12Data);
+                const top12Data = data.slice(0, 11);
+                const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
+                setData(sortedData);
             });
     }, [user.email])
 
@@ -31,8 +32,9 @@ const Dashboard = () => {
         fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => {
-                const top12Data = data.slice(0, 11);
-                setData2(top12Data);
+                const top12Data = data.slice(0, 10);
+                const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
+                setData2(sortedData);
             });
     }, [user.email])
 
@@ -456,12 +458,12 @@ const Dashboard = () => {
                         <tbody>
                             {
                                 data2.map((dta) =>
-                                        <tr key={dta._id}>
-                                            <td>{dta.name}</td>
-                                            <td>{(dta.record-1).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
-                                            <td>{(dta.value-1).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                        </tr>
-                                    )
+                                    <tr key={dta._id}>
+                                        <td>{dta.name}</td>
+                                        <td>{(dta.record - 1).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+                                        <td>{(dta.value - 1).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                    </tr>
+                                )
                             }
                         </tbody>
                     </table>

@@ -41,7 +41,11 @@ const InvoiceEdit = () => {
     useEffect(() => {
         fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
-            .then(data => setConceptoReport(data));
+            .then(data => {
+                const top12Data = data.slice(0, 10);
+                const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
+                setConceptoReport(sortedData)
+            });
     }, [user.email])
     const [salesReport, setSalesReport] = useState([]);
     useEffect(() => {

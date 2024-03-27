@@ -39,7 +39,11 @@ const PurchaseAdd = () => {
     useEffect(() => {
         fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
-            .then(data => setConceptoReport(data));
+            .then(data => {
+                const top12Data = data.slice(0, 10);
+                const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
+                setConceptoReport(sortedData)
+            });
     }, [user.email])
 
     const [salesReport, setSalesReport] = useState([]);
@@ -398,11 +402,11 @@ const PurchaseAdd = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        let srl ;
+        let srl;
         if (salesReport && salesReport.length > 0) {
-            for(let i=0;i<salesReport.length;i++){
-                if(monthName===salesReport[i].name){
-                    srl=i;
+            for (let i = 0; i < salesReport.length; i++) {
+                if (monthName === salesReport[i].name) {
+                    srl = i;
                     break;
                 }
             }
