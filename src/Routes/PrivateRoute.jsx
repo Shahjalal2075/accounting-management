@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProvider";
 
@@ -10,7 +10,9 @@ const PrivateRoute = ({ children }) => {
 
 
     if (loading) {
-        return <span className="loading loading-spinner text-neutral"></span>
+        return <div className="flex justify-center py-72">
+            <span className="loading loading-spinner text-neutral"></span>
+        </div>
     }
 
     /* useEffect(() => {

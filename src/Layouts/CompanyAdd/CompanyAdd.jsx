@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,16 +6,27 @@ import { updateProfile } from 'firebase/auth';
 import { AuthContext } from '../../Providers/AuthProvider';
 
 const CompanyAdd = () => {
-
-    const { createUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const { user } = useContext(AuthContext);
+    useEffect(() => {
+        fetch(`https://account-ser.vercel.app/user-list/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.role==="User")
+    {
+        navigate('/');
+    }
+            });
+    }, [user.email,navigate])
+
+    const { createUser } = useContext(AuthContext);
     const handleRegister = e => {
         e.preventDefault();
         const company = e.target.company.value;
         const email = e.target.email.value;
         const role = e.target.role.value;
-        const verify = false;
+        const verify = true;
         const password = e.target.password.value;
         const user = { company, email, role, verify };
 
@@ -162,7 +173,7 @@ const CompanyAdd = () => {
 
                 toast("User Create Succsessfully.");
 
-                fetch('http://localhost:5000/user-list', {
+                fetch('https://account-ser.vercel.app/user-list', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -172,7 +183,7 @@ const CompanyAdd = () => {
 
                 if (role === "User") {
                     for (let i = 0; i < salesReportData.length; i++) {
-                        fetch('http://localhost:5000/sales-report', {
+                        fetch('https://account-ser.vercel.app/sales-report', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
@@ -181,7 +192,7 @@ const CompanyAdd = () => {
                         })
                     }
                     for (let i = 0; i < conceptoReportData.length; i++) {
-                        fetch('http://localhost:5000/concepto-report', {
+                        fetch('https://account-ser.vercel.app/concepto-report', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

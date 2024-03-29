@@ -1,7 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CompanyView from "../CompanyView/CompanyView";
+import { AuthContext } from "../../Providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const CompanyList = () => {
+    const navigate = useNavigate();
+
+    const { user } = useContext(AuthContext);
+    useEffect(() => {
+        fetch(`https://account-ser.vercel.app/user-list/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.role==="User")
+    {
+        navigate('/');
+    }
+            });
+    }, [user.email,navigate])
+
+    
 
     const [invoices, setInvoices] = useState([]);
     useEffect(() => {
@@ -12,7 +29,7 @@ const CompanyList = () => {
 
     console.log(invoices);
 
-    
+
 
     return (
         <div>
@@ -34,9 +51,9 @@ const CompanyList = () => {
                     <tbody>
                         {
                             invoices.map((invoice, index) => <CompanyView
-                            key={invoice._id}
-                            invoice={invoice}
-                            index={index}
+                                key={invoice._id}
+                                invoice={invoice}
+                                index={index}
                             ></CompanyView>)
                         }
                     </tbody>

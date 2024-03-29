@@ -10,7 +10,7 @@ const Dashboard = () => {
     const { user } = useContext(AuthContext);
 
     //https://account-ser.vercel.app
-    //http://localhost:5000
+    //https://account-ser.vercel.app
 
     /* For BarChart Start */
     const [data, setData] = useState([]);

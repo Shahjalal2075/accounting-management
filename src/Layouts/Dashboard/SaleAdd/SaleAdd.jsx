@@ -8,6 +8,7 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 
 const SaleAdd = () => {
     const { user} = useContext(AuthContext);
+
     const navigate = useNavigate();
     
 

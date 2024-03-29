@@ -15,6 +15,7 @@ import InvoiceEditS from "../Layouts/InvoiceEdit/InvoiceEditS";
 import Dashboard2 from "../Layouts/Dashboard/Dashboard2";
 import CompanyAdd from "../Layouts/CompanyAdd/CompanyAdd";
 import IconEdit from "../Layouts/IconEdit/IconEdit";
+import RoleSelect from "../Layouts/RoleSelect/RoleSelect";
 
 
 const Routes = createBrowserRouter([
@@ -28,7 +29,7 @@ const Routes = createBrowserRouter([
                 children: [
                     {
                         path: "/",
-                        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                        element: <PrivateRoute><RoleSelect></RoleSelect></PrivateRoute>
                     },
                     {
                         path: "/dashboard",
