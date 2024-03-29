@@ -8,7 +8,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 
 
 const InvoiceEdit = () => {
-    const { user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const invoiceData = useLoaderData();
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const InvoiceEdit = () => {
         fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => {
-                const top12Data = data.slice(0, 10);
+                const top12Data = data.slice(0, 11);
                 const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
                 setConceptoReport(sortedData)
             });
@@ -315,7 +315,7 @@ const InvoiceEdit = () => {
         setMontoList([...montoList, ammount]);
         setTipoList([...tipoList, tipoCk]);
 
-        if (nfc.length !== 11 && nfc.length !== 13) {
+        if (mark === false && nfc.length !== 11 && nfc.length !== 13) {
             toast('Llene el NCF correcto. ' + nfc.length);
             return;
         }
@@ -338,11 +338,11 @@ const InvoiceEdit = () => {
         const parts = dateString.split('-');
         const month = parseInt(parts[1]);
         const monthName = monthNames[month - 1];
-        let srl ;
+        let srl;
         if (salesReport && salesReport.length > 0) {
-            for(let i=0;i<salesReport.length;i++){
-                if(monthName===salesReport[i].name){
-                    srl=i;
+            for (let i = 0; i < salesReport.length; i++) {
+                if (monthName === salesReport[i].name) {
+                    srl = i;
                     break;
                 }
             }
@@ -468,14 +468,14 @@ const InvoiceEdit = () => {
                             </label>
                             <label className="input-group">
                                 <select defaultValue={formaDePago} name="formaDePago" id="status" className="input bg-[#fff] input-bordered w-full">
-                                    <option value="">Select</option>
-                                    <option value="EFECTIVO">EFECTIVO</option>
-                                    <option value="CHEQUES/TRANSFERENCIAS/DEPÓSITO">CHEQUES/TRANSFERENCIAS/DEPÓSITO</option>
-                                    <option value="TARJETA CRÉDITO/DÉBITO">TARJETA CRÉDITO/DÉBITO</option>
-                                    <option value="COMPRA A CREDITO">COMPRA A CREDITO</option>
-                                    <option value="PERMUTA">PERMUTA</option>
-                                    <option value="NOTA DE CREDITO">NOTA DE CREDITO</option>
-                                    <option value="MIXTO">MIXTO</option>
+                                    <option value="none">Select</option>
+                                    <option value="01 - EFECTIVO">01 - EFECTIVO</option>
+                                    <option value="02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO">02 - CHEQUES/TRANSFERENCIAS/DEPÓSITO</option>
+                                    <option value="03 - TARJETA CRÉDITO/DÉBITO">03 - TARJETA CRÉDITO/DÉBITO</option>
+                                    <option value="04 - COMPRA A CREDITO">04 - COMPRA A CREDITO</option>
+                                    <option value="05 - PERMUTA">05 - PERMUTA</option>
+                                    <option value="06 - NOTA DE CREDITO">06 - NOTA DE CREDITO</option>
+                                    <option value="07 - MIXTO">07 - MIXTO</option>
                                 </select>
                             </label>
                         </div>

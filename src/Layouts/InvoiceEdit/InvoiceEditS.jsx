@@ -259,7 +259,7 @@ const InvoiceEditS = () => {
         const modificado = form.modificado.value;
         const mark = isChecked;
 
-        if (nfc.length !== 11 && nfc.length !== 13) {
+        if (mark === false && nfc.length !== 11 && nfc.length !== 13) {
             toast('Llene el NCF correcto. ' + nfc.length);
             return;
         }

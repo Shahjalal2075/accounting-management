@@ -32,7 +32,7 @@ const Dashboard = () => {
         fetch(`https://account-ser.vercel.app/concepto-report/${user.email}`)
             .then(res => res.json())
             .then(data => {
-                const top12Data = data.slice(0, 10);
+                const top12Data = data.slice(0, 11);
                 const sortedData = top12Data.sort((a, b) => a.sl - b.sl);
                 setData2(sortedData);
             });
@@ -104,6 +104,10 @@ const Dashboard = () => {
         }
     }
 
+    const formatYAxisTick = (tick) => {
+        return tick.toLocaleString();
+      }
+
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
             <div className="flex pb-10 items-center justify-between">
@@ -137,7 +141,7 @@ const Dashboard = () => {
                     <div>
                         <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                             {
-                                searchStatus ? 'Clear' : 'Filtrar'
+                                searchStatus ? 'Limpiar' : 'Filtrar'
                             }
                         </button>
 
@@ -206,7 +210,7 @@ const Dashboard = () => {
                                 <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
                             </div>
                             <div className="">
-                                <h2 className="text-sm text-[#878A99] font-medium">Tax on Sales</h2>
+                                <h2 className="text-sm text-[#878A99] font-medium">Total de impuestos en ingresos</h2>
                                 <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                     ((filterData.length > 0) ? ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                     :
@@ -225,7 +229,7 @@ const Dashboard = () => {
                                 <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
                             </div>
                             <div className="">
-                                <h2 className="text-sm text-[#878A99] font-medium">Tax on Purchases</h2>
+                                <h2 className="text-sm text-[#878A99] font-medium">Total de impuestos en egresos</h2>
                                 <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                     ((filterData.length > 0) ? ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                     :
@@ -243,7 +247,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Tax Sales - Tax Purchases</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Saldo Impuestos</h2>
                             <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                 ((filterData.length > 0) ? ((((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))) - (((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                 :
@@ -268,7 +272,7 @@ const Dashboard = () => {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
-                        <YAxis />
+                        <YAxis tickFormatter={formatYAxisTick}/>
                         <Tooltip />
                         <Legend />
                         <Bar dataKey="Ventas" fill="#8884d8" />
@@ -328,7 +332,7 @@ const Dashboard = () => {
                                 <p className="text-3xl font-bold text-[#FFb800]"><FaDollarSign /></p>
                             </div>
                             <div className="">
-                                <h2 className="text-sm text-[#878A99] font-medium">Total Income</h2>
+                                <h2 className="text-sm text-[#878A99] font-medium">Total de ingresos</h2>
                                 <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                     ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                     :
@@ -347,7 +351,7 @@ const Dashboard = () => {
                                 <p className="text-3xl font-bold text-[#42cdff]"><FaDollarSign /></p>
                             </div>
                             <div className="">
-                                <h2 className="text-sm text-[#878A99] font-medium">Total Outcome</h2>
+                                <h2 className="text-sm text-[#878A99] font-medium">Total de egresos</h2>
                                 <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                     ((filterData.length > 0) ? (((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                     :
@@ -365,7 +369,7 @@ const Dashboard = () => {
                             <p className="text-3xl font-bold text-[#52fb6a]"><FaDollarSign /></p>
                         </div>
                         <div className="">
-                            <h2 className="text-sm text-[#878A99] font-medium">Income - Outcome</h2>
+                            <h2 className="text-sm text-[#878A99] font-medium">Saldo</h2>
                             <p className="text-base text-[#111] font-semibold">{searchStatus ?
                                 ((filterData.length > 0) ? ((((filterData[0] ? filterData[0].Ventas : 0) + (filterData[1] ? filterData[1].Ventas : 0) + (filterData[2] ? filterData[2].Ventas : 0) + (filterData[3] ? filterData[3].Ventas : 0) + (filterData[4] ? filterData[4].Ventas : 0) + (filterData[5] ? filterData[5].Ventas : 0) + (filterData[6] ? filterData[6].Ventas : 0) + (filterData[7] ? filterData[7].Ventas : 0) + (filterData[8] ? filterData[8].Ventas : 0) + (filterData[9] ? filterData[9].Ventas : 0) + (filterData[10] ? filterData[10].Ventas : 0) + (filterData[11] ? filterData[11].Ventas : 0)) - ((filterData[0] ? filterData[0].STax : 0) + (filterData[1] ? filterData[1].STax : 0) + (filterData[2] ? filterData[2].STax : 0) + (filterData[3] ? filterData[3].STax : 0) + (filterData[4] ? filterData[4].STax : 0) + (filterData[5] ? filterData[5].STax : 0) + (filterData[6] ? filterData[6].STax : 0) + (filterData[7] ? filterData[7].STax : 0) + (filterData[8] ? filterData[8].STax : 0) + (filterData[9] ? filterData[9].STax : 0) + (filterData[10] ? filterData[10].STax : 0) + (filterData[11] ? filterData[11].STax : 0))) - (((filterData[0] ? filterData[0].Compra : 0) + (filterData[1] ? filterData[1].Compra : 0) + (filterData[2] ? filterData[2].Compra : 0) + (filterData[3] ? filterData[3].Compra : 0) + (filterData[4] ? filterData[4].Compra : 0) + (filterData[5] ? filterData[5].Compra : 0) + (filterData[6] ? filterData[6].Compra : 0) + (filterData[7] ? filterData[7].Compra : 0) + (filterData[8] ? filterData[8].Compra : 0) + (filterData[9] ? filterData[9].Compra : 0) + (filterData[10] ? filterData[10].Compra : 0) + (filterData[11] ? filterData[11].Compra : 0)) - ((filterData[0] ? filterData[0].PTax : 0) + (filterData[1] ? filterData[1].PTax : 0) + (filterData[2] ? filterData[2].PTax : 0) + (filterData[3] ? filterData[3].PTax : 0) + (filterData[4] ? filterData[4].PTax : 0) + (filterData[5] ? filterData[5].PTax : 0) + (filterData[6] ? filterData[6].PTax : 0) + (filterData[7] ? filterData[7].PTax : 0) + (filterData[8] ? filterData[8].PTax : 0) + (filterData[9] ? filterData[9].PTax : 0) + (filterData[10] ? filterData[10].PTax : 0) + (filterData[11] ? filterData[11].PTax : 0)))).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 0.00)
                                 :
@@ -451,7 +455,7 @@ const Dashboard = () => {
                         <thead>
                             <tr>
                                 <th>Concepto</th>
-                                <th>Record Count</th>
+                                <th>Cantidad</th>
                                 <th>Monto</th>
                             </tr>
                         </thead>

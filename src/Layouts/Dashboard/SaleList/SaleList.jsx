@@ -391,9 +391,15 @@ const SaleList = () => {
             if (parseInt(fecha[1]) < 10) {
                 fecha[1] = '0' + fecha[1];
             }
+            if (parseInt(fecha[0]) < 10) {
+                fecha[0] = '0' + fecha[0];
+            }
             const fechaDePago = invoice?.fechDePago.split('-');
             if (parseInt(fechaDePago[1]) < 10) {
                 fechaDePago[1] = '0' + fechaDePago[1];
+            }
+            if (parseInt(fechaDePago[0]) < 10) {
+                fechaDePago[0] = '0' + fechaDePago[0];
             }
 
             sheet.addRow({
@@ -470,7 +476,7 @@ const SaleList = () => {
                     <div>
                         <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                             {
-                                searchStatus ? 'Clear' : 'Filtrar'
+                                searchStatus ? 'Limpiar' : 'Filtrar'
                             }
                         </button>
 

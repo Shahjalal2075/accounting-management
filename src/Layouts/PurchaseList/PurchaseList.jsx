@@ -300,14 +300,14 @@ const PurchaseList = () => {
             },
 
             {
-                header: "Sub Total",
-                key: "subTotal",
+                header: "Total",
+                key: "total",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "Total Tax",
-                key: "totalTax",
+                header: "ITBIS",
+                key: "itbisTaxC",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
@@ -378,44 +378,8 @@ const PurchaseList = () => {
                 alignment: { horizontal: 'center' }
             },
             {
-                header: "EFECTIVO",
-                key: "type1",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "CHEQUES/TRANSFERENCIAS/DEPÓSITO",
-                key: "type2",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "TARJETA CRÉDITO/DÉBITO",
-                key: "type3",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "COMPRA A CREDITO",
-                key: "type4",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "PERMUTA",
-                key: "type5",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "NOTA DE CREDITO",
-                key: "type6",
-                width: 15,
-                alignment: { horizontal: 'center' }
-            },
-            {
-                header: "MIXTO",
-                key: "type7",
+                header: "Forma De Pago",
+                key: "formaDePago",
                 width: 15,
                 alignment: { horizontal: 'center' }
             },
@@ -498,9 +462,15 @@ const PurchaseList = () => {
             if (parseInt(fecha[1]) < 10) {
                 fecha[1] = '0' + fecha[1];
             }
+            if (parseInt(fecha[0]) < 10) {
+                fecha[0] = '0' + fecha[0];
+            }
             const fechaDePago = invoice?.fechDePago.split('-');
             if (parseInt(fechaDePago[1]) < 10) {
                 fechaDePago[1] = '0' + fechaDePago[1];
+            }
+            if (parseInt(fechaDePago[0]) < 10) {
+                fechaDePago[0] = '0' + fechaDePago[0];
             }
 
             sheet.addRow({
@@ -516,8 +486,8 @@ const PurchaseList = () => {
                 fechaDePago2: fechaDePago[0],
                 bien: bienAmm,
                 servicio: servicioAmm,
-                subTotal: invoice?.subTotals,
-                totalTax: ((invoice?.subTotals * taxAmm) / 100),
+                total: invoice?.totalToPagars,
+                itbisTaxC: itbis,
                 itbisRetendio: itbisDis,
                 proporcionalidadTax: proporcionalidad,
                 b1: "",
@@ -529,13 +499,7 @@ const PurchaseList = () => {
                 iscTax: isc,
                 cdtTax: cdt,
                 propinaTax: propina,
-                type1: (invoice?.formaDePago === "EFECTIVO") ? invoice?.totals : 0,
-                type2: (invoice?.formaDePago === "CHEQUES/TRANSFERENCIAS/DEPÓSITO") ? invoice?.totals : 0,
-                type3: (invoice?.formaDePago === "TARJETA CRÉDITO/DÉBITO") ? invoice?.totals : 0,
-                type4: (invoice?.formaDePago === "COMPRA A CREDITO") ? invoice?.totals : 0,
-                type5: (invoice?.formaDePago === "PERMUTA") ? invoice?.totals : 0,
-                type6: (invoice?.formaDePago === "NOTA DE CREDITO") ? invoice?.totals : 0,
-                type7: (invoice?.formaDePago === "MIXTO") ? invoice?.totals : 0,
+                formaDePago: invoice?.formaDePago,
                 mark: invoice?.mark
             })
         })
@@ -585,7 +549,7 @@ const PurchaseList = () => {
                     <div>
                         <button onClick={handleFilter} className="px-4 cursor-pointer py-2 rounded-lg bg-[#733CFF] border border-[#733CFF] hover:border-[#733CFF] text-[#fff] hover:text-[#733CFF] hover:bg-[#fff]" disabled={(selectedDate1 === null) ? true : false}>
                             {
-                                searchStatus ? 'Clear' : 'Filtrar'
+                                searchStatus ? 'Limpiar' : 'Filtrar'
                             }
                         </button>
 
