@@ -106,7 +106,7 @@ const Dashboard = () => {
 
     const formatYAxisTick = (tick) => {
         return tick.toLocaleString();
-      }
+    }
 
     return (
         <div className='bg-[#eee] pt-8 pb-14 px-8'>
@@ -272,7 +272,7 @@ const Dashboard = () => {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
-                        <YAxis tickFormatter={formatYAxisTick}/>
+                        <YAxis tickFormatter={formatYAxisTick} />
                         <Tooltip />
                         <Legend />
                         <Bar dataKey="Ventas" fill="#8884d8" />
@@ -293,7 +293,7 @@ const Dashboard = () => {
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
-                        <YAxis />
+                        <YAxis tickFormatter={formatYAxisTick} />
                         <Tooltip />
                         <Legend />
                         <Bar dataKey="Ventas" fill="#8884d8" />

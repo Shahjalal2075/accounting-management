@@ -14,6 +14,7 @@ import CompanyList from "../Layouts/CompanyList/CompanyList";
 import InvoiceEditS from "../Layouts/InvoiceEdit/InvoiceEditS";
 import Dashboard2 from "../Layouts/Dashboard/Dashboard2";
 import CompanyAdd from "../Layouts/CompanyAdd/CompanyAdd";
+import IconEdit from "../Layouts/IconEdit/IconEdit";
 
 
 const Routes = createBrowserRouter([
@@ -70,6 +71,10 @@ const Routes = createBrowserRouter([
                     {
                         path: "/company-add",
                         element: <CompanyAdd></CompanyAdd>
+                    },
+                    {
+                        path: "/icon-edit",
+                        element: <IconEdit></IconEdit>
                     }
                 ]
             },

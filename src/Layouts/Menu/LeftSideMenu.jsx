@@ -30,8 +30,10 @@ const LeftSideMenu = () => {
                             users.role === "Super Admin"
                             &&
                             <div className="text-lg text-[#fff] font-medium flex flex-col">
-                                <NavLink to={'/company-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2 px-8' activeclassname='active' >Company List</NavLink>
-                                <NavLink to={'/company-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2 px-8' activeclassname='active' >Add User</NavLink>
+                                <NavLink to={'/company-list'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Company List</NavLink>
+                                <NavLink to={'/company-add'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Add User</NavLink>
+                                {/* <NavLink to={'/icon-edit'} className='hover:bg-[#733CFF] hover:text-[#fff] px-2 rounded-lg w-full py-2' activeclassname='active' >Icon Edit</NavLink>
+                             */}
                             </div>
                         }
                         {
