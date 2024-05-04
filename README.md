@@ -6,6 +6,6 @@ Through this project, the companies under it can calculate their sales and purch
 
 Live Link: https://account-shah.netlify.app/
 
-Login Mail: demoadmin@gmail.com
+Login Mail: demoadmin@gmail.com <br>
 Password: 123456
 
